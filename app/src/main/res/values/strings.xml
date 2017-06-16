@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">ConversationDemo</string>
+    <string name="app_copyright">Copyright © 2017 Wilddog. All Rights Reserved</string>
+    <string name="logo_des">野狗通信云</string>
+    <string name="app_des">视频通话示例程序</string>
+    <string name="login">登录</string>
+    <string name="online">在线</string>
+    <string name="settings">设置</string>
+    <string name="personnal_settings">个人设置</string>
+    <string name="user_id">用户ID</string>
+    <string name="dimension">清晰度</string>
+    <string name="beauty_plan">美颜方案</string>
+    <string name="record_file">录制文件</string>
+    <string name="SDK_version">SDK版本</string>
+    <string name="cancel">取消</string>
+    <string name="dimension_1080P">1080P</string>
+    <string name="dimension_720P">720P</string>
+    <string name="dimension_480P">480P</string>
+    <string name="dimension_360P">360P</string>
+    <string name="change_dimension">切换清晰度</string>
+    <string name="change_beauty_plan">切换美颜方案</string>
+    <string name="beauty_plan_Camera360">Camera360</string>
+    <string name="beauty_plan_TuSDK">TuSDK</string>
+    <string name="change_beauty_nothing">不使用美颜</string>
+    <string name="delete">删除</string>
+    <string name="online_now">当前在线</string>
+</resources>

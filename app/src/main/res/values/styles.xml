@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ItemStyle" >
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@color/itemBackground</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="DialogItemStyle">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@color/itemBackground</item>
+    </style>
+
+    <style name="TitleStyle">
+        <item name="android:layout_height">30dp</item>
+
+    </style>
+</resources>

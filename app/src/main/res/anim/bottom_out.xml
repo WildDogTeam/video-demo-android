@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:andoird="http://schemas.android.com/apk/res/android">
+    <translate andoird:fromYDelta="0" andoird:toYDelta="-100%p" andoird:duration="500"/>
+</set>

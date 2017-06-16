@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    >
+<TextView
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    style="@style/DialogItemStyle"
+    android:layout_alignParentBottom="true"
+    android:text="@string/cancel"
+    android:id="@+id/tv_cancel"
+    />
+    <TextView
+    android:layout_width="match_parent"
+    style="@style/DialogItemStyle"
+    android:text="@string/dimension_1080P"
+    android:layout_above="@+id/tv_cancel"
+    android:id="@+id/tv_dimesion_1080P"
+    />
+    <TextView
+    android:layout_width="match_parent"
+    style="@style/DialogItemStyle"
+    android:text="@string/dimension_720P"
+    android:layout_above="@+id/tv_dimesion_1080P"
+    android:id="@+id/tv_dimension_720P"
+    />
+    <TextView
+    android:layout_width="match_parent"
+    style="@style/DialogItemStyle"
+    android:text="@string/dimension_480P"
+    android:layout_above="@+id/tv_dimension_720P"
+    android:id="@+id/tv_dimesion_480P"
+    />
+    <TextView
+    android:layout_width="match_parent"
+    style="@style/DialogItemStyle"
+    android:text="@string/dimension_360P"
+    android:layout_above="@+id/tv_dimesion_480P"
+    android:id="@+id/tv_dimesion_360P"
+    />
+    <TextView
+    android:layout_width="match_parent"
+    style="@style/DialogItemStyle"
+    android:layout_height="wrap_content"
+    android:text="@string/change_dimension"
+    android:layout_above="@+id/tv_dimesion_360P"
+    />
+</RelativeLayout>

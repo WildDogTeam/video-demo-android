@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.wilddog.conversationdemo.activities.SendInviteActivity">
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/cancel" />
+
+    <EditText
+        android:id="@+id/et_invite_user_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:hint="填写或粘贴您所呼叫的用户ID" />
+
+    <Button
+        android:id="@+id/btn_create_convercation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发起视频通话" />
+</LinearLayout>

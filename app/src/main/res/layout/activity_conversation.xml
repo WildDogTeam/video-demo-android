@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background"
+    tools:context="com.wilddog.conversationdemo.activities.ConversationActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_call_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="正在呼叫Uid"
+            android:textColor="@color/itemBackground" />
+
+        <com.wilddog.video.WilddogVideoView
+            android:id="@+id/wvv_big"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_mic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="麦克风" />
+
+            <TextView
+                android:id="@+id/tv_hungup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="挂断" />
+
+            <TextView
+                android:id="@+id/tv_flipCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="翻转相机" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.wilddog.video.WilddogVideoView
+        android:layout_width="80dp"
+        android:layout_height="150dp"
+        android:id="@+id/wvv_small"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="20dp"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_data"
+        android:orientation="vertical"
+        android:layout_alignParentRight="true"
+        >
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/iv_report"
+            android:src="@android:drawable/ic_menu_crop"
+            />
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/iv_record"
+            android:src="@android:drawable/ic_menu_crop"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_state"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        >
+
+        <TextView
+            android:padding="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dimension"
+            android:textSize="12sp"
+            android:id="@+id/tv_dimensions"
+            android:textColor="@color/itemBackground"
+            />
+        <TextView
+            android:padding="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fps"
+            android:textSize="12sp"
+            android:id="@+id/tv_fps"
+            android:textColor="@color/itemBackground"
+            />
+        <TextView
+            android:padding="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="rate"
+            android:textSize="12sp"
+            android:id="@+id/tv_rate"
+            android:textColor="@color/itemBackground"
+            />
+        <TextView
+            android:padding="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sent"
+            android:textSize="12sp"
+            android:id="@+id/tv_bytes"
+            android:textColor="@color/itemBackground"
+            />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

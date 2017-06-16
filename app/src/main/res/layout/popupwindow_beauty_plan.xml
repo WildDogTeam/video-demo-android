@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    >
+<TextView
+    android:layout_marginTop="5dp"
+    android:layout_width="match_parent"
+    style="@style/DialogItemStyle"
+    android:layout_alignParentBottom="true"
+    android:text="@string/cancel"
+    android:id="@+id/tv_cancel"
+    />
+    <TextView
+    android:layout_width="match_parent"
+    style="@style/DialogItemStyle"
+    android:text="@string/change_beauty_nothing"
+    android:layout_above="@+id/tv_cancel"
+    android:id="@+id/tv_beauty_nothing"
+    />
+    <TextView
+    android:layout_width="match_parent"
+    style="@style/DialogItemStyle"
+    android:text="@string/beauty_plan_TuSDK"
+    android:layout_above="@+id/tv_beauty_nothing"
+    android:id="@+id/tv_beauty_plan_TuSDK"
+    />
+    <TextView
+    android:layout_width="match_parent"
+    style="@style/DialogItemStyle"
+    android:text="@string/beauty_plan_Camera360"
+    android:layout_above="@+id/tv_beauty_plan_TuSDK"
+    android:id="@+id/tv_beauty_plan_Camera360"
+    />
+    <TextView
+    android:layout_width="match_parent"
+    style="@style/DialogItemStyle"
+    android:layout_height="wrap_content"
+    android:text="@string/change_beauty_plan"
+    android:layout_above="@+id/tv_beauty_plan_Camera360"
+    />
+</RelativeLayout>
