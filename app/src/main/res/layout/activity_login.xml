@@ -6,17 +6,20 @@
     android:layout_height="match_parent"
     tools:context="com.wilddog.conversationdemo.activities.LoginActivity">
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="110dp"
         android:id="@+id/iv_login_logo"
         />
     <TextView
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/logo_des"
+        android:textSize="35sp"
+        android:textColor="@color/textColor"
         android:layout_below="@+id/iv_login_logo"
         android:gravity="center"
         android:id="@+id/tv_logo_desc"
@@ -25,6 +28,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/app_des"
+        android:layout_marginTop="15dp"
+        android:textSize="21sp"
+        android:textColor="@color/textColor"
         android:layout_below="@+id/tv_logo_desc"
         android:gravity="center"
         />
@@ -32,10 +38,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/login"
+        android:textSize="@dimen/button_text_size"
+        android:textColor="@color/textColor_white"
+        android:layout_marginTop="145dp"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="100dp"
         android:id="@+id/btn_login"
+        android:background="@drawable/btn_orange_bg"
         />
 </RelativeLayout>

@@ -15,7 +15,7 @@
 
     <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="82dp"
         android:layout_gravity="center"
         android:id="@+id/rg_main"
         android:orientation="horizontal">
@@ -23,22 +23,28 @@
     <RadioButton
         android:button="@null"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
+        android:paddingTop="15dp"
         android:gravity="center"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
         android:text="@string/online"
         android:id="@+id/rb_main_online"
+        android:drawableTop="@drawable/selector_tab_online"
+        android:checked="false"
         />
         <RadioButton
             android:button="@null"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
             android:gravity="center"
-            android:layout_gravity="center_horizontal"
+            android:paddingTop="15dp"
+            android:layout_gravity="center"
+        android:drawableTop="@drawable/selector_tab_setting"
         android:text="@string/settings"
             android:id="@+id/rb_main_settings"
-        />
+            android:checked="false"
+            />
     </RadioGroup>
 </LinearLayout>

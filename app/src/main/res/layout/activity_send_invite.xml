@@ -11,6 +11,8 @@
         android:id="@+id/tv_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/textColor"
+        android:textSize="22sp"
         android:padding="10dp"
         android:text="@string/cancel" />
 
@@ -20,11 +22,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:gravity="center"
+        android:textColorHint="@color/text_color_hint"
+        android:textSize="17sp"
+        android:background="@drawable/edit_uid"
         android:hint="填写或粘贴您所呼叫的用户ID" />
 
     <Button
         android:id="@+id/btn_create_convercation"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:textSize="@dimen/button_text_size"
+        android:textColor="@color/textColor_white"
+        android:background="@drawable/btn_orange_bg"
         android:text="发起视频通话" />
 </LinearLayout>

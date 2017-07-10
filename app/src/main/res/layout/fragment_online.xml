@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    >
+    android:orientation="vertical">
+
     <RelativeLayout
         style="@style/TitleStyle"
         android:layout_width="match_parent"
-        android:background="@color/titleColor"
-        >
+        android:background="@color/titleColor">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
             android:id="@+id/iv_invite"
-            android:src="@android:drawable/arrow_down_float" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:src="@drawable/call" />
 
         <TextView
             android:layout_width="match_parent"
@@ -24,19 +25,40 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/online_now"
-            android:textColor="@color/itemBackground" />
+            android:textColor="@color/textColor_white"
+            android:textSize="@dimen/title_text_size" />
     </RelativeLayout>
+
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/lv_user_id"
-        />
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="暂无其他用户可呼叫"
-        android:id="@+id/tv_no_user"
-        android:gravity="center"
-        android:layout_gravity="center"
-        />
+         />
+
+    <RelativeLayout
+        android:id="@+id/ll_no_user"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/tv_no_user"
+            android:src="@drawable/no_user" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_centerInParent="true"
+            android:text="暂无其他用户可呼叫"
+            android:textColor="@color/textColor"
+            android:id="@+id/tv_no_user"
+            android:textSize="22sp" />
+    </RelativeLayout>
 </LinearLayout>

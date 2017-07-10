@@ -31,27 +31,37 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp"
+            android:background="@android:color/transparent"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_mic"
+            <CheckBox
+                android:id="@+id/cb_mic"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
+                android:drawableTop="@drawable/selector_button_mic"
+                android:button="@null"
                 android:text="麦克风" />
 
             <TextView
                 android:id="@+id/tv_hungup"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:drawableTop="@drawable/reject"
                 android:text="挂断" />
 
             <TextView
                 android:id="@+id/tv_flipCamera"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableTop="@drawable/flip_camera"
                 android:layout_weight="1"
                 android:text="翻转相机" />
         </LinearLayout>
@@ -61,6 +71,7 @@
         android:layout_width="80dp"
         android:layout_height="150dp"
         android:id="@+id/wvv_small"
+        android:layout_marginTop="16dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_margin="20dp"
@@ -70,19 +81,21 @@
         android:layout_height="wrap_content"
         android:id="@+id/ll_data"
         android:orientation="vertical"
+        android:layout_marginTop="16dp"
         android:layout_alignParentRight="true"
         >
         <ImageView
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:id="@+id/iv_report"
-            android:src="@android:drawable/ic_menu_crop"
+            android:src="@drawable/stats"
             />
         <ImageView
+            android:layout_marginTop="20dp"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:id="@+id/iv_record"
-            android:src="@android:drawable/ic_menu_crop"
+            android:src="@drawable/selector_button_record"
             />
     </LinearLayout>
     <LinearLayout

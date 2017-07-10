@@ -4,8 +4,16 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="titleColor">@android:color/black</color>
-    <color name="background">@android:color/darker_gray</color>
+    <color name="titleColor">@android:color/holo_orange_dark</color>
+    <color name="background">#F5F5F5</color>
     <color name="itemBackground">@android:color/white</color>
+
+    <color name="textColor">#333333</color>
+    <color name="textColor_666666">#666666</color>
+    <color name="text_color_hint">#999999</color>
+    <color name="text_color_e5e5e5">#e5e5e5</color>
+
+    <color name="textColor_white">#ffffff</color>
+    <color name="line_color">@android:color/darker_gray</color>
 
 </resources>

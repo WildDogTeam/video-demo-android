@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         client.setInviteListener(new WilddogVideoClient.Listener() {
             @Override
             public void onIncomingInvite(WilddogVideoClient wilddogVideoClient, IncomingInvite incomingInvite) {
+                Log.d(TAG,"current state is "+incomingInvite.getStatus() +"::"+incomingInvite.getStatus().equals("pendding"));
                 // 有邀请过来，打开被叫界面
                 String uid = incomingInvite.getFromParticipantId();
                 Intent intent = new Intent(MainActivity.this,AcceptActivity.class);
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onIncomingInviteCanceled(WilddogVideoClient wilddogVideoClient, IncomingInvite incomingInvite) {
+                Log.d(TAG,"current state is "+incomingInvite.getStatus() +"::"+incomingInvite.getStatus().equals("cancel"));
                 Log.d(TAG,"IncomingInviteCanceled");
                 // 取消邀请。 TODO 关闭被叫界面
                 AlertMessageUtil.showShortToast("对方已取消");

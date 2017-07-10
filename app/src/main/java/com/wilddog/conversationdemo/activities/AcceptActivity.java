@@ -23,8 +23,8 @@ public class AcceptActivity extends AppCompatActivity {
     private String uid;
     private TextView tvUid;
 
-    private ImageView ivReject;
-    private ImageView ivAccept;
+    private TextView ivReject;
+    private TextView ivAccept;
 
     private IncomingInvite incomingInvite;
     private BroadcastReceiver broadcastReceiver;
@@ -35,8 +35,8 @@ public class AcceptActivity extends AppCompatActivity {
         setContentView(R.layout.activity_accept);
 
         tvUid = (TextView) findViewById(R.id.tv_uid);
-        ivAccept = (ImageView) findViewById(R.id.iv_accept);
-        ivReject = (ImageView) findViewById(R.id.iv_reject);
+        ivAccept = (TextView) findViewById(R.id.tv_accept);
+        ivReject = (TextView) findViewById(R.id.tv_reject);
 
         uid = getIntent().getStringExtra("fromUid");
         incomingInvite = WilddogVideoManager.getIncomingInvite();

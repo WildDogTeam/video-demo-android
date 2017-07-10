@@ -18,27 +18,48 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:id="@+id/iv_cancel"
-            android:src="@android:drawable/arrow_down_float" />
+            android:layout_marginLeft="20dp"
+            android:padding="10dp"
+            android:src="@drawable/left_arrow" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="@string/SDK_version"
+            android:text="@string/about"
+            android:textSize="@dimen/title_text_size"
             android:textColor="@color/itemBackground" />
     </RelativeLayout>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical">
-
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/logo"
+            android:layout_gravity="center"
+            />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:textSize="22sp"
+            android:textColor="@color/textColor"
+            android:text="Demo v1.0" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="17sp"
+            android:textColor="@color/textColor_666666"
+            android:layout_marginTop="12dp"
             android:text="该示例程序基于" />
 
         <TextView
@@ -46,6 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textSize="17sp"
+            android:textColor="@color/textColor_666666"
             android:gravity="center"
             android:text="Wilddog Video SDK v1.0.0-beta" />
 
@@ -54,6 +77,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textColor="@color/textColor_666666"
+            android:textSize="17sp"
             android:gravity="center"
             android:text="Wilddog Sync SDK v1.2.2" />
 
@@ -62,6 +87,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textColor="@color/textColor_666666"
+            android:textSize="17sp"
             android:gravity="center"
             android:text="Wilddog Auth SDK v2.1.1" />
 
@@ -70,13 +97,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:textColor="@color/textColor_666666"
+            android:textSize="17sp"
             android:gravity="center"
-            android:text="Camera360 SDK v1.6" />
+            android:text="@string/camera360_sdk_v1_6" />
 
         <TextView
             android:id="@+id/tv_Tu_sdk_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textColor="@color/textColor_666666"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="TuSDK v2.2" />

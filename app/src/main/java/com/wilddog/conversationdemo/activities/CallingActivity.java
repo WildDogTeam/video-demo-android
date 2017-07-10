@@ -119,12 +119,13 @@ public class CallingActivity extends AppCompatActivity {
                             llData.setVisibility(View.VISIBLE);
                         }
                     });
-
+                    Log.d(TAG,"outgoingInvite status is "+outgoingInvite.getStatus()+"::"+outgoingInvite.getStatus().equals("accepted"));
                     isAccept = true;
                     mConversation = conversation;
                     mConversation.setConversationListener(listener);
                     mConversation.setRTCStatsListener(rtcStatsListener);
                 } else {
+                    Log.d(TAG,"outgoingInvite status is "+outgoingInvite.getStatus()+"::"+String.valueOf(outgoingInvite.getStatus().equals("busy") | outgoingInvite.getStatus().equals("cancel")));
                     //处理会话建立失败逻辑
                     if (e.getErrorCode() == VideoExceptionCode.VIDEO_CONVERSATION_INVITATION_FAILED) {
                         AlertMessageUtil.showShortToast("对方拒绝邀请");
@@ -143,6 +144,9 @@ public class CallingActivity extends AppCompatActivity {
 
             }
         });
+          //TODO 当前版本有问题，需要修复后使用
+        //  Log.d(TAG,"outgoingInvite status is "+outgoingInvite.getStatus()+"::"+outgoingInvite.getStatus().equals("pendding"));
+
         // 做超时处理 呼叫超过三十秒，未接受
         handler.sendEmptyMessageDelayed(1,timeout);
     }
@@ -208,6 +212,8 @@ public class CallingActivity extends AppCompatActivity {
 
         @Override
         public void onParticipantConnected(Conversation conversation, Participant participant) {
+            String remoteParticipantId=participant.getParticipantId();
+            Log.d(TAG,"remoteParticipantId:"+remoteParticipantId);
             participant.setListener(new Participant.Listener() {
                 @Override
                 public void onStreamAdded(RemoteStream remoteStream) {

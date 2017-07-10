@@ -18,7 +18,9 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:id="@+id/iv_cancel"
-            android:src="@android:drawable/arrow_down_float" />
+            android:layout_marginLeft="20dp"
+            android:padding="10dp"
+            android:src="@drawable/left_arrow" />
 
         <TextView
             android:layout_width="match_parent"
@@ -26,6 +28,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/record_file"
+            android:textSize="@dimen/title_text_size"
             android:textColor="@color/itemBackground" />
     </RelativeLayout>
 <ListView

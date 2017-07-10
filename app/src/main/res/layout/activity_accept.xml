@@ -5,12 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/callbg"
     tools:context="com.wilddog.conversationdemo.activities.AcceptActivity">
+    
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="160dp"
+        android:src="@drawable/called_user"
+        android:layout_gravity="center"
+        />
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:textColor="@color/text_color_e5e5e5"
+    android:textSize="25sp"
     android:text="54641353412123"
-    android:layout_marginTop="120dp"
+    android:layout_marginTop="15dp"
     android:layout_gravity="center"
     android:gravity="center"
     android:id="@+id/tv_uid"
@@ -19,7 +30,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="邀你视频通话"
-    android:layout_marginTop="40dp"
+    android:textColor="@color/text_color_e5e5e5"
+    android:textSize="16sp"
+    android:layout_marginTop="15dp"
     android:gravity="center"
     />
 <LinearLayout
@@ -28,21 +41,30 @@
     android:layout_marginTop="150dp"
     android:orientation="horizontal"
     >
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_menu_close_clear_cancel"
-        android:id="@+id/iv_reject"
+        android:drawableTop="@drawable/reject"
+        android:id="@+id/tv_reject"
+        android:textColor="@color/textColor_white"
         android:layout_weight="1"
         android:layout_gravity="center"
+        android:gravity="center"
+        android:drawablePadding="5dp"
+        android:text="拒绝"
         />
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/iv_accept"
-        android:layout_weight="1"
-        android:src="@android:drawable/sym_action_call"
+        android:id="@+id/tv_accept"
         android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:textColor="@color/textColor_white"
+        android:drawableTop="@drawable/accept"
+        android:drawablePadding="5dp"
+        android:text="接听"
+
         />
 </LinearLayout>
 </LinearLayout>

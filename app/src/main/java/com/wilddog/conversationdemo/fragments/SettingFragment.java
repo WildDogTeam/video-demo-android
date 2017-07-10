@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -24,7 +23,7 @@ import com.wilddog.conversationdemo.utils.SharedpereferenceTool;
 
 public class SettingFragment extends BaseFragment implements View.OnClickListener{
    private TextView tvUid;
-   private Button btnCopy;
+   private TextView btnCopy;
    private TextView tvDimension;
    private TextView tvBeautyPlan;
     private LinearLayout llParent;
@@ -52,7 +51,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         tvUid = (TextView) view.findViewById(R.id.tv_user_id);
         tvDimension = (TextView) view.findViewById(R.id.tv_dimension);
         tvBeautyPlan = (TextView) view.findViewById(R.id.tv_beauty_plan);
-        btnCopy = (Button) view.findViewById(R.id.btn_copy);
+        btnCopy = (TextView) view.findViewById(R.id.tv_copy);
         btnCopy.setOnClickListener(this);
         llDimension.setOnClickListener(this);
         llBeautyPlan.setOnClickListener(this);
@@ -77,7 +76,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_copy:
+            case R.id.tv_copy:
                 copyUid();
                 break;
             case R.id.ll_dimension:

@@ -4,11 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,7 +46,7 @@ public class ConversationActivity extends AppCompatActivity {
     private WilddogVideo video = WilddogVideo.getInstance();
     private WilddogVideoClient client = video.getClient();
 
-    private TextView tvMic;
+    private CheckBox cbMic;
     private TextView tvHungup;
     private TextView tvFlipCamera;
 
@@ -128,7 +130,8 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        tvMic = (TextView) findViewById(R.id.tv_mic);
+        cbMic = (CheckBox) findViewById(R.id.cb_mic);
+        cbMic.setChecked(isAudioEnable);
         tvHungup = (TextView) findViewById(R.id.tv_hungup);
         tvFlipCamera = (TextView) findViewById(R.id.tv_flipCamera);
 
@@ -167,12 +170,12 @@ public class ConversationActivity extends AppCompatActivity {
             }
         });
 
-        tvMic.setOnClickListener(new View.OnClickListener() {
+        cbMic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (localStream != null) {
                     isAudioEnable = !isAudioEnable;
-                    localStream.enableAudio(isAudioEnable);
+                    localStream.enableAudio(isChecked);
                 }
             }
         });
