@@ -31,10 +31,10 @@ public class Camera360Util {
              prettifySDK = new PGPrettifySDK(context);
          }
         // 初始化引擎
-        if (AppConfig.IS_HAS_STICKER) {
-            boolean b = prettifySDK.InitialiseEngine(AppConfig.SDK_KEY_NEW, isInitEGL, FileReadUtils.getFileContent(context, R.raw.megvii_facepp_model));//
+        if (Contants.IS_HAS_STICKER) {
+            boolean b = prettifySDK.InitialiseEngine(Contants.SDK_KEY_NEW, isInitEGL, FileReadUtils.getFileContent(context, R.raw.megvii_facepp_model));//
         } else {
-            boolean b = prettifySDK.InitialiseEngine(AppConfig.SDK_KEY_NEW, isInitEGL);
+            boolean b = prettifySDK.InitialiseEngine(Contants.SDK_KEY_NEW, isInitEGL);
         }
         //引擎相关参数设置
         prettifySDK.SetSizeForAdjustInput(frameWidth, frameHeight);//调整输入帧的宽高
