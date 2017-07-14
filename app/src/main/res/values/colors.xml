@@ -22,5 +22,6 @@
     <color name="popwin_item_ba_normal">#ffffff</color>
     <color name="popwin_item_ba_selected">#e5e5e5</color>
 
-    <color name="popwin_bg">#0000007f</color>
+    <color name="popwin_bg">#99000000</color>
+    <color name="popwin_gray">@android:color/darker_gray</color>
 </resources>

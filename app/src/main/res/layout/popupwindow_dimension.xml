@@ -1,80 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/popwin_bg"
-    >
-<TextView
-    android:layout_marginTop="5dp"
-    android:layout_width="match_parent"
-    style="@style/DialogItemStyle"
-    android:layout_alignParentBottom="true"
-    android:text="@string/cancel"
-    android:id="@+id/tv_cancel"
-    />
-    <TextView
-    android:layout_width="match_parent"
-    style="@style/DialogItemStyle"
-    android:text="@string/dimension_1080P"
-    android:layout_above="@+id/tv_cancel"
-    android:id="@+id/tv_dimesion_1080P"
-    />
-    <View
+    android:orientation="vertical">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/line_color"
-        android:layout_above="@+id/tv_dimesion_1080P"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/line_1080p"
-        />
-    <TextView
-    android:layout_width="match_parent"
-    style="@style/DialogItemStyle"
-    android:text="@string/dimension_720P"
-    android:layout_above="@+id/line_1080p"
-    android:id="@+id/tv_dimension_720P"
-    />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/line_color"
-        android:layout_above="@+id/tv_dimension_720P"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/line_720p"
-        />
-    <TextView
-    android:layout_width="match_parent"
-    style="@style/DialogItemStyle"
-    android:text="@string/dimension_480P"
-    android:layout_above="@+id/line_720p"
-    android:id="@+id/tv_dimesion_480P"
-    />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/line_color"
-        android:layout_above="@+id/tv_dimesion_480P"
-        android:layout_marginLeft="20dp"
-        android:id="@+id/line_480p"
-        />
-    <TextView
-    android:layout_width="match_parent"
-    style="@style/DialogItemStyle"
-    android:text="@string/dimension_360P"
-    android:layout_above="@+id/line_480p"
-    android:id="@+id/tv_dimesion_360P"
-    />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/line_color"
-        android:layout_above="@+id/tv_dimesion_360P"
-        android:id="@+id/line_360p"
-        />
-    <TextView
-    android:layout_width="match_parent"
-    style="@style/DialogItemStyle"
-    android:text="@string/change_dimension"
-    android:layout_above="@+id/line_360p"
-    />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/popwin_gray"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/DialogItemStyle"
+            android:layout_width="match_parent"
+            android:text="@string/change_dimension" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color" />
+
+        <TextView
+            android:id="@+id/tv_dimesion_360P"
+            style="@style/DialogItemStyle"
+            android:layout_width="match_parent"
+            android:text="@string/dimension_360P" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/line_color" />
+
+        <TextView
+            android:id="@+id/tv_dimesion_480P"
+            style="@style/DialogItemStyle"
+            android:layout_width="match_parent"
+            android:text="@string/dimension_480P" />
+
+        <View
+            android:id="@+id/line_720p"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/line_color" />
+
+        <TextView
+            android:id="@+id/tv_dimension_720P"
+            style="@style/DialogItemStyle"
+            android:layout_width="match_parent"
+            android:text="@string/dimension_720P" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/line_color" />
+
+        <TextView
+            android:id="@+id/tv_dimesion_1080P"
+            style="@style/DialogItemStyle"
+            android:layout_width="match_parent"
+            android:text="@string/dimension_1080P" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            style="@style/DialogItemStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:text="@string/cancel" />
+    </LinearLayout>
 </RelativeLayout>

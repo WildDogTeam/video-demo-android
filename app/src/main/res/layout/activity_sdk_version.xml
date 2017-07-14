@@ -71,7 +71,7 @@
             android:textSize="11sp"
             android:textColor="@color/text_color_666666"
             android:gravity="center"
-            android:text="Wilddog Video SDK v1.0.0-beta" />
+            android:text="Wilddog Video SDK v1.1.0-beta" />
 
         <TextView
             android:id="@+id/tv_sync_sdk_version"
