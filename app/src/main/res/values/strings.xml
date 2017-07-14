@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ConversationDemo</string>
+    <string name="app_name">视频通话</string>
     <string name="app_copyright">Copyright © 2017 Wilddog. All Rights Reserved</string>
     <string name="logo_des">野狗通信云</string>
     <string name="app_des">视频通话示例程序</string>

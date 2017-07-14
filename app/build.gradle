@@ -40,7 +40,30 @@ android {
         exclude 'META-INF/license'
         exclude 'META-INF/license.txt'
     }
+    configurations {
+        compile.exclude group: "org.json", module: "json"
+    }
 
+    android {
+        lintOptions {
+            abortOnError false
+        }
+        defaultConfig {
+            ndk {
+                // 设置支持的SO库架构，不设置的话默认打全CPU架构，包会较大，
+                // 在绝大部分手机上运行的话开启 armeabi-v7a 即可，
+                // 需要在支持 arm64-v8a 手机上拥有更高效率的话可开启 arm64-v8a
+                abiFilters 'armeabi-v7a'//, 'arm64-v8a', 'x86','x86_64',
+            }
+        }
+    }
+
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
@@ -50,9 +73,14 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
-    compile 'com.wilddog.client:wilddog-video-android:1.0.1-beta'
+    compile 'com.wilddog.client:wilddog-video-android:1.1.0-beta'
     testCompile 'junit:junit:4.12'
 
+    // camera 360 美颜库
+    compile(name: 'PgPrettifyEngine-release_1.7', ext: 'aar')
+    compile 'com.google.code.gson:gson:2.8.0'
+    // TuSDK
+    compile files('libs/TuSDKCore-2.7.0.jar')
     //单元测试相关
     androidTestCompile 'com.android.support.test:runner:0.5'
     testCompile 'org.hamcrest:hamcrest-library:1.3'

@@ -13,7 +13,7 @@
 
 <!-- 描边 -->
     <solid
-        android:color="@color/titleColor"
+        android:color="@color/title_color"
         />
 
 

@@ -5,46 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.wilddog.conversationdemo.activities.MainActivity">
+    tools:context="com.wilddog.demo.activities.MainActivity">
 
     <FrameLayout
+        android:id="@+id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fl_content"
         android:layout_weight="1"></FrameLayout>
 
     <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="82dp"
-        android:layout_gravity="center"
         android:id="@+id/rg_main"
+        android:layout_width="match_parent"
+        android:layout_height="54.7dp"
+        android:layout_gravity="center"
         android:orientation="horizontal">
 
-    <RadioButton
-        android:button="@null"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:paddingTop="15dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:text="@string/online"
-        android:id="@+id/rb_main_online"
-        android:drawableTop="@drawable/selector_tab_online"
-        android:checked="false"
-        />
         <RadioButton
-            android:button="@null"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="15dp"
+            android:id="@+id/rb_main_online"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-        android:drawableTop="@drawable/selector_tab_setting"
-        android:text="@string/settings"
-            android:id="@+id/rb_main_settings"
+            android:layout_weight="1"
+            android:button="@null"
             android:checked="false"
-            />
+            android:drawableTop="@drawable/selector_tab_online"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="@string/online" />
+
+        <RadioButton
+            android:id="@+id/rb_main_settings"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:checked="false"
+            android:drawableTop="@drawable/selector_tab_setting"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:text="@string/settings" />
     </RadioGroup>
 </LinearLayout>

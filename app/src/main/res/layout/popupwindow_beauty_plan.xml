@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/popwin_bg"
     >
 <TextView
     android:layout_marginTop="5dp"
@@ -36,7 +36,6 @@
     <TextView
     android:layout_width="match_parent"
     style="@style/DialogItemStyle"
-    android:layout_height="wrap_content"
     android:text="@string/change_beauty_plan"
     android:layout_above="@+id/tv_beauty_plan_Camera360"
     />

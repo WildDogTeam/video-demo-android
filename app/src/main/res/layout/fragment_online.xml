@@ -8,15 +8,15 @@
     <RelativeLayout
         style="@style/TitleStyle"
         android:layout_width="match_parent"
-        android:background="@color/titleColor">
+        android:background="@color/title_color">
 
         <ImageView
             android:id="@+id/iv_invite"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="20dp"
             android:src="@drawable/call" />
 
         <TextView
@@ -25,7 +25,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/online_now"
-            android:textColor="@color/textColor_white"
+            android:textColor="@color/text_color_white"
             android:textSize="@dimen/title_text_size" />
     </RelativeLayout>
 
@@ -33,18 +33,20 @@
         android:id="@+id/lv_user_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="14.7dp"
          />
 
     <RelativeLayout
-        android:id="@+id/ll_no_user"
+        android:id="@+id/rl_no_user"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="130dp"
-            android:layout_height="150dp"
+            android:layout_width="84dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="138dp"
             android:gravity="center"
             android:layout_centerHorizontal="true"
             android:layout_above="@+id/tv_no_user"
@@ -54,11 +56,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="28dp"
             android:layout_centerInParent="true"
             android:text="暂无其他用户可呼叫"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:id="@+id/tv_no_user"
-            android:textSize="22sp" />
+            android:textSize="15sp" />
     </RelativeLayout>
 </LinearLayout>

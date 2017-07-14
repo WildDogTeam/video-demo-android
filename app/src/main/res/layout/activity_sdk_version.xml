@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/background"
-    tools:context="com.wilddog.conversationdemo.activities.SDKVersionActivity">
+    tools:context="com.wilddog.demo.activities.SDKVersionActivity">
 
     <RelativeLayout
         style="@style/TitleStyle"
         android:layout_width="match_parent"
-        android:background="@color/titleColor"
+        android:background="@color/title_color"
         android:orientation="horizontal">
 
         <ImageView
@@ -18,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:id="@+id/iv_cancel"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="13.3dp"
             android:padding="10dp"
             android:src="@drawable/left_arrow" />
 
@@ -29,7 +30,7 @@
             android:gravity="center"
             android:text="@string/about"
             android:textSize="@dimen/title_text_size"
-            android:textColor="@color/itemBackground" />
+            android:textColor="@color/item_background" />
     </RelativeLayout>
 
 
@@ -37,11 +38,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_marginTop="120dp"
         android:orientation="vertical">
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
             android:src="@drawable/logo"
             android:layout_gravity="center"
             />
@@ -49,17 +50,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="12dp"
-            android:textSize="22sp"
-            android:textColor="@color/textColor"
+            android:layout_marginTop="8dp"
+            android:textSize="15sp"
+            android:textColor="@color/text_color"
             android:text="Demo v1.0" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="17sp"
-            android:textColor="@color/textColor_666666"
-            android:layout_marginTop="12dp"
+            android:textSize="11sp"
+            android:textColor="@color/text_color_666666"
+            android:layout_marginTop="53dp"
             android:text="该示例程序基于" />
 
         <TextView
@@ -67,8 +68,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textSize="17sp"
-            android:textColor="@color/textColor_666666"
+            android:textSize="11sp"
+            android:textColor="@color/text_color_666666"
             android:gravity="center"
             android:text="Wilddog Video SDK v1.0.0-beta" />
 
@@ -77,8 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textColor="@color/textColor_666666"
-            android:textSize="17sp"
+            android:textColor="@color/text_color_666666"
+            android:textSize="11sp"
             android:gravity="center"
             android:text="Wilddog Sync SDK v1.2.2" />
 
@@ -87,8 +88,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textColor="@color/textColor_666666"
-            android:textSize="17sp"
+            android:textColor="@color/text_color_666666"
+            android:textSize="11sp"
             android:gravity="center"
             android:text="Wilddog Auth SDK v2.1.1" />
 
@@ -97,8 +98,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textColor="@color/textColor_666666"
-            android:textSize="17sp"
+            android:textColor="@color/text_color_666666"
+            android:textSize="11sp"
             android:gravity="center"
             android:text="@string/camera360_sdk_v1_6" />
 
@@ -106,11 +107,11 @@
             android:id="@+id/tv_Tu_sdk_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="17sp"
-            android:textColor="@color/textColor_666666"
+            android:textSize="11sp"
+            android:textColor="@color/text_color_666666"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="TuSDK v2.2" />
 
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

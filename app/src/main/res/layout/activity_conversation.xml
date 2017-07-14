@@ -6,98 +6,158 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
-    tools:context="com.wilddog.conversationdemo.activities.ConversationActivity">
+    tools:context="com.wilddog.demo.activities.ConversationActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_call_state"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="正在呼叫Uid"
-            android:textColor="@color/itemBackground" />
-
-        <com.wilddog.video.WilddogVideoView
-            android:id="@+id/wvv_big"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:background="@android:color/transparent"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/cb_mic"
-                android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <com.wilddog.video.WilddogVideoView
+                android:id="@+id/wvv_big"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:drawableTop="@drawable/selector_button_mic"
-                android:button="@null"
-                android:text="麦克风" />
-
+                />
             <TextView
-                android:id="@+id/tv_hungup"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_time"
                 android:gravity="center"
-                android:layout_gravity="center"
-                android:drawableTop="@drawable/reject"
-                android:text="挂断" />
+                android:textSize="14sp"
+                android:textColor="@color/text_color_white"
+                android:visibility="invisible"
+                android:layout_above="@+id/ll_contral_button"
+                android:layout_marginBottom="15dp"
+                />
 
-            <TextView
-                android:id="@+id/tv_flipCamera"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:drawableTop="@drawable/flip_camera"
-                android:layout_weight="1"
-                android:text="翻转相机" />
-        </LinearLayout>
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="17dp"
+                android:background="@android:color/transparent"
+                android:id="@+id/ll_contral_button"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:id="@+id/ll_mic"
+                    android:descendantFocusability="afterDescendants"
+                    >
+                    <CheckBox
+                        android:id="@+id/cb_mic"
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:drawableTop="@drawable/selector_button_mic"
+                        android:button="@null"
+                        />
+                    <TextView
+                        android:layout_marginTop="15dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/text_color_white"
+                        android:text="麦克风"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:id="@+id/ll_reject"
+                    >
+                    <ImageView
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        android:src="@drawable/reject"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:id="@+id/tv_hungup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textColor="@color/text_color_white"
+                        android:text="挂断" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:id="@+id/ll_filp_camera"
+                    >
+                    <ImageView
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        android:src="@drawable/flip_camera"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        />
+                    <TextView
+                        android:id="@+id/tv_flipCamera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:textColor="@color/text_color_white"
+                        android:text="翻转相机" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
     </LinearLayout>
 
     <com.wilddog.video.WilddogVideoView
-        android:layout_width="80dp"
-        android:layout_height="150dp"
+        android:layout_width="105dp"
+        android:layout_height="160dp"
         android:id="@+id/wvv_small"
         android:layout_marginTop="16dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="20dp"
+        android:layout_margin="3dp"
         />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ll_data"
         android:orientation="vertical"
-        android:layout_marginTop="16dp"
+        android:layout_marginRight="13.3dp"
+        android:layout_marginTop="15dp"
         android:layout_alignParentRight="true"
         >
         <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
             android:id="@+id/iv_report"
             android:src="@drawable/stats"
             />
         <ImageView
             android:layout_marginTop="20dp"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
             android:id="@+id/iv_record"
             android:src="@drawable/selector_button_record"
             />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -114,7 +174,7 @@
             android:text="dimension"
             android:textSize="12sp"
             android:id="@+id/tv_dimensions"
-            android:textColor="@color/itemBackground"
+            android:textColor="@color/item_background"
             />
         <TextView
             android:padding="3dp"
@@ -123,7 +183,7 @@
             android:text="fps"
             android:textSize="12sp"
             android:id="@+id/tv_fps"
-            android:textColor="@color/itemBackground"
+            android:textColor="@color/item_background"
             />
         <TextView
             android:padding="3dp"
@@ -132,7 +192,7 @@
             android:text="rate"
             android:textSize="12sp"
             android:id="@+id/tv_rate"
-            android:textColor="@color/itemBackground"
+            android:textColor="@color/item_background"
             />
         <TextView
             android:padding="3dp"
@@ -141,10 +201,9 @@
             android:text="sent"
             android:textSize="12sp"
             android:id="@+id/tv_bytes"
-            android:textColor="@color/itemBackground"
+            android:textColor="@color/item_background"
             />
 
 
     </LinearLayout>
-
 </RelativeLayout>

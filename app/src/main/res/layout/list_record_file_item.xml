@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-  <com.wilddog.conversationdemo.view.SideslipView
+  <com.wilddog.demo.view.SideslipView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
@@ -20,14 +20,18 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:lines="1"
-              android:textSize="16sp"/>
+              android:textColor="@color/text_color"
+              android:textSize="15sp"/>
 
           <TextView
               android:layout_marginLeft="30dp"
               android:id="@+id/widget_channel_time"
               android:layout_marginTop="5dip"
               android:layout_width="wrap_content"
+              android:textSize="11sp"
+              android:textColor="@color/text_color"
               android:lines="1"
+              android:layout_marginRight="13dp"
               android:layout_height="wrap_content"/>
 
       </LinearLayout>
@@ -43,5 +47,5 @@
           android:text="@string/delete"
           android:textSize="16sp" />
       </LinearLayout>
-  </com.wilddog.conversationdemo.view.SideslipView>
+  </com.wilddog.demo.view.SideslipView>
 </RelativeLayout>

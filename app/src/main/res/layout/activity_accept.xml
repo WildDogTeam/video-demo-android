@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/callbg"
-    tools:context="com.wilddog.conversationdemo.activities.AcceptActivity">
+    tools:context="com.wilddog.demo.activities.AcceptActivity">
     
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="160dp"
+        android:layout_width="57.3dp"
+        android:layout_height="57.3dp"
+        android:layout_marginTop="181.3dp"
         android:src="@drawable/called_user"
         android:layout_gravity="center"
         />
@@ -31,40 +31,73 @@
     android:layout_height="wrap_content"
     android:text="邀你视频通话"
     android:textColor="@color/text_color_e5e5e5"
-    android:textSize="16sp"
-    android:layout_marginTop="15dp"
+    android:textSize="15sp"
+    android:layout_marginTop="13.3dp"
     android:gravity="center"
     />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="150dp"
+    android:layout_marginBottom="17dp"
     android:orientation="horizontal"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/ll_reject"
+        android:layout_weight="1"
+        >
+        <ImageView
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_gravity="center"
+            android:src="@drawable/reject"
+            />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableTop="@drawable/reject"
-        android:id="@+id/tv_reject"
-        android:textColor="@color/textColor_white"
-        android:layout_weight="1"
+        android:textColor="@color/text_color_white"
         android:layout_gravity="center"
         android:gravity="center"
-        android:drawablePadding="5dp"
+        android:layout_marginTop="15dp"
         android:text="拒绝"
+        android:textSize="12sp"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_accept"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:textColor="@color/textColor_white"
-        android:drawableTop="@drawable/accept"
-        android:drawablePadding="5dp"
-        android:text="接听"
+    </LinearLayout>
 
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/ll_accept"
+        android:layout_weight="1"
+        >
+        <ImageView
+            android:layout_width="62dp"
+            android:layout_height="62dp"
+            android:layout_gravity="center"
+            android:src="@drawable/accept"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_accept"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:textColor="@color/text_color_white"
+            android:text="接听"
+
+            />
+    </LinearLayout>
+
+
 </LinearLayout>
 </LinearLayout>

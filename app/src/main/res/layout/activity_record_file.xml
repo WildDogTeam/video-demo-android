@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context="com.wilddog.conversationdemo.activities.RecordFileActivity">
+    tools:context="com.wilddog.demo.activities.RecordFileActivity">
     <RelativeLayout
         style="@style/TitleStyle"
         android:layout_width="match_parent"
-        android:background="@color/titleColor"
+        android:background="@color/title_color"
        >
 
         <ImageView
@@ -29,9 +29,10 @@
             android:gravity="center"
             android:text="@string/record_file"
             android:textSize="@dimen/title_text_size"
-            android:textColor="@color/itemBackground" />
+            android:textColor="@color/item_background" />
     </RelativeLayout>
 <ListView
+    android:layout_marginTop="15dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/lv_record_file"

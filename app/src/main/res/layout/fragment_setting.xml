@@ -8,17 +8,17 @@
 <TextView
     android:layout_width="match_parent"
     android:layout_height="@dimen/title_size"
-    android:background="@color/titleColor"
+    android:background="@color/title_color"
     android:text="@string/personnal_settings"
-    android:textSize="26sp"
-    android:textColor="@color/itemBackground"
+    android:textSize="18sp"
+    android:textColor="@color/item_background"
     android:layout_gravity="center"
     android:gravity="center"
     />
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:background="@color/line_color"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,15 +26,15 @@
         style="@style/ItemStyle"
         >
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
         android:src="@drawable/uid"
         />
     <TextView
         android:layout_marginLeft="@dimen/item_text_image_space"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/textColor"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/item_left_text_size"
         android:layout_gravity="center_vertical"
         android:text="@string/user_id"
@@ -51,19 +51,18 @@
         android:text="564521351456"
         android:maxLines="1"
         android:ellipsize="end"
-        android:textColor="@color/textColor"
+        android:textColor="@color/text_color"
         android:textSize="@dimen/item_right_text_size"
         android:gravity="center|right"
         android:layout_marginRight="@dimen/item_text_button_space"
         />
     <TextView
-        android:layout_marginLeft="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="复制"
         android:padding="5dp"
-        android:textSize="22sp"
-        android:textColor="@color/titleColor"
+        android:textSize="15sp"
+        android:textColor="@color/title_color"
         android:background="@null"
         android:id="@+id/tv_copy"
         />
@@ -75,7 +74,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="19dp"
         android:background="@color/line_color"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,9 +83,9 @@
         android:id="@+id/ll_dimension"
         >
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/uid"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:src="@drawable/dimen"
             />
         <TextView
             android:layout_marginLeft="@dimen/item_text_image_space"
@@ -94,16 +93,16 @@
             android:layout_height="wrap_content"
             android:text="@string/dimension"
             android:textSize="@dimen/item_left_text_size"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_dimension"
             android:layout_weight="1"
-            android:text="360"
+            android:text="480P"
             android:textSize="@dimen/item_right_text_size"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:gravity="center|right"
             android:layout_marginLeft="20dp"
             />
@@ -126,15 +125,15 @@
         android:id="@+id/ll_beauty_plan"
         >
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
             android:src="@drawable/beauty_plan"
             />
         <TextView
             android:layout_marginLeft="@dimen/item_text_image_space"
             android:textSize="@dimen/item_left_text_size"
             android:layout_width="wrap_content"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:layout_height="wrap_content"
             android:text="@string/beauty_plan"
             />
@@ -146,7 +145,7 @@
             android:text="Camera360"
             android:textSize="@dimen/item_right_text_size"
             android:gravity="center|right"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:layout_marginRight="@dimen/item_text_button_space"
             />
         <ImageView
@@ -167,8 +166,8 @@
         android:id="@+id/ll_record_file"
         >
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="15dp"
             android:src="@drawable/record_file"
             />
         <TextView
@@ -177,7 +176,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/item_left_text_size"
             android:text="@string/record_file"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             />
         <TextView
             android:layout_width="match_parent"
@@ -211,8 +210,8 @@
         android:id="@+id/ll_SDK_version"
         >
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
             android:src="@drawable/about"
             />
         <TextView
@@ -220,7 +219,7 @@
             android:layout_marginLeft="@dimen/item_text_image_space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textColor"
+            android:textColor="@color/text_color"
             android:text="@string/about"
             />
         <TextView
