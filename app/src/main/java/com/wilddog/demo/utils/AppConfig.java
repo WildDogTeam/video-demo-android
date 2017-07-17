@@ -1,4 +1,4 @@
-package com.wilddog.conversationdemo.utils;
+package com.wilddog.demo.utils;
 
 /**
  * Created by wh on 2017/3/16.
