@@ -5,14 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wilddog.demo.R;
@@ -22,6 +27,7 @@ import com.wilddog.demo.utils.Camera360Util;
 import com.wilddog.demo.utils.Contants;
 import com.wilddog.demo.utils.ConvertUtil;
 import com.wilddog.demo.utils.SharedpereferenceTool;
+import com.wilddog.demo.utils.TuSDKUtil;
 import com.wilddog.demo.wilddogAuth.WilddogVideoManager;
 import com.wilddog.video.Conversation;
 import com.wilddog.video.ConversationCallback;
@@ -39,6 +45,8 @@ import com.wilddog.video.bean.LocalStats;
 import com.wilddog.video.bean.RemoteStats;
 import com.wilddog.video.listener.RTCStatsListener;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -76,6 +84,11 @@ public class ConversationActivity extends AppCompatActivity {
 
     private boolean isAudioEnable = true;
 
+    private PopupWindow popupWindow;
+    private RelativeLayout rlParent;
+    private boolean isrecording = false;
+    private ImageView ivRecordFile;
+
     private LocalStream localStream;
 
     private Conversation mConversation;
@@ -110,9 +123,9 @@ public class ConversationActivity extends AppCompatActivity {
         localStream = video.createLocalStream(localStreamOptions);
         localStream.setOnFrameListener(new WilddogVideo.CameraFrameListener() {
             @Override
-            public void onByteFrame(byte[] bytes, int i, int i1) {
+            public void onByteFrame(byte[] bytes, int i, int i1,int var4,long var5) {
 
-                frameProcess(bytes, 0, mFirstFrame, true, i, i1, 0);//data 可以传空 根据TextureId进行美颜
+                frameProcess(bytes, 0, mFirstFrame, true, i, i1, var4);//data 可以传空 根据TextureId进行美颜
                 mFirstFrame = false;
                 //TODO 设置美颜效果
             }
@@ -137,7 +150,92 @@ public class ConversationActivity extends AppCompatActivity {
         });
     }
 
+
+    private String fileName;
+
+    private File getRecordFile(){
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "wilddog");
+        if (!file.exists()) {
+            boolean a = file.mkdirs();
+        }
+      File  videoFile = new File(file, "wilddog-" + System.currentTimeMillis() + ".mp4");
+        try {
+            boolean b = videoFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return videoFile;
+    }
+
+    private File getRecordFile2() {
+        long currentTime =System.currentTimeMillis();
+        fileName = ConvertUtil.getDayString(currentTime)+"-"+currentTime+".mp4";
+
+        File file = new File(Contants.filePath);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+
+        File recordFile = new File(file.getAbsolutePath()+fileName);
+        if(!recordFile.exists()){
+            try {
+                recordFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return recordFile;
+    }
+
+    private void showSavePopupWindow() {
+        View view = View.inflate(ConversationActivity.this, R.layout.popupwindow_record_file, null);
+        final EditText etFileName = (EditText) findViewById(R.id.et_file_name);
+        etFileName.setText(fileName);
+        TextView tvCancel = (TextView) findViewById(R.id.tv_cancel);
+        TextView tvSave = (TextView) findViewById(R.id.tv_save);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 删除文件
+                deletefile();
+                popupWindow.dismiss();
+            }
+        });
+        tvSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //存储重命名文件。。。
+
+                String newFileName =  etFileName.getText().toString().trim();
+                if(newFileName.contains("/")){
+                    etFileName.setText("");
+                    AlertMessageUtil.showShortToast("你的文件命名不符合规范，不应该存在"+"/");
+                }else {
+                    renameFile(newFileName);
+                    popupWindow.dismiss();}
+            }
+        });
+        showPopupWindow(view);
+    }
+
+    private void renameFile(String newFileName) {
+        File file = new File(Contants.filePath+fileName);
+        file.renameTo(new File(newFileName));
+    }
+    private void deletefile(){
+        File file = new File(Contants.filePath+fileName);
+        file.delete();
+    }
+
+    private void showPopupWindow(View view){
+        popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        popupWindow.setFocusable(true);
+        popupWindow.showAtLocation(rlParent, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+    }
+
+
     private void initView() {
+        rlParent = (RelativeLayout) findViewById(R.id.rl_parent);
         cbMic = (CheckBox) findViewById(R.id.cb_mic);
         cbMic.setChecked(isAudioEnable);
         llHungup = (LinearLayout) findViewById(R.id.ll_reject);
@@ -158,6 +256,7 @@ public class ConversationActivity extends AppCompatActivity {
         llData = (LinearLayout) findViewById(R.id.ll_data);
         llState = (LinearLayout) findViewById(R.id.ll_state);
 
+        ivRecordFile = (ImageView) findViewById(R.id.iv_record);
         ivState = (ImageView) findViewById(R.id.iv_report);
 
         llData.setVisibility(View.VISIBLE);
@@ -175,6 +274,25 @@ public class ConversationActivity extends AppCompatActivity {
                     llData.setVisibility(View.VISIBLE);
                 }
 
+            }
+        });
+
+        ivRecordFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //开始录制
+                if(isrecording){
+                    //结束录制，弹出对话框
+                    ivRecordFile.setBackgroundResource(R.drawable.record_normal);
+                    isrecording =false;
+                    mConversation.stopVideoRecording();
+                    showSavePopupWindow();
+                }else {
+                    //开始录制
+                    ivRecordFile.setBackgroundResource(R.drawable.record_selected);
+                    isrecording = true;
+                    mConversation.startVideoRecording(getRecordFile());
+                }
             }
         });
 
@@ -255,8 +373,8 @@ public class ConversationActivity extends AppCompatActivity {
                 Camera360Util.processFrame(data,frameWidth,frameHeight);
                 break;
             case "TuSDK":
-               /* if(isFirstFrame) TuSDKUtil.init(frameWidth,frameHeight);
-                TuSDKUtil.processFrame(data);*/
+                if(isFirstFrame) TuSDKUtil.init(frameWidth,frameHeight);
+                TuSDKUtil.processFrame(data);
                 break;
             default:
                 break;
@@ -296,14 +414,20 @@ public class ConversationActivity extends AppCompatActivity {
                     remoteStream.enableAudio(true);
                     remoteStream.enableVideo(true);
                     //在视频展示控件中播放其他端媒体流
-                    localStream.detach();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            localStream.detach();
 
-                      remoteStream.attach(wwvBig);
-                    wwvSmall.setVisibility(View.VISIBLE);
-                      localStream.attach(wwvSmall);
+                            remoteStream.attach(wwvBig);
+                            wwvSmall.setVisibility(View.VISIBLE);
+                            localStream.attach(wwvSmall);
 
-                    tvTime.setVisibility(View.VISIBLE);
-                    startTimer();
+                            tvTime.setVisibility(View.VISIBLE);
+                            startTimer();
+
+                        }
+                    });
 
                 }
 
@@ -410,9 +534,9 @@ public class ConversationActivity extends AppCompatActivity {
         if (mConversation != null) {
             mConversation.disconnect();
         }
-
+/*
         client.dispose();
-        video.dispose();
+        video.dispose();*/
     }
 
 }

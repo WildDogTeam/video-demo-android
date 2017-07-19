@@ -12,7 +12,7 @@ public class ConvertUtil {
     public static long hourValue = 60*60*1000;
     public static long minuteValue =60*1000;
     public static final String yyyyMMddWWHHmm = "yyyy-MM-dd(E)  HH:mm";
-    public static final String yyyyMMdd = "yyyy/MM/dd";
+    public static final String yyyyMMdd = "yyyyMMdd";
     public static final String HHmm = "HH:mm";
     public static final String yyyyMMddHHmm = "yyyy/MM/dd HH:mm";
     public static String longToDurationString(long duration){
@@ -35,12 +35,13 @@ public class ConvertUtil {
     }
 
     public static String getDayString(long time){
-        String dayString =longToDayString(time);
+       /* String dayString =longToDayString(time);
         if(dayString.equals(longToDayString(System.currentTimeMillis()))){
             return "今天";
         }else {
             return dayString;
-        }
+        }*/
+       return longToDayString(time);
     }
 
     public static String getHourAndMinute(long time){

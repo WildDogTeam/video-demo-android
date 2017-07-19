@@ -24,6 +24,7 @@ public class ConversationApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application=this;
+        TuSdk.enableDebugLog(true);
         // 自定义 .so 文件路径，在 init 之前调用
         /*NativeLibraryHelper.shared().mapLibrary(NativeLibraryHelper.NativeLibType.LIB_CORE, "jniLibs/arm64-v8a/libtusdk-library.so");
         NativeLibraryHelper.shared().mapLibrary(NativeLibraryHelper.NativeLibType.LIB_IMAGE, "jniLibs/arm64-v8a/libtusdk-image.so");*/

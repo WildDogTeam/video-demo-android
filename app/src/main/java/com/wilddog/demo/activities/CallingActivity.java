@@ -6,18 +6,24 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wilddog.demo.R;
 import com.wilddog.demo.utils.AlertMessageUtil;
 import com.wilddog.demo.utils.Camera360Util;
+import com.wilddog.demo.utils.Contants;
 import com.wilddog.demo.utils.ConvertUtil;
 import com.wilddog.demo.utils.SharedpereferenceTool;
+import com.wilddog.demo.utils.TuSDKUtil;
 import com.wilddog.video.Conversation;
 import com.wilddog.video.ConversationCallback;
 import com.wilddog.video.LocalStream;
@@ -35,6 +41,8 @@ import com.wilddog.video.bean.LocalStats;
 import com.wilddog.video.bean.RemoteStats;
 import com.wilddog.video.listener.RTCStatsListener;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -61,14 +69,18 @@ public class CallingActivity extends AppCompatActivity {
 
     private TextView tvTime;
 
-    private WilddogVideoView wwvBig;
-    private WilddogVideoView wwvSmall;
+    private WilddogVideoView wvvBig;
+    private WilddogVideoView wvvSmall;
 
 
     private LinearLayout llData;
     private LinearLayout llState;
 
     private ImageView ivState;
+    private ImageView ivRecordFile;
+
+    private PopupWindow popupWindow;
+    private RelativeLayout rlParent;
 
     private LocalStream localStream;
 
@@ -78,6 +90,8 @@ public class CallingActivity extends AppCompatActivity {
     private boolean isShowDetail = false;
     private boolean isAccept = false;
     private boolean mFirstFrame =true;
+
+    private boolean isrecording = false;
 
     private int timeout = 30000;
 
@@ -110,15 +124,15 @@ public class CallingActivity extends AppCompatActivity {
         localStream = video.createLocalStream(localStreamOptions);
         localStream.setOnFrameListener(new WilddogVideo.CameraFrameListener() {
             @Override
-            public void onByteFrame(byte[] bytes, int i, int i1) {
+            public void onByteFrame(byte[] bytes, int i, int i1,int var4, long var5) {
                 //
                 // TODO 设置美颜效果
 
-                frameProcess(bytes, 0, mFirstFrame, true, i, i1, 0);//data 可以传空 根据TextureId进行美颜
+                frameProcess(bytes, 0, mFirstFrame, true, i, i1, var4 );//data 可以传空 根据TextureId进行美颜
                 mFirstFrame = false;
             }
         });
-        localStream.attach(wwvBig);
+        localStream.attach(wvvBig);
         ConnectOptions connectOptions = new ConnectOptions(localStream, "conversationDemo");
         outgoingInvite = client.inviteToConversation(inviteUid, connectOptions, new ConversationCallback() {
             @Override
@@ -173,8 +187,8 @@ public class CallingActivity extends AppCompatActivity {
                 Camera360Util.processFrame(data,frameWidth,frameHeight);
                 break;
             case "TuSDK":
-                /*if(isFirstFrame) TuSDKUtil.init(frameWidth,frameHeight);
-                TuSDKUtil.processFrame(data);*/
+                if(isFirstFrame) TuSDKUtil.init(frameWidth,frameHeight);
+                TuSDKUtil.processFrame(data);
                 break;
             default:
                 break;
@@ -217,11 +231,6 @@ public class CallingActivity extends AppCompatActivity {
     }
 
     private String convertToMB(long value) {
-        /*float result = Float.parseFloat(String.valueOf(value)) / (1024 * 1024);
-        return decimalFormat.format(result);*/
-        /* bg = new BigDecimal(value);
-        double f1 = bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        return String.valueOf(f1);*/
         return String.format("%.2f", value);
     }
 
@@ -249,19 +258,25 @@ public class CallingActivity extends AppCompatActivity {
             Log.d(TAG,"remoteParticipantId:"+remoteParticipantId);
             participant.setListener(new Participant.Listener() {
                 @Override
-                public void onStreamAdded(RemoteStream remoteStream) {
+                public void onStreamAdded(final RemoteStream remoteStream) {
                     //有参与者成功加入会话后，会触发此方法
                     //设置音视频全部开启
                     remoteStream.enableAudio(true);
                     remoteStream.enableVideo(true);
                     //在视频展示控件中播放其他端媒体流
-                    localStream.detach();
-                    remoteStream.attach(wwvBig);
-                    wwvSmall.setVisibility(View.VISIBLE);
-                    localStream.attach(wwvSmall);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            localStream.detach();
+                            remoteStream.attach(wvvBig);
+                            wvvSmall.setVisibility(View.VISIBLE);
+                            localStream.attach(wvvSmall);
 
-                    tvTime.setVisibility(View.VISIBLE);
-                    startTimer();
+                            tvTime.setVisibility(View.VISIBLE);
+                            startTimer();
+                        }
+                    });
+
                 }
 
                 @Override
@@ -295,6 +310,7 @@ public class CallingActivity extends AppCompatActivity {
 
 
     private void initView() {
+        rlParent = (RelativeLayout) findViewById(R.id.rl_parent);
         cbMic = (CheckBox) findViewById(R.id.cb_mic);
         cbMic.setChecked(isAudioEnable);
         llHungup = (LinearLayout) findViewById(R.id.ll_reject);
@@ -313,10 +329,10 @@ public class CallingActivity extends AppCompatActivity {
         tvState = (TextView) findViewById(R.id.tv_call_state);
         tvState.setText(inviteUid);
 
-        wwvBig = (WilddogVideoView) findViewById(R.id.wvv_big);
-        wwvSmall = (WilddogVideoView) findViewById(R.id.wvv_small);
+        wvvBig = (WilddogVideoView) findViewById(R.id.wvv_big);
+        wvvSmall = (WilddogVideoView) findViewById(R.id.wvv_small);
         // 两个surfaceview 重叠显示，会有一个不显示。设置此属性，让此控件放到窗口顶层
-        wwvSmall.setZOrderMediaOverlay(true);
+        wvvSmall.setZOrderMediaOverlay(true);
 
 
         llData = (LinearLayout) findViewById(R.id.ll_data);
@@ -324,6 +340,7 @@ public class CallingActivity extends AppCompatActivity {
         llState = (LinearLayout) findViewById(R.id.ll_state);
 
         ivState = (ImageView) findViewById(R.id.iv_report);
+        ivRecordFile = (ImageView) findViewById(R.id.iv_record);
 
         ivState.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -341,6 +358,24 @@ public class CallingActivity extends AppCompatActivity {
             }
         });
 
+        ivRecordFile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //开始录制
+                if(isrecording){
+                    //结束录制，弹出对话框
+                    ivRecordFile.setBackgroundResource(R.drawable.record_normal);
+                    isrecording =false;
+                    mConversation.stopVideoRecording();
+                    showSavePopupWindow();
+                }else {
+                    //开始录制
+                    ivRecordFile.setBackgroundResource(R.drawable.record_selected);
+                    isrecording = true;
+                    mConversation.startVideoRecording(getRecordFile());
+                }
+            }
+        });
 
         cbMic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -381,6 +416,78 @@ public class CallingActivity extends AppCompatActivity {
 
     }
 
+    private String fileName;
+
+    private String getFileName(){
+        return fileName;
+    }
+
+    private File getRecordFile() {
+        long currentTime =System.currentTimeMillis();
+        fileName = ConvertUtil.getDayString(currentTime)+"-"+currentTime+".mp4";
+
+        File file = new File(Contants.filePath);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+
+        File recordFile = new File(file.getAbsolutePath()+fileName);
+        if(!recordFile.exists()){
+            try {
+                recordFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return recordFile;
+    }
+
+
+    private void showSavePopupWindow() {
+        View view = View.inflate(CallingActivity.this, R.layout.popupwindow_record_file, null);
+        final EditText etFileName = (EditText) findViewById(R.id.et_file_name);
+        etFileName.setText(fileName);
+        TextView tvCancel = (TextView) findViewById(R.id.tv_cancel);
+        TextView tvSave = (TextView) findViewById(R.id.tv_save);
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 删除文件
+                deletefile();
+                popupWindow.dismiss();
+            }
+        });
+        tvSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //存储重命名文件。。。
+
+               String newFileName =  etFileName.getText().toString().trim();
+                if(newFileName.contains("/")){
+                    etFileName.setText("");
+                    AlertMessageUtil.showShortToast("你的文件命名不符合规范，不应该存在"+"/");
+                }else {
+                    renameFile(newFileName);
+                popupWindow.dismiss();}
+            }
+        });
+        showPopupWindow(view);
+    }
+
+    private void renameFile(String newFileName) {
+        File file = new File(Contants.filePath+fileName);
+        file.renameTo(new File(newFileName));
+    }
+    private void deletefile(){
+        File file = new File(Contants.filePath+fileName);
+        file.delete();
+    }
+
+    private void showPopupWindow(View view){
+        popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        popupWindow.setFocusable(true);
+        popupWindow.showAtLocation(rlParent, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+    }
 
     private long conversationTime =0;
     private TimerTask task = new TimerTask() {
@@ -435,19 +542,19 @@ public class CallingActivity extends AppCompatActivity {
             localStream.detach();
             localStream.close();
         }
-        if (wwvBig != null) {
-            wwvBig.release();
-            wwvBig = null;
+        if (wvvBig != null) {
+            wvvBig.release();
+            wvvBig = null;
         }
-        if (wwvSmall != null) {
-            wwvSmall.release();
-            wwvSmall = null;
+        if (wvvSmall != null) {
+            wvvSmall.release();
+            wvvSmall = null;
         }
         if (mConversation != null) {
             mConversation.disconnect();
         }
-
+/*
         client.dispose();
-        video.dispose();
+        video.dispose();*/
     }
 }

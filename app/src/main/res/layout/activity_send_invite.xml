@@ -45,6 +45,6 @@
         android:layout_gravity="center"
         android:textSize="@dimen/button_text_size"
         android:textColor="@color/text_color_white"
-        android:background="@drawable/btn_orange_bg"
+        android:background="@drawable/selector_button_login"
         android:text="发起视频通话" />
 </LinearLayout>

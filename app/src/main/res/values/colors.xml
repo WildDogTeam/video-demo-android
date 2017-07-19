@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="title_color">#e6501e</color>
-    <color name="background">#e5e5e5</color>
+    <color name="background">#f5f5f5</color>
     <color name="item_background">@android:color/white</color>
 
     <color name="text_color">#333333</color>
@@ -24,4 +24,7 @@
 
     <color name="popwin_bg">#99000000</color>
     <color name="popwin_gray">@android:color/darker_gray</color>
+
+    <color name="btn_orange_clicked">#eb734b</color>
+    <color name="btn_orange_selected">#f0916e</color>
 </resources>

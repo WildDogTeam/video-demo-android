@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
+    android:id="@+id/rl_parent"
     tools:context="com.wilddog.demo.activities.ConversationActivity">
 
     <LinearLayout
@@ -154,7 +155,7 @@
             android:layout_width="33dp"
             android:layout_height="33dp"
             android:id="@+id/iv_record"
-            android:src="@drawable/selector_button_record"
+            android:src="@drawable/record_normal"
             />
     </LinearLayout>
 

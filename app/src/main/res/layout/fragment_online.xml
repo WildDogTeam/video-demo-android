@@ -34,13 +34,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="14.7dp"
+        android:divider="@drawable/listview_line_style"
+        android:visibility="gone"
          />
 
     <RelativeLayout
         android:id="@+id/rl_no_user"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="vertical">
 
         <ImageView

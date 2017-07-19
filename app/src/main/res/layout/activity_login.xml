@@ -45,7 +45,7 @@
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:id="@+id/btn_login"
-        android:background="@drawable/btn_orange_bg"
+        android:background="@drawable/selector_button_login"
         android:layout_below="@+id/tv_conversation_program"
         />
 </RelativeLayout>

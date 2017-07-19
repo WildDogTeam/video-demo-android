@@ -45,32 +45,44 @@ public class MainActivity extends AppCompatActivity {
     private void initWilddogVideo() {
         WilddogVideo.initializeWilddogVideo(MainActivity.this, Contants.APP_ID);
         client = WilddogVideo.getInstance().getClient();
-        client.setInviteListener(new WilddogVideoClient.Listener() {
-            @Override
-            public void onIncomingInvite(WilddogVideoClient wilddogVideoClient, IncomingInvite incomingInvite) {
-                Log.d(TAG,"current state is "+incomingInvite.getStatus() +"::"+incomingInvite.getStatus().equals("pendding"));
-                // 有邀请过来，打开被叫界面
-                String uid = incomingInvite.getFromParticipantId();
-                Intent intent = new Intent(MainActivity.this,AcceptActivity.class);
-                intent.putExtra("fromUid",uid);
-                WilddogVideoManager.saveIncomingInvite(incomingInvite);
-                startActivity(intent);
 
-            }
-
-            @Override
-            public void onIncomingInviteCanceled(WilddogVideoClient wilddogVideoClient, IncomingInvite incomingInvite) {
-                Log.d(TAG,"current state is "+incomingInvite.getStatus() +"::"+incomingInvite.getStatus().equals("cancel"));
-                Log.d(TAG,"IncomingInviteCanceled");
-                // 取消邀请。 TODO 关闭被叫界面
-                AlertMessageUtil.showShortToast("对方已取消");
-                // 发自定义广播，关闭界面回到主页
-                Intent intent = new Intent();
-                intent.setAction(Contants.INVITE_CANCEL);
-                sendBroadcast(intent);
-            }
-        });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setListener();
+    }
+
+    private void setListener(){
+        client.setInviteListener(listener);
+    }
+
+    private WilddogVideoClient.InviteListener listener = new WilddogVideoClient.Listener() {
+        @Override
+        public void onIncomingInvite(WilddogVideoClient wilddogVideoClient, IncomingInvite incomingInvite) {
+            Log.d(TAG,"current state is "+incomingInvite.getStatus() +"::"+incomingInvite.getStatus().equals("pendding"));
+            // 有邀请过来，打开被叫界面
+            String uid = incomingInvite.getFromParticipantId();
+            Intent intent = new Intent(MainActivity.this,AcceptActivity.class);
+            intent.putExtra("fromUid",uid);
+            WilddogVideoManager.saveIncomingInvite(incomingInvite);
+            startActivity(intent);
+
+        }
+
+        @Override
+        public void onIncomingInviteCanceled(WilddogVideoClient wilddogVideoClient, IncomingInvite incomingInvite) {
+            Log.d(TAG,"current state is "+incomingInvite.getStatus() +"::"+incomingInvite.getStatus().equals("cancel"));
+            Log.d(TAG,"IncomingInviteCanceled");
+            // 取消邀请。 TODO 关闭被叫界面
+            AlertMessageUtil.showShortToast("对方已取消");
+            // 发自定义广播，关闭界面回到主页
+            Intent intent = new Intent();
+            intent.setAction(Contants.INVITE_CANCEL);
+            sendBroadcast(intent);
+        }
+    };
 
     private void initView() {
         rgMain = (RadioGroup) findViewById(R.id.rg_main);

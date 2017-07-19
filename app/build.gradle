@@ -67,15 +67,14 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
-    compile 'com.wilddog.client:wilddog-video-android:1.1.0-beta'
+    compile 'com.wilddog.client:wilddog-video-android:1.2.0-beta'
     testCompile 'junit:junit:4.12'
-
     // camera 360 美颜库
     compile(name: 'PgPrettifyEngine-release_1.7', ext: 'aar')
     compile 'com.google.code.gson:gson:2.8.0'
@@ -86,4 +85,5 @@ dependencies {
     testCompile 'org.hamcrest:hamcrest-library:1.3'
     testCompile 'org.robolectric:robolectric:3.3.2'
     testCompile 'org.robolectric:shadows-httpclient:3.0'
+    compile files('libs/universal-image-loader-1.9.4.jar')
 }
