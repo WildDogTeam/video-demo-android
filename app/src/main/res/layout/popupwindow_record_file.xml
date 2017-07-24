@@ -45,7 +45,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_height="match_parent">
-            <TextView
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="删除"
@@ -54,10 +54,11 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textColor="@drawable/selector_record_button_text_color"
-                android:id="@+id/tv_cancel"
-                android:background="@drawable/selector_record_button_bg_color"
+                android:id="@+id/btn_cancel"
+                android:background="@drawable/selector_record_button"
+
                 />
-            <TextView
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -66,8 +67,8 @@
                 android:textSize="17sp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:id="@+id/tv_save"
-                android:background="@drawable/selector_record_button_bg_color"
+                android:id="@+id/btn_save"
+                android:background="@drawable/selector_record_button"
                 />
 
         </LinearLayout>

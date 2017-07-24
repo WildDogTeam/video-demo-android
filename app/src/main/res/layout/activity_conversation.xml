@@ -158,18 +158,32 @@
             android:src="@drawable/record_normal"
             />
     </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:00:00"
+        android:id="@+id/tv_record_time"
+        android:layout_alignBottom="@+id/ll_data"
+        android:layout_toLeftOf="@+id/ll_data"
+        android:layout_marginRight="7dp"
+        android:textColor="@color/text_color_white"
+        android:textSize="12sp"
+        android:visibility="gone"
+        />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ll_state"
         android:orientation="vertical"
+        android:layout_marginTop="16dp"
         android:visibility="gone"
-        android:layout_alignParentRight="true"
+        android:layout_marginEnd="13.3dp"
+        android:layout_alignParentEnd="true"
         >
 
         <TextView
-            android:padding="3dp"
+            android:padding="2.5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="dimension"
@@ -178,7 +192,7 @@
             android:textColor="@color/item_background"
             />
         <TextView
-            android:padding="3dp"
+            android:padding="2.5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="fps"
@@ -187,7 +201,7 @@
             android:textColor="@color/item_background"
             />
         <TextView
-            android:padding="3dp"
+            android:padding="2.5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="rate"
@@ -196,7 +210,7 @@
             android:textColor="@color/item_background"
             />
         <TextView
-            android:padding="3dp"
+            android:padding="2.5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="sent"

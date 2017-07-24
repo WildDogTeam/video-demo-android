@@ -3,8 +3,11 @@ package com.wilddog.demo;
 import android.app.Application;
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.ndk.CrashlyticsNdk;
 import com.wilddog.demo.utils.Contants;
 
+import io.fabric.sdk.android.Fabric;
 import org.lasque.tusdk.core.TuSdk;
 import org.lasque.tusdk.core.TuSdkApplication;
 import org.lasque.tusdk.core.utils.NativeLibraryHelper;
@@ -22,7 +25,9 @@ public class ConversationApplication extends Application {
 
     @Override
     public void onCreate() {
+        Fabric.with(this, new Crashlytics());
         super.onCreate();
+        Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         application=this;
         TuSdk.enableDebugLog(true);
         // 自定义 .so 文件路径，在 init 之前调用

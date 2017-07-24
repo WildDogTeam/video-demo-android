@@ -62,7 +62,7 @@
         android:text="复制"
         android:padding="5dp"
         android:textSize="15sp"
-        android:textColor="@color/title_color"
+        android:textColor="@drawable/selector_textview_copy"
         android:background="@null"
         android:id="@+id/tv_copy"
         />
@@ -203,41 +203,42 @@
         android:layout_height="0.5dp"
         android:layout_marginTop="19dp"
         android:background="@color/line_color"/>
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        style="@style/ItemStyle"
         android:id="@+id/ll_SDK_version"
-        >
+        style="@style/ItemStyle"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+
         <ImageView
             android:layout_width="21dp"
             android:layout_height="21dp"
-            android:src="@drawable/about"
-            />
+            android:src="@drawable/about" />
+
         <TextView
-            android:textSize="@dimen/item_left_text_size"
-            android:layout_marginLeft="@dimen/item_text_image_space"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_color"
+            android:layout_marginLeft="@dimen/item_text_image_space"
             android:text="@string/about"
-            />
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/item_left_text_size" />
+
         <TextView
+            android:id="@+id/tv_sdk_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_sdk_version"
-            android:layout_weight="1"
-            android:text=""
-            android:gravity="center|right"
             android:layout_marginLeft="20dp"
-            />
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:text="" />
+
         <ImageView
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/right_arraw"
-            />
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/right_arraw" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

@@ -31,6 +31,7 @@
             android:drawableTop="@drawable/selector_tab_online"
             android:gravity="center"
             android:paddingTop="10dp"
+            android:background="@drawable/selector_radiobutton_bg"
             android:text="@string/online" />
 
         <RadioButton
@@ -43,6 +44,7 @@
             android:checked="false"
             android:drawableTop="@drawable/selector_tab_setting"
             android:gravity="center"
+            android:background="@drawable/selector_radiobutton_bg"
             android:paddingTop="10dp"
             android:text="@string/settings" />
     </RadioGroup>

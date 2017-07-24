@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@drawable/selector_popupwin_item_bg"
-    >
+    android:minHeight="50dp"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:background="@drawable/selector_popupwin_item_bg">
 <TextView
     android:layout_width="match_parent"
     android:padding="5dp"
-    android:layout_marginLeft="10dp"
+    android:layout_marginLeft="20dp"
     android:text="456546546"
     android:id="@+id/tv_uid"
     android:textColor="@drawable/selector_item_text_color"

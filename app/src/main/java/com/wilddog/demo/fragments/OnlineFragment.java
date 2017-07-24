@@ -35,6 +35,7 @@ public class OnlineFragment extends BaseFragment {
     private ImageView ivInvite;
     private ListView lvUserList;
     private RelativeLayout rlNoUser;
+    private LinearLayout llListView;
 
     private SyncReference mRef;
     private String mUid;
@@ -92,16 +93,17 @@ public class OnlineFragment extends BaseFragment {
     private void showListViewOrTextView(){
         if(userList.size()>0){
             rlNoUser.setVisibility(View.GONE);
-            lvUserList.setVisibility(View.VISIBLE);
+            llListView.setVisibility(View.VISIBLE);
         }else {
             rlNoUser.setVisibility(View.VISIBLE);
-            lvUserList.setVisibility(View.GONE);
+            llListView.setVisibility(View.GONE);
         }
     }
 
     @Override
     public View initView(LayoutInflater inflater) {
         View view = inflater.inflate(R.layout.fragment_online,null);
+        llListView = (LinearLayout) view.findViewById(R.id.ll_listview);
         ivInvite = (ImageView) view.findViewById(R.id.iv_invite);
         lvUserList = (ListView) view.findViewById(R.id.lv_user_id);
         rlNoUser = (RelativeLayout) view.findViewById(R.id.rl_no_user);

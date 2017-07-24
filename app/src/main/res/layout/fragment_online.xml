@@ -12,15 +12,17 @@
 
         <ImageView
             android:id="@+id/iv_invite"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
+           android:padding="10dp"
+            android:layout_marginEnd="10dp"
+            android:scaleType="centerInside"
             android:src="@drawable/call" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
@@ -28,16 +30,31 @@
             android:textColor="@color/text_color_white"
             android:textSize="@dimen/title_text_size" />
     </RelativeLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/text_color_white"
+        android:id="@+id/ll_listview"
+        android:visibility="gone"
+        >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="14.7dp"
+        android:background="@color/line_color"/>
     <ListView
         android:id="@+id/lv_user_id"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="14.7dp"
+        android:layout_height="wrap_content"
         android:divider="@drawable/listview_line_style"
-        android:visibility="gone"
+        android:dividerHeight="0.5dp"
          />
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color"/>
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/rl_no_user"
         android:layout_width="match_parent"
@@ -46,8 +63,8 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="84dp"
-            android:layout_height="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="138dp"
             android:gravity="center"
             android:layout_centerHorizontal="true"

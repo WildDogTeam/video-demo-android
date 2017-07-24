@@ -15,6 +15,8 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        mavenLocal()
+        maven { url "http://clojars.org/repo" }
     }
 }
 

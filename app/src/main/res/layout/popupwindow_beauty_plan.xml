@@ -15,25 +15,46 @@
             style="@style/DialogItemStyle"
             android:layout_width="match_parent"
             android:text="@string/change_beauty_plan" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/text_color_white"
+            >
         <TextView
             android:id="@+id/tv_beauty_plan_Camera360"
             style="@style/DialogItemStyle"
             android:layout_width="match_parent"
             android:text="@string/beauty_plan_Camera360" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/line_color" />
         <TextView
             android:id="@+id/tv_beauty_plan_TuSDK"
             style="@style/DialogItemStyle"
             android:layout_width="match_parent"
             android:text="@string/beauty_plan_TuSDK" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/line_color" />
         <TextView
             android:id="@+id/tv_beauty_nothing"
             style="@style/DialogItemStyle"
             android:layout_width="match_parent"
             android:text="@string/change_beauty_nothing" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color" />
+        </LinearLayout>
         <TextView
             android:id="@+id/tv_cancel"
             style="@style/DialogItemStyle"

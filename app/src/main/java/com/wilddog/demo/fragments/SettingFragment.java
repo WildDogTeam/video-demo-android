@@ -198,7 +198,7 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
 
     private void copyUid(){
        getClipboardManager().setText(SharedpereferenceTool.getUserId(getContext()));
-        AlertMessageUtil.showShortToast("复制uid成功");
+        AlertMessageUtil.showShortToast("复制成功");
     }
 
     private ClipboardManager getClipboardManager(){

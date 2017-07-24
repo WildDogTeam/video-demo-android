@@ -1,4 +1,14 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 25
@@ -64,6 +74,7 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 dependencies {
@@ -73,7 +84,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
-    compile 'com.wilddog.client:wilddog-video-android:1.2.0-beta'
+   // compile 'com.wilddog.client:wilddog-video-android:1.2.0-beta'
+    compile 'com.wilddog.client:wilddog-video-android:1.2.3-beta-SNAPSHOT'
     testCompile 'junit:junit:4.12'
     // camera 360 美颜库
     compile(name: 'PgPrettifyEngine-release_1.7', ext: 'aar')
@@ -86,4 +98,16 @@ dependencies {
     testCompile 'org.robolectric:robolectric:3.3.2'
     testCompile 'org.robolectric:shadows-httpclient:3.0'
     compile files('libs/universal-image-loader-1.9.4.jar')
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+        transitive = true;
+    }
+    compile('com.crashlytics.sdk.android:crashlytics-ndk:1.1.6@aar') {
+        transitive = true;
+    }
+}
+
+crashlytics {
+    enableNdk true
+    androidNdkOut 'src/main/obj'
+    androidNdkLibsOut 'src/main/libs'
 }

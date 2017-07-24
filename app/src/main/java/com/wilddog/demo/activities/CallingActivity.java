@@ -1,6 +1,7 @@
 package com.wilddog.demo.activities;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -43,6 +45,7 @@ import com.wilddog.video.listener.RTCStatsListener;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -78,6 +81,7 @@ public class CallingActivity extends AppCompatActivity {
 
     private ImageView ivState;
     private ImageView ivRecordFile;
+    private TextView tvRecordTime;
 
     private PopupWindow popupWindow;
     private RelativeLayout rlParent;
@@ -92,6 +96,7 @@ public class CallingActivity extends AppCompatActivity {
     private boolean mFirstFrame =true;
 
     private boolean isrecording = false;
+    DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
     private int timeout = 30000;
 
@@ -201,12 +206,15 @@ public class CallingActivity extends AppCompatActivity {
     private RTCStatsListener rtcStatsListener = new RTCStatsListener() {
         @Override
         public void onLocalStats(LocalStats localStats) {
-            showStats(localStats, null);
+            if(isSelfInBig){
+            showStats(localStats, null);}
         }
 
         @Override
         public void onRemoteStats(RemoteStats remoteStats) {
-            showStats(null, remoteStats);
+
+            if(!isSelfInBig){
+            showStats(null, remoteStats);}
         }
     };
 
@@ -231,7 +239,9 @@ public class CallingActivity extends AppCompatActivity {
     }
 
     private String convertToMB(long value) {
-        return String.format("%.2f", value);
+        float result = Float.parseFloat(String.valueOf(value)) / (1024 * 1024);
+        return decimalFormat.format(result);
+       // return String.format("%.2f", value);
     }
 
 
@@ -271,7 +281,7 @@ public class CallingActivity extends AppCompatActivity {
                             remoteStream.attach(wvvBig);
                             wvvSmall.setVisibility(View.VISIBLE);
                             localStream.attach(wvvSmall);
-
+                            isSelfInBig =false;
                             tvTime.setVisibility(View.VISIBLE);
                             startTimer();
                         }
@@ -288,12 +298,20 @@ public class CallingActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onDisconnected(Participant participant, VideoError exception) {
+                public void onDisconnected(final Participant participant, VideoError exception) {
                     Log.e(TAG, "Participant:onDisconnected");
                     //TODO 对方断开连接 如何处理？
                     if (exception != null) {
                         Log.d(TAG, "Participant onDisconnected failured,the detail:" + exception.getMessage());
                     }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AlertMessageUtil.showShortToast("用户：" + participant.getParticipantId() + "离开会话");
+                        }
+                    });
+                    mConversation.disconnect();
+                    finish();
                 }
             });
 
@@ -338,6 +356,7 @@ public class CallingActivity extends AppCompatActivity {
         llData = (LinearLayout) findViewById(R.id.ll_data);
         llData.setVisibility(View.INVISIBLE);
         llState = (LinearLayout) findViewById(R.id.ll_state);
+        tvRecordTime = (TextView) findViewById(R.id.tv_record_time);
 
         ivState = (ImageView) findViewById(R.id.iv_report);
         ivRecordFile = (ImageView) findViewById(R.id.iv_record);
@@ -346,15 +365,21 @@ public class CallingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isShowDetail=!isShowDetail;
-                if(isShowDetail){
                     // 将图标隐藏，显示统计信息
                     llState.setVisibility(View.VISIBLE);
                     llData.setVisibility(View.INVISIBLE);
-                }else {
+
+
+            }
+        });
+
+        llState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isShowDetail=!isShowDetail;
+
                     llState.setVisibility(View.INVISIBLE);
                     llData.setVisibility(View.VISIBLE);
-                }
-
             }
         });
 
@@ -366,13 +391,17 @@ public class CallingActivity extends AppCompatActivity {
                     //结束录制，弹出对话框
                     ivRecordFile.setBackgroundResource(R.drawable.record_normal);
                     isrecording =false;
+                    tvRecordTime.setVisibility(View.GONE);
                     mConversation.stopVideoRecording();
+                    endRecordTime();
                     showSavePopupWindow();
                 }else {
                     //开始录制
                     ivRecordFile.setBackgroundResource(R.drawable.record_selected);
                     isrecording = true;
                     mConversation.startVideoRecording(getRecordFile());
+                    tvRecordTime.setVisibility(View.VISIBLE);
+                    startRecordTime();
                 }
             }
         });
@@ -407,14 +436,47 @@ public class CallingActivity extends AppCompatActivity {
         llFlipCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (video != null) {
+              if (video != null) {
                     video.flipCamera();
                 }
+
             }
         });
 
 
     }
+
+    private Timer recordTimer;
+    private void startRecordTime() {
+        if(recordTimer==null){
+            recordTimer = new Timer();
+        }
+        recordTime = 0;
+        recordTask = new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvRecordTime.setText(ConvertUtil.secToTime(recordTime));
+                    }
+                });
+                recordTime++;
+            }
+        };
+        recordTimer.schedule(recordTask,0,1000);
+    }
+    private int recordTime = 0;
+
+    private TimerTask recordTask;
+
+    private void endRecordTime(){
+        recordTimer.cancel();
+        recordTimer = null ;
+        recordTime =0;
+    }
+
+
 
     private String fileName;
 
@@ -422,34 +484,30 @@ public class CallingActivity extends AppCompatActivity {
         return fileName;
     }
 
-    private File getRecordFile() {
-        long currentTime =System.currentTimeMillis();
-        fileName = ConvertUtil.getDayString(currentTime)+"-"+currentTime+".mp4";
-
-        File file = new File(Contants.filePath);
-        if(!file.exists()){
-            file.mkdirs();
+    private File getRecordFile(){
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "wilddog");
+        if (!file.exists()) {
+            boolean a = file.mkdirs();
         }
-
-        File recordFile = new File(file.getAbsolutePath()+fileName);
-        if(!recordFile.exists()){
-            try {
-                recordFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        File  videoFile = new File(file, "wilddog-" + System.currentTimeMillis() + ".mp4");
+        try {
+            boolean b = videoFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return recordFile;
+        fileName = videoFile.getName();
+        return videoFile;
     }
+
 
 
     private void showSavePopupWindow() {
         View view = View.inflate(CallingActivity.this, R.layout.popupwindow_record_file, null);
-        final EditText etFileName = (EditText) findViewById(R.id.et_file_name);
+        final EditText etFileName = (EditText) view.findViewById(R.id.et_file_name);
         etFileName.setText(fileName);
-        TextView tvCancel = (TextView) findViewById(R.id.tv_cancel);
-        TextView tvSave = (TextView) findViewById(R.id.tv_save);
-        tvCancel.setOnClickListener(new View.OnClickListener() {
+        Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
+        Button btnSave = (Button) view.findViewById(R.id.btn_save);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 删除文件
@@ -457,7 +515,7 @@ public class CallingActivity extends AppCompatActivity {
                 popupWindow.dismiss();
             }
         });
-        tvSave.setOnClickListener(new View.OnClickListener() {
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //存储重命名文件。。。
