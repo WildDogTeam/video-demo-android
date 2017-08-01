@@ -44,7 +44,7 @@ public class Camera360Util {
         prettifySDK.SetSkinSoftenStrength(PrettifySDKContants.SOFTEN_VALUE);//设置美颜程度
         prettifySDK.SetSkinColor(PrettifySDKContants.PINK_VALUE, PrettifySDKContants.WHITE_VALUE, PrettifySDKContants.REDDEN_VALUE);//设置美颜参数
 
-        prettifySDK.SetColorFilterByName("Grace");//设置美颜滤镜，详细参数参考 AppConfig 中的 mFilterType
+        prettifySDK.SetColorFilterByName("Grace");//设置美颜滤镜，详细参数参考中的 mFilterType
         prettifySDK.SetColorFilterStrength(PrettifySDKContants.SOFTEN_VALUE);//设置美颜强度
         prettifySDK.SetSkinSoftenAlgorithm(PGSkinPrettifyEngine.PG_SoftenAlgorithm.PG_SoftenAlgorithmContrast);//设置磨皮算法
     }
