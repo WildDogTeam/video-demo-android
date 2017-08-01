@@ -1,6 +1,8 @@
 package com.wilddog.demo.activities;
 
 import android.content.Context;
+import android.media.MediaMetadataRetriever;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,8 +17,12 @@ import android.widget.TextView;
 import com.wilddog.demo.R;
 import com.wilddog.demo.bean.RecordFileData;
 import com.wilddog.demo.utils.AlertMessageUtil;
+import com.wilddog.demo.utils.ConvertUtil;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class RecordFileActivity extends AppCompatActivity {
@@ -24,6 +30,10 @@ public class RecordFileActivity extends AppCompatActivity {
     private ListView lvRecordFile;
     private List<RecordFileData> files= new ArrayList();
      private BaseAdapter adapter;
+    private File file;
+    private File[] recordFiles;
+    private MediaMetadataRetriever  metadataRetriever = new MediaMetadataRetriever();;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +46,8 @@ public class RecordFileActivity extends AppCompatActivity {
                  finish();
              }
          });
+        file= getFile();
+        recordFiles = file.listFiles();
         initData();
          adapter= new MyAdapter(files,this);
         lvRecordFile.setAdapter(adapter);
@@ -43,17 +55,55 @@ public class RecordFileActivity extends AppCompatActivity {
 
     }
 
-    private void initData(){
-        for(int i = 0;i<10;i++){
-            RecordFileData data = new RecordFileData();
-            data.setFileName("文件"+i);
-            data.setDuration("00:15:0"+i);
-            files.add(data);
+    private File getFile(){
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "wilddog");
+        if (!file.exists()) {
+            boolean a = file.mkdirs();
         }
+        return file;
 
     }
 
+    private void initData(){
+        if(recordFiles.length<=0){return;}
+       for(File file:recordFiles){
+           if(file.getName().endsWith(".mp4")){
+               getMP4Duration(file);
+              /* RecordFileData fileData = new RecordFileData();
+               fileData.setFileName(file.getName());
+               fileData.setDuration(getMP4Duration(file.getAbsolutePath()));*/
+           }
+       }
 
+    }
+
+    private String getMP4Duration(File file1){
+
+
+        String duration ="0";
+        try {
+       /*     if (mUri != null) {
+                HashMap<String, String> headers = mHeaders;
+                if (headers == null) {
+                    headers = new HashMap<String, String>();
+                    headers.put("User-Agent", "Mozilla/5.0 (Linux; U; Android 4.4.2; zh-CN; MW-KW-001 Build/JRO03C) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 UCBrowser/1.0.0.001 U4/0.8.0 Mobile Safari/533.1");
+                }
+                mmr.setDataSource(mUri, headers);
+            } else {
+                mmr.setDataSource(mFD, mOffset, mLength);
+            }
+*/
+           if(file1!=null)
+               metadataRetriever.setDataSource(new FileOutputStream(file1).getFD());
+            duration= metadataRetriever.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION);
+
+        } catch (Exception ex) {
+           ex.printStackTrace();
+        } finally {
+            metadataRetriever.release();
+        }
+        return ConvertUtil.secToTime((int) Integer.parseInt(duration));
+    }
 
 
     class MyAdapter extends BaseAdapter {
@@ -100,6 +150,10 @@ public class RecordFileActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     //TODO 删除操作
                     AlertMessageUtil.showShortToast("删除文件");
+                    deleteFile(mList.get(i).getFileName());
+                    mList.remove(i);
+                    notifyDataSetChanged();
+
                 }
             });
             return view;
@@ -111,7 +165,14 @@ public class RecordFileActivity extends AppCompatActivity {
             public Button delete;
 
         }
+
+        private void deleteFile(String fileName){
+            File file = new File(getFile().getAbsolutePath()+"/"+fileName);
+            file.delete();
+        }
+
     }
+
 
 
 }

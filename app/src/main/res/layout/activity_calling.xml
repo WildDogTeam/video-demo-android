@@ -122,7 +122,6 @@
         android:layout_height="match_parent"
         android:id="@+id/ll_call"
         android:background="@drawable/callbg"
-        android:visibility="gone"
         android:orientation="vertical"
         >
         <TextView
@@ -132,6 +131,7 @@
             android:layout_gravity="center"
             android:textSize="23sp"
             android:layout_marginTop="40dp"
+            android:textColor="@color/text_color_white"
             android:text="正在呼叫"/>
         <TextView
             android:layout_width="match_parent"

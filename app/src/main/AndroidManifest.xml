@@ -34,8 +34,6 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera.flash" />
 
 
@@ -72,7 +70,7 @@
         </receiver>
 
         <activity android:name="com.wilddog.demo.activities.AcceptActivity" />
-        <activity android:name="com.wilddog.demo.activities.ConversationActivity"></activity>
+        <activity android:name="com.wilddog.demo.activities.ConversationActivity"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="62b476b8bec312542b8993f36ee2e14400600162" />

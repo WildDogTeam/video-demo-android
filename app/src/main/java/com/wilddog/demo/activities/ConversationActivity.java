@@ -512,8 +512,9 @@ public class ConversationActivity extends AppCompatActivity {
     };
     private Timer timer;
     private void startTimer() {
+        if(timer==null){
         timer = new Timer();
-        timer.schedule(task,0,1000);
+        timer.schedule(task,0,1000);}
     }
 
     private LocalStreamOptions genLocalStreamOptions() {

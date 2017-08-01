@@ -17,8 +17,8 @@ android {
         applicationId "com.wilddog.demo"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 19
-        versionName "1.0"
+        versionCode 25
+        versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -85,10 +85,16 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
    // compile 'com.wilddog.client:wilddog-video-android:1.2.0-beta'
-    compile 'com.wilddog.client:wilddog-video-android:1.2.3-beta-SNAPSHOT'
     testCompile 'junit:junit:4.12'
     // camera 360 美颜库
     compile(name: 'PgPrettifyEngine-release_1.7', ext: 'aar')
+
+    compile('com.wilddog.client:wilddog-sync-android:2.3.3', {
+        exclude group: 'org.json', module: 'json'
+    })
+    compile 'com.wilddog.client:wilddog-auth-android:2.0.5'
+    compile(name: 'wilddog-video-android-1.2.5', ext: 'aar')
+
     compile 'com.google.code.gson:gson:2.8.0'
     // TuSDK
     compile files('libs/TuSDKCore-2.7.0.jar')
@@ -101,6 +107,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
+
     compile('com.crashlytics.sdk.android:crashlytics-ndk:1.1.6@aar') {
         transitive = true;
     }

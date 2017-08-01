@@ -8,7 +8,7 @@ import android.os.Environment;
 
 public final class Contants {
     public static final int AUTO_SKIP_TIME = 2000;
-    public static final String APP_ID = "rtcdemo";
+    public static final String APP_ID = "wd6029736988xhigqo";
     public static final String INVITE_CANCEL = "com.wilddog.conversation.inviteCancel";
     //TuSDK key
     public static final String TUSDK_KEY = /*<TU_SDK_KEY>*/"eb73513fb59037c3-00-f8g7r1";

@@ -153,14 +153,14 @@ public class CallingActivity extends AppCompatActivity {
                             llData.setVisibility(View.VISIBLE);
                         }
                     });
-                    Log.d(TAG,"outgoingInvite status is "+outgoingInvite.getStatus()+"::"+outgoingInvite.getStatus().equals("accepted"));
+                  //  Log.d(TAG,"outgoingInvite status is "+outgoingInvite.getStatus()+"::"+outgoingInvite.getStatus().equals("accepted"));
                     isAccept = true;
                     mConversation = conversation;
                     mConversation.setConversationListener(listener);
                     mConversation.setRTCStatsListener(rtcStatsListener);
                 } else {
-                    Log.d(TAG,"outgoingInvite status is "+outgoingInvite.getStatus()+"::"+String.valueOf(outgoingInvite.getStatus().equals("busy") | outgoingInvite.getStatus().equals("cancel")));
-                    //处理会话建立失败逻辑
+                  /*  Log.d(TAG,"outgoingInvite status is "+outgoingInvite.getStatus()+"::"+String.valueOf(outgoingInvite.getStatus().equals("busy") | outgoingInvite.getStatus().equals("cancel")));
+                    *///处理会话建立失败逻辑
                     if (e.getErrorCode() == VideoErrorCode.VIDEO_CONVERSATION_INVITATION_FAILED) {
                         AlertMessageUtil.showShortToast("对方拒绝邀请");
                         finish();
@@ -219,23 +219,29 @@ public class CallingActivity extends AppCompatActivity {
     };
 
 
-    private void showStats(LocalStats localStats, RemoteStats remoteStats) {
+    private void showStats(final LocalStats localStats, final RemoteStats remoteStats) {
         if (!isShowDetail) {
             return;
         }
-        if (isSelfInBig) {
-            // 显示本地统计数据
-            tvDimension.setText(localStats.getWidth() + "x" + localStats.getHeight() + "px");
-            tvFps.setText(localStats.getFps() + "fps");
-            tvRate.setText(localStats.getTxBitRate() + "kpbs");
-            tvByte.setText("send " + convertToMB(localStats.getTxBytes()) + "MB");
-        } else {
-            // 显示远程统计数据
-            tvDimension.setText(remoteStats.getWidth() + "x" + remoteStats.getHeight() + "px");
-            tvFps.setText(remoteStats.getFps() + "fps");
-            tvRate.setText(remoteStats.getRxBitRate() + "kpbs");
-            tvByte.setText("recv " + convertToMB(remoteStats.getRxBytes()) + "MB");
-        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (isSelfInBig) {
+                    // 显示本地统计数据
+                    tvDimension.setText(localStats.getWidth() + "x" + localStats.getHeight() + "px");
+                    tvFps.setText(localStats.getFps() + "fps");
+                    tvRate.setText(localStats.getTxBitRate() + "kpbs");
+                    tvByte.setText("send " + convertToMB(localStats.getTxBytes()) + "MB");
+                } else {
+                    // 显示远程统计数据
+                    tvDimension.setText(remoteStats.getWidth() + "x" + remoteStats.getHeight() + "px");
+                    tvFps.setText(remoteStats.getFps() + "fps");
+                    tvRate.setText(remoteStats.getRxBitRate() + "kpbs");
+                    tvByte.setText("recv " + convertToMB(remoteStats.getRxBytes()) + "MB");
+                }
+            }
+        });
+
     }
 
     private String convertToMB(long value) {
@@ -533,11 +539,13 @@ public class CallingActivity extends AppCompatActivity {
     }
 
     private void renameFile(String newFileName) {
-        File file = new File(Contants.filePath+fileName);
+        File filedir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "wilddog");
+        File file = new File(filedir.getAbsolutePath()+"/"+fileName);
         file.renameTo(new File(newFileName));
     }
     private void deletefile(){
-        File file = new File(Contants.filePath+fileName);
+        File filedir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "wilddog");
+        File file = new File(filedir.getAbsolutePath()+"/"+fileName);
         file.delete();
     }
 
@@ -562,8 +570,9 @@ public class CallingActivity extends AppCompatActivity {
     };
     private Timer timer;
     private void startTimer() {
+        if(timer==null){
         timer = new Timer();
-        timer.schedule(task,0,1000);
+        timer.schedule(task,0,1000);}
     }
 
     private LocalStreamOptions genLocalStreamOptions() {
