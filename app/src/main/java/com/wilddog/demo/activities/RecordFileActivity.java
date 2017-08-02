@@ -2,9 +2,9 @@ package com.wilddog.demo.activities;
 
 import android.content.Context;
 import android.media.MediaMetadataRetriever;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +18,9 @@ import com.wilddog.demo.R;
 import com.wilddog.demo.bean.RecordFileData;
 import com.wilddog.demo.utils.AlertMessageUtil;
 import com.wilddog.demo.utils.ConvertUtil;
+import com.wilddog.demo.utils.ExtractVideoInfoUtil;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,43 +68,22 @@ public class RecordFileActivity extends AppCompatActivity {
         if(recordFiles.length<=0){return;}
        for(File file:recordFiles){
            if(file.getName().endsWith(".mp4")){
-               getMP4Duration(file);
-              /* RecordFileData fileData = new RecordFileData();
+               RecordFileData fileData = new RecordFileData();
                fileData.setFileName(file.getName());
-               fileData.setDuration(getMP4Duration(file.getAbsolutePath()));*/
+               ExtractVideoInfoUtil extractVideoInfoUtil = new ExtractVideoInfoUtil(file.getAbsolutePath());
+               fileData.setDuration(convertToSeconds(extractVideoInfoUtil.getVideoLength()));
+               extractVideoInfoUtil.release();
+               files.add(fileData);
            }
        }
 
     }
 
-    private String getMP4Duration(File file1){
 
-
-        String duration ="0";
-        try {
-       /*     if (mUri != null) {
-                HashMap<String, String> headers = mHeaders;
-                if (headers == null) {
-                    headers = new HashMap<String, String>();
-                    headers.put("User-Agent", "Mozilla/5.0 (Linux; U; Android 4.4.2; zh-CN; MW-KW-001 Build/JRO03C) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 UCBrowser/1.0.0.001 U4/0.8.0 Mobile Safari/533.1");
-                }
-                mmr.setDataSource(mUri, headers);
-            } else {
-                mmr.setDataSource(mFD, mOffset, mLength);
-            }
-*/
-           if(file1!=null)
-               metadataRetriever.setDataSource(new FileOutputStream(file1).getFD());
-            duration= metadataRetriever.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION);
-
-        } catch (Exception ex) {
-           ex.printStackTrace();
-        } finally {
-            metadataRetriever.release();
-        }
-        return ConvertUtil.secToTime((int) Integer.parseInt(duration));
+    private String convertToSeconds(String time){
+        long duration = Long.parseLong(time);
+       return ConvertUtil.secToTime((int)duration/1000);
     }
-
 
     class MyAdapter extends BaseAdapter {
         private List<RecordFileData> mList = new ArrayList<>();
@@ -143,7 +122,8 @@ public class RecordFileActivity extends AppCompatActivity {
             }else {
                 v= (MyAdapter.ViewHolder) view.getTag();
             }
-            v.fileName.setText(mList.get(i).getFileName());
+            String name = mList.get(i).getFileName();
+            v.fileName.setText(name.substring(0,name.indexOf(".mp4")));
             v.duration.setText(mList.get(i).getDuration());
             v.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
