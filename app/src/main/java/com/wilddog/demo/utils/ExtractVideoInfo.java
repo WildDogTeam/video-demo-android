@@ -20,9 +20,12 @@ public class ExtractVideoInfo {
         if (!file.exists()) {
             throw new RuntimeException("path file   not exists !");
         }
+        if(file.length()==0){
+            return;
+        }
         mMetadataRetriever = new MediaMetadataRetriever();
         mMetadataRetriever.setDataSource(file.getAbsolutePath());
-        String len = getVideoLength();
+        String len = mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
         fileLength = TextUtils.isEmpty(len) ? 0 : Long.valueOf(len);
     }
 
@@ -32,7 +35,7 @@ public class ExtractVideoInfo {
      * @return String 毫秒
      */
     public String getVideoLength() {
-        return mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        return String.valueOf(fileLength) ;
     }
     public void release() {
         if (mMetadataRetriever != null) {
