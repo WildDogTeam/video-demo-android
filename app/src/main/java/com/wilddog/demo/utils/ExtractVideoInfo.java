@@ -9,10 +9,10 @@ import java.io.File;
  * Created by fly on 17-8-2.
  */
 
-public class ExtractVideoInfoUtil {
+public class ExtractVideoInfo {
     private MediaMetadataRetriever mMetadataRetriever;
     private long fileLength = 0;//毫秒
-    public ExtractVideoInfoUtil(String path) {
+    public ExtractVideoInfo(String path) {
         if (TextUtils.isEmpty(path)) {
             throw new RuntimeException("path must be not null !");
         }

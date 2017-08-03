@@ -18,11 +18,10 @@ import com.wilddog.demo.R;
 import com.wilddog.demo.bean.RecordFileData;
 import com.wilddog.demo.utils.AlertMessageUtil;
 import com.wilddog.demo.utils.ConvertUtil;
-import com.wilddog.demo.utils.ExtractVideoInfoUtil;
+import com.wilddog.demo.utils.ExtractVideoInfo;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class RecordFileActivity extends AppCompatActivity {
@@ -70,9 +69,9 @@ public class RecordFileActivity extends AppCompatActivity {
            if(file.getName().endsWith(".mp4")){
                RecordFileData fileData = new RecordFileData();
                fileData.setFileName(file.getName());
-               ExtractVideoInfoUtil extractVideoInfoUtil = new ExtractVideoInfoUtil(file.getAbsolutePath());
-               fileData.setDuration(convertToSeconds(extractVideoInfoUtil.getVideoLength()));
-               extractVideoInfoUtil.release();
+               ExtractVideoInfo extractVideoInfo = new ExtractVideoInfo(file.getAbsolutePath());
+               fileData.setDuration(convertToSeconds(extractVideoInfo.getVideoLength()));
+               extractVideoInfo.release();
                files.add(fileData);
            }
        }
