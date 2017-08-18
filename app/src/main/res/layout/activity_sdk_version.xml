@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background"
-    tools:context="com.wilddog.demo.activities.SDKVersionActivity">
+    tools:context="com.wilddog.conversation.activities.SDKVersionActivity">
 
     <RelativeLayout
         style="@style/TitleStyle"
@@ -50,18 +50,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginTop="6.7dp"
+            android:textSize="15sp"
+            android:textColor="@color/text_color"
+            android:text="野狗视频通话" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginTop="8dp"
             android:textSize="15sp"
             android:textColor="@color/text_color"
-            android:text="Demo v1.0" />
+            android:text="V2.1.0" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="11sp"
             android:textColor="@color/text_color_666666"
-            android:layout_marginTop="53dp"
-            android:text="该示例程序基于" />
+            android:layout_marginTop="29dp"
+            android:text="该应用程序基于" />
 
         <TextView
             android:id="@+id/tv_video_sdk_version"
@@ -71,7 +79,7 @@
             android:textSize="11sp"
             android:textColor="@color/text_color_666666"
             android:gravity="center"
-            android:text="Wilddog Video SDK v1.1.0-beta" />
+            android:text="Wilddog Video SDK v2.0.0" />
 
         <TextView
             android:id="@+id/tv_sync_sdk_version"

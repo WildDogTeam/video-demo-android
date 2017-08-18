@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context="com.wilddog.demo.activities.RecordFileActivity">
+    tools:context="com.wilddog.conversation.activities.RecordFileActivity">
     <RelativeLayout
         style="@style/TitleStyle"
         android:layout_width="match_parent"

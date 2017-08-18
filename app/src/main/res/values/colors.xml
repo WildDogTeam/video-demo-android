@@ -27,4 +27,5 @@
 
     <color name="btn_orange_clicked">#eb734b</color>
     <color name="btn_orange_selected">#f0916e</color>
+    <color name="greeny">#00ffff</color>
 </resources>

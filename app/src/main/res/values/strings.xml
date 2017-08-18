@@ -2,11 +2,12 @@
     <string name="app_name">视频通话</string>
     <string name="app_copyright">Copyright © 2017 Wilddog. All Rights Reserved</string>
     <string name="logo_des">野狗通信云</string>
-    <string name="app_des">视频通话示例程序</string>
-    <string name="login">登录</string>
+    <string name="app_des">野狗视频通话</string>
+    <string name="login">微信登录</string>
     <string name="online">在线</string>
-    <string name="settings">设置</string>
-    <string name="personnal_settings">个人设置</string>
+    <string name="call">通话</string>
+    <string name="me">我</string>
+    <string name="personnal_settings">我</string>
     <string name="user_id">用户ID</string>
     <string name="dimension">清晰度</string>
     <string name="beauty_plan">美颜方案</string>
@@ -24,6 +25,7 @@
     <string name="change_beauty_nothing">不使用美颜</string>
     <string name="delete">删除</string>
     <string name="online_now">当前在线</string>
+    <string name="call_history">最近通话</string>
     <string name="camera360_sdk_v1_6">Camera360 SDK v1.6</string>
     <string name="about">关于</string>
 </resources>

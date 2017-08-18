@@ -16,8 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-           android:padding="10dp"
             android:layout_marginEnd="10dp"
+            android:padding="10dp"
             android:scaleType="centerInside"
             android:src="@drawable/call" />
 
@@ -30,56 +30,71 @@
             android:textColor="@color/text_color_white"
             android:textSize="@dimen/title_text_size" />
     </RelativeLayout>
-    <LinearLayout
+
+    <RelativeLayout
+        android:id="@+id/rl_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/text_color_white"
-        android:id="@+id/ll_listview"
-        android:visibility="gone"
-        >
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="14.7dp"
-        android:background="@color/line_color"/>
-    <ListView
-        android:id="@+id/lv_user_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@drawable/listview_line_style"
-        android:dividerHeight="0.5dp"
-         />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/line_color"/>
-    </LinearLayout>
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="14.7dp"
+                android:background="@color/line_color" />
+
+            <ListView
+                android:id="@+id/lv_records"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@drawable/listview_line_style"
+                android:dividerHeight="0.5dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_color" />
+        </LinearLayout>
+
+        <com.wilddog.conversation.view.SideBar
+            android:id="@+id/sideBar"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="30dp" />
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rl_no_user"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_no_user"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="138dp"
             android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:layout_above="@+id/tv_no_user"
             android:src="@drawable/no_user" />
 
         <TextView
+            android:id="@+id/tv_no_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="28dp"
             android:layout_centerInParent="true"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
             android:text="暂无其他用户可呼叫"
             android:textColor="@color/text_color"
-            android:id="@+id/tv_no_user"
             android:textSize="15sp" />
     </RelativeLayout>
 </LinearLayout>
