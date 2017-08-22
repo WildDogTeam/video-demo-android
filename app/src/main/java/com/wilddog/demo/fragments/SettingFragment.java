@@ -3,6 +3,8 @@ package com.wilddog.demo.fragments;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,11 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wilddog.demo.R;
 import com.wilddog.demo.activities.RecordFileActivity;
 import com.wilddog.demo.activities.SDKVersionActivity;
 import com.wilddog.demo.utils.AlertMessageUtil;
+import com.wilddog.demo.utils.Contants;
 import com.wilddog.demo.utils.SharedpereferenceTool;
 
 /**
@@ -148,14 +152,20 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
         tvCamera360.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveBeautyPlanAndChangeUI(getResources().getString(R.string.beauty_plan_Camera360));
+                if(TextUtils.isEmpty(Contants.SDK_KEY_NEW)){
+                    AlertMessageUtil.showShortToast("请先申请Camera360的key,在自己的sdk中集成");
+                }else {
+                saveBeautyPlanAndChangeUI(getResources().getString(R.string.beauty_plan_Camera360));}
                 popupWindowDismiss();
             }
         });
         tvTuSDK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveBeautyPlanAndChangeUI(getResources().getString(R.string.beauty_plan_TuSDK));
+                if(TextUtils.isEmpty(Contants.TUSDK_KEY)){
+                    AlertMessageUtil.showShortToast("请先申请TuSDK的key,在自己的sdk中集成");
+                }else {
+                saveBeautyPlanAndChangeUI(getResources().getString(R.string.beauty_plan_TuSDK));}
                 popupWindowDismiss();
             }
         });

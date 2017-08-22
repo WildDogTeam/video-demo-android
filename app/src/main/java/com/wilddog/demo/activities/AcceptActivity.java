@@ -14,7 +14,6 @@ import com.wilddog.demo.R;
 import com.wilddog.demo.receiver.InviteCancelBroadcastReceiver;
 import com.wilddog.demo.utils.Contants;
 import com.wilddog.demo.wilddogAuth.WilddogVideoManager;
-import com.wilddog.video.IncomingInvite;
 
 public class AcceptActivity extends AppCompatActivity {
     private final String TAG = AcceptActivity.class.getName();
@@ -25,7 +24,6 @@ public class AcceptActivity extends AppCompatActivity {
     private LinearLayout llReject;
     private LinearLayout llAccept;
 
-    private IncomingInvite incomingInvite;
     private BroadcastReceiver broadcastReceiver;
 
     @Override
@@ -38,7 +36,6 @@ public class AcceptActivity extends AppCompatActivity {
         llReject = (LinearLayout) findViewById(R.id.ll_reject);
 
         uid = getIntent().getStringExtra("fromUid");
-        incomingInvite = WilddogVideoManager.getIncomingInvite();
         tvUid.setText(uid);
 
         broadcastReceiver = new InviteCancelBroadcastReceiver(){
@@ -66,8 +63,7 @@ public class AcceptActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 拒绝
-                incomingInvite.reject();
-                incomingInvite.getStatus();
+                WilddogVideoManager.getConversation().reject();
                 finish();
             }
         });

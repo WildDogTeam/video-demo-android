@@ -2,11 +2,7 @@ package com.wilddog.demo.activities;
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -22,26 +18,19 @@ import android.widget.TextView;
 import com.wilddog.demo.R;
 import com.wilddog.demo.utils.AlertMessageUtil;
 import com.wilddog.demo.utils.Camera360Util;
-import com.wilddog.demo.utils.Contants;
 import com.wilddog.demo.utils.ConvertUtil;
 import com.wilddog.demo.utils.SharedpereferenceTool;
 import com.wilddog.demo.utils.TuSDKUtil;
+import com.wilddog.video.CallStatus;
 import com.wilddog.video.Conversation;
-import com.wilddog.video.ConversationCallback;
 import com.wilddog.video.LocalStream;
 import com.wilddog.video.LocalStreamOptions;
-import com.wilddog.video.OutgoingInvite;
-import com.wilddog.video.Participant;
 import com.wilddog.video.RemoteStream;
-import com.wilddog.video.VideoError;
-import com.wilddog.video.VideoErrorCode;
 import com.wilddog.video.WilddogVideo;
-import com.wilddog.video.WilddogVideoClient;
+import com.wilddog.video.WilddogVideoError;
 import com.wilddog.video.WilddogVideoView;
-import com.wilddog.video.bean.ConnectOptions;
-import com.wilddog.video.bean.LocalStats;
-import com.wilddog.video.bean.RemoteStats;
-import com.wilddog.video.listener.RTCStatsListener;
+import com.wilddog.video.core.stats.LocalStreamStatsReport;
+import com.wilddog.video.core.stats.RemoteStreamStatsReport;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,9 +42,7 @@ public class CallingActivity extends AppCompatActivity {
     private static final String TAG = CallingActivity.class.getCanonicalName();
 
     private String inviteUid;
-    private OutgoingInvite outgoingInvite;
     private WilddogVideo video = WilddogVideo.getInstance();
-    private WilddogVideoClient client = video.getClient();
 
     private CheckBox cbMic;
     private LinearLayout llHungup;
@@ -101,23 +88,7 @@ public class CallingActivity extends AppCompatActivity {
     private int timeout = 30000;
 
     private boolean isAudioEnable = true;
-    public Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case 1:
-                    if(!isAccept){
-                        AlertMessageUtil.showShortToast("对方暂时无人接听");
-                        outgoingInvite.cancel();
-                        finish();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +98,7 @@ public class CallingActivity extends AppCompatActivity {
         initView();
         LocalStreamOptions localStreamOptions = genLocalStreamOptions();
         localStream = video.createLocalStream(localStreamOptions);
-        localStream.setOnFrameListener(new WilddogVideo.CameraFrameListener() {
+        localStream.setOnFrameListener(new LocalStream.CameraFrameListener() {
             @Override
             public void onByteFrame(byte[] bytes, int i, int i1,int var4, long var5) {
                 //
@@ -138,51 +109,73 @@ public class CallingActivity extends AppCompatActivity {
             }
         });
         localStream.attach(wvvBig);
-        ConnectOptions connectOptions = new ConnectOptions(localStream, "conversationDemo");
-        outgoingInvite = client.inviteToConversation(inviteUid, connectOptions, new ConversationCallback() {
+        mConversation = video.call(inviteUid,localStream,"conversation extra info");
+        mConversation.setConversationListener(new Conversation.Listener() {
             @Override
-            public void onConversation(@Nullable Conversation conversation, @Nullable VideoError e) {
-
-                if (conversation != null) {
-                    // 对方接受  将呼叫中隐藏
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            llCalled.setVisibility(View.INVISIBLE);
-                            tvHungup.setText("挂断");
-                            llData.setVisibility(View.VISIBLE);
-                        }
-                    });
-                  //  Log.d(TAG,"outgoingInvite status is "+outgoingInvite.getStatus()+"::"+outgoingInvite.getStatus().equals("accepted"));
-                    isAccept = true;
-                    mConversation = conversation;
-                    mConversation.setConversationListener(listener);
-                    mConversation.setRTCStatsListener(rtcStatsListener);
-                } else {
-                  /*  Log.d(TAG,"outgoingInvite status is "+outgoingInvite.getStatus()+"::"+String.valueOf(outgoingInvite.getStatus().equals("busy") | outgoingInvite.getStatus().equals("cancel")));
-                    *///处理会话建立失败逻辑
-                    if (e.getErrorCode() == VideoErrorCode.VIDEO_CONVERSATION_INVITATION_FAILED) {
-                        AlertMessageUtil.showShortToast("对方拒绝邀请");
-                        finish();
-                    } else if(e.getErrorCode() == VideoErrorCode.VIDEO_CONVERSATION_INVITATION_IGNORED){
+            public void onCallResponse(CallStatus callStatus) {
+                switch (callStatus){
+                    case BUSY:
                         AlertMessageUtil.showShortToast("对方在通话中，请稍后");
                         finish();
-                    }
-                    else  {
-                        //TODO 处理其他错误
-                        Log.e(TAG, "create failured:" + e.getMessage());
-                        AlertMessageUtil.showShortToast("呼叫失败");
+                        break;
+                    case ACCEPTED:
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                llCalled.setVisibility(View.INVISIBLE);
+                                tvHungup.setText("挂断");
+                                llData.setVisibility(View.VISIBLE);
+                            }
+                        });
+                        break;
+                    case REJECTED:
+                        AlertMessageUtil.showShortToast("对方拒绝邀请");
                         finish();
-                    }
+                        break;
+                    case TIMEOUT:
+                        // 做超时处理 呼叫超过三十秒，未接受
+                        AlertMessageUtil.showShortToast("邀请超时");
+                        finish();
+                        break;
+                    default:
+                        break;
                 }
+            }
+
+            @Override
+            public void onStreamReceived(final RemoteStream remoteStream) {
+                mConversation.setStatsListener(rtcStatsListener);
+                //有参与者成功加入会话后，会触发此方法
+                //设置音视频全部开启
+                remoteStream.enableAudio(true);
+                remoteStream.enableVideo(true);
+                //在视频展示控件中播放其他端媒体流
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        localStream.detach();
+                        remoteStream.attach(wvvBig);
+                        wvvSmall.setVisibility(View.VISIBLE);
+                        localStream.attach(wvvSmall);
+                        isSelfInBig =false;
+                        tvTime.setVisibility(View.VISIBLE);
+                        startTimer();
+                    }
+                });
+            }
+
+            @Override
+            public void onClosed() {
+                mConversation.close();
+                finish();
+            }
+
+            @Override
+            public void onError(WilddogVideoError wilddogVideoError) {
 
             }
         });
-          //TODO 当前版本有问题，需要修复后使用
-        //  Log.d(TAG,"outgoingInvite status is "+outgoingInvite.getStatus()+"::"+outgoingInvite.getStatus().equals("pendding"));
 
-        // 做超时处理 呼叫超过三十秒，未接受
-        handler.sendEmptyMessageDelayed(1,timeout);
     }
 
     public void frameProcess(byte[] data, int textureId, boolean isFirstFrame, boolean isInitEGL, int frameWidth, int frameHeight, int rotation) {
@@ -203,23 +196,22 @@ public class CallingActivity extends AppCompatActivity {
     }
 
 
-    private RTCStatsListener rtcStatsListener = new RTCStatsListener() {
+    private Conversation.StatsListener rtcStatsListener = new Conversation.StatsListener() {
         @Override
-        public void onLocalStats(LocalStats localStats) {
+        public void onLocalStreamStatsReport(LocalStreamStatsReport localStreamStatsReport) {
             if(isSelfInBig){
-            showStats(localStats, null);}
+                showStats(localStreamStatsReport, null);}
         }
 
         @Override
-        public void onRemoteStats(RemoteStats remoteStats) {
-
+        public void onRemoteStreamStatsReport(RemoteStreamStatsReport remoteStreamStatsReport) {
             if(!isSelfInBig){
-            showStats(null, remoteStats);}
+                showStats(null, remoteStreamStatsReport);}
         }
     };
 
 
-    private void showStats(final LocalStats localStats, final RemoteStats remoteStats) {
+    private void showStats(final LocalStreamStatsReport localStats, final RemoteStreamStatsReport remoteStats) {
         if (!isShowDetail) {
             return;
         }
@@ -230,14 +222,14 @@ public class CallingActivity extends AppCompatActivity {
                     // 显示本地统计数据
                     tvDimension.setText(localStats.getWidth() + "x" + localStats.getHeight() + "px");
                     tvFps.setText(localStats.getFps() + "fps");
-                    tvRate.setText(localStats.getTxBitRate() + "kpbs");
-                    tvByte.setText("send " + convertToMB(localStats.getTxBytes()) + "MB");
+                    tvRate.setText(localStats.getBitsSentRate() + "kpbs");
+                    tvByte.setText("send " + convertToMB(localStats.getBytesSent()) + "MB");
                 } else {
                     // 显示远程统计数据
                     tvDimension.setText(remoteStats.getWidth() + "x" + remoteStats.getHeight() + "px");
                     tvFps.setText(remoteStats.getFps() + "fps");
-                    tvRate.setText(remoteStats.getRxBitRate() + "kpbs");
-                    tvByte.setText("recv " + convertToMB(remoteStats.getRxBytes()) + "MB");
+                    tvRate.setText(remoteStats.getBitsReceivedRate() + "kpbs");
+                    tvByte.setText("recv " + convertToMB(remoteStats.getBytesReceived()) + "MB");
                 }
             }
         });
@@ -251,86 +243,8 @@ public class CallingActivity extends AppCompatActivity {
     }
 
 
-    private Conversation.Listener listener = new Conversation.Listener() {
-        @Override
-        public void onConnected(Conversation conversation) {
-
-        }
 
 
-        @Override
-        public void onConnectFailed(Conversation conversation, VideoError e) {
-
-        }
-
-        @Override
-        public void onDisconnected(Conversation conversation, VideoError e) {
-
-        }
-
-        @Override
-        public void onParticipantConnected(Conversation conversation, Participant participant) {
-            String remoteParticipantId=participant.getParticipantId();
-            Log.d(TAG,"remoteParticipantId:"+remoteParticipantId);
-            participant.setListener(new Participant.Listener() {
-                @Override
-                public void onStreamAdded(final RemoteStream remoteStream) {
-                    //有参与者成功加入会话后，会触发此方法
-                    //设置音视频全部开启
-                    remoteStream.enableAudio(true);
-                    remoteStream.enableVideo(true);
-                    //在视频展示控件中播放其他端媒体流
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            localStream.detach();
-                            remoteStream.attach(wvvBig);
-                            wvvSmall.setVisibility(View.VISIBLE);
-                            localStream.attach(wvvSmall);
-                            isSelfInBig =false;
-                            tvTime.setVisibility(View.VISIBLE);
-                            startTimer();
-                        }
-                    });
-
-                }
-
-                @Override
-                public void onConnectFailed(Participant participant, VideoError exception) {
-
-                    if (exception != null) {
-                        Log.d(TAG, "Participant connect failed,the detail:" + exception.getMessage());
-                    }
-                }
-
-                @Override
-                public void onDisconnected(final Participant participant, VideoError exception) {
-                    Log.e(TAG, "Participant:onDisconnected");
-                    //TODO 对方断开连接 如何处理？
-                    if (exception != null) {
-                        Log.d(TAG, "Participant onDisconnected failured,the detail:" + exception.getMessage());
-                    }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            AlertMessageUtil.showShortToast("用户：" + participant.getParticipantId() + "离开会话");
-                        }
-                    });
-                    mConversation.disconnect();
-                    finish();
-                }
-            });
-
-        }
-
-        @Override
-        public void onParticipantDisconnected(Conversation conversation, Participant participant) {
-            // 收到离开会话
-            AlertMessageUtil.showShortToast("用户：" + participant.getParticipantId() + "离开会话");
-            mConversation.disconnect();
-            finish();
-        }
-    };
 
 
     private void initView() {
@@ -398,14 +312,14 @@ public class CallingActivity extends AppCompatActivity {
                     ivRecordFile.setBackgroundResource(R.drawable.record_normal);
                     isrecording =false;
                     tvRecordTime.setVisibility(View.GONE);
-                    mConversation.stopVideoRecording();
+                    mConversation.stopLocalRecording();
                     endRecordTime();
                     showSavePopupWindow();
                 }else {
                     //开始录制
                     ivRecordFile.setBackgroundResource(R.drawable.record_selected);
                     isrecording = true;
-                    mConversation.startVideoRecording(getRecordFile());
+                    mConversation.startLocalRecording(getRecordFile(),wvvSmall,wvvBig);
                     tvRecordTime.setVisibility(View.VISIBLE);
                     startRecordTime();
                 }
@@ -424,26 +338,15 @@ public class CallingActivity extends AppCompatActivity {
         llHungup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isAccept) {
-                    // 对方已经接受，结束会话
-                    if (mConversation != null) {
-                        mConversation.disconnect();
-                    }
-                } else {
-                    // 对方未接受，取消邀请
-                    if (outgoingInvite != null) {
-                        outgoingInvite.cancel();
-
-                    }
-                }
+                mConversation.close();
                 finish();
             }
         });
         llFlipCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              if (video != null) {
-                    video.flipCamera();
+              if (localStream != null) {
+                  localStream.switchCamera();
                 }
 
             }
@@ -579,22 +482,22 @@ public class CallingActivity extends AppCompatActivity {
         LocalStreamOptions.Builder builder = new LocalStreamOptions.Builder();
         switch (SharedpereferenceTool.getDimension(CallingActivity.this)) {
             case "360P":
-                builder.setDimension(LocalStreamOptions.Dimension.DIMENSION_360P);
+                builder.dimension(LocalStreamOptions.Dimension.DIMENSION_360P);
                 break;
             case "480P":
-                builder.setDimension(LocalStreamOptions.Dimension.DIMENSION_480P);
+                builder.dimension(LocalStreamOptions.Dimension.DIMENSION_480P);
                 break;
             case "720P":
-                builder.setDimension(LocalStreamOptions.Dimension.DIMENSION_720P);
+                builder.dimension(LocalStreamOptions.Dimension.DIMENSION_720P);
                 break;
             case "1080P":
-                builder.setDimension(LocalStreamOptions.Dimension.DIMENSION_1080P);
+                builder.dimension(LocalStreamOptions.Dimension.DIMENSION_1080P);
                 break;
             default:
-                builder.setDimension(LocalStreamOptions.Dimension.DIMENSION_480P);
+                builder.dimension(LocalStreamOptions.Dimension.DIMENSION_480P);
                 break;
         }
-        return builder.setAudioEnabled(true).build();
+        return builder.captureAudio(true).build();
     }
 
 
@@ -604,7 +507,6 @@ public class CallingActivity extends AppCompatActivity {
         if(timer!=null){
             timer.cancel();
         }
-        handler.removeCallbacksAndMessages(null);
         if (localStream != null) {
             localStream.detach();
             localStream.close();
@@ -618,10 +520,7 @@ public class CallingActivity extends AppCompatActivity {
             wvvSmall = null;
         }
         if (mConversation != null) {
-            mConversation.disconnect();
+            mConversation.close();
         }
-/*
-        client.dispose();
-        video.dispose();*/
     }
 }

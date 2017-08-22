@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="title_margen_top">5dp</dimen>
     <dimen name="title_margen_bottom">5dp</dimen>
     <dimen name="item_margen_left">20dp</dimen>

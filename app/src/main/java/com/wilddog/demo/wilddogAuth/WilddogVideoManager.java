@@ -1,22 +1,22 @@
 package com.wilddog.demo.wilddogAuth;
 
-import com.wilddog.video.IncomingInvite;
+import com.wilddog.video.Conversation;
 
 /**
  * Created by fly on 17-6-13.
  */
 
 public class WilddogVideoManager {
-    private static IncomingInvite mIncomingInvite;
+    private static Conversation mConversation;
 
-    public static IncomingInvite getIncomingInvite(){
-        return mIncomingInvite;
+    public static Conversation getConversation(){
+        return mConversation;
     }
-    public static void  saveIncomingInvite(IncomingInvite incomingInvite){
-        mIncomingInvite = incomingInvite;
+    public static void saveConversation(Conversation conversation){
+        mConversation = conversation;
     }
 
-    public static void clearIncomingInvite(){
-        mIncomingInvite = null;
+    public static void clearConversation(){
+        mConversation = null;
     }
 }

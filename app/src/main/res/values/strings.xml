@@ -24,6 +24,6 @@
     <string name="change_beauty_nothing">不使用美颜</string>
     <string name="delete">删除</string>
     <string name="online_now">当前在线</string>
-    <string name="camera360_sdk_v1_6">Camera360 SDK v1.6</string>
+    <string name="camera360_sdk_version">Camera360 SDK v1.7</string>
     <string name="about">关于</string>
 </resources>

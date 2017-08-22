@@ -47,7 +47,7 @@ public class SharedpereferenceTool {
     public static String getBeautyPlan(Context context){
         String beautyPlan = null;
         sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
-        beautyPlan = sp.getString("beautyPlan","Camera360");
+        beautyPlan = sp.getString("beautyPlan","不使用美颜");
         return beautyPlan;
     }
 

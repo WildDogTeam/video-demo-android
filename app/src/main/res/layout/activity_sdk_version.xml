@@ -71,7 +71,7 @@
             android:textSize="11sp"
             android:textColor="@color/text_color_666666"
             android:gravity="center"
-            android:text="Wilddog Video SDK v1.1.0-beta" />
+            android:text="Wilddog Video SDK v2.0.1" />
 
         <TextView
             android:id="@+id/tv_sync_sdk_version"
@@ -81,7 +81,7 @@
             android:textColor="@color/text_color_666666"
             android:textSize="11sp"
             android:gravity="center"
-            android:text="Wilddog Sync SDK v1.2.2" />
+            android:text="Wilddog Sync SDK v2.3.3" />
 
         <TextView
             android:id="@+id/tv_auth_sdk_version"
@@ -91,7 +91,7 @@
             android:textColor="@color/text_color_666666"
             android:textSize="11sp"
             android:gravity="center"
-            android:text="Wilddog Auth SDK v2.1.1" />
+            android:text="Wilddog Auth SDK v2.0.5" />
 
         <TextView
             android:id="@+id/tv_camera_360_sdk_version"
@@ -101,7 +101,7 @@
             android:textColor="@color/text_color_666666"
             android:textSize="11sp"
             android:gravity="center"
-            android:text="@string/camera360_sdk_v1_6" />
+            android:text="@string/camera360_sdk_version" />
 
         <TextView
             android:id="@+id/tv_Tu_sdk_version"
@@ -111,7 +111,7 @@
             android:textColor="@color/text_color_666666"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="TuSDK v2.2" />
+            android:text="TuSDK v2.7" />
 
     </LinearLayout>
 </LinearLayout>

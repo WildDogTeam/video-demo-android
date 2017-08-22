@@ -1,11 +1,11 @@
 package com.wilddog.demo.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -16,9 +16,12 @@ import com.wilddog.demo.fragments.SettingFragment;
 import com.wilddog.demo.utils.AlertMessageUtil;
 import com.wilddog.demo.utils.Contants;
 import com.wilddog.demo.wilddogAuth.WilddogVideoManager;
-import com.wilddog.video.IncomingInvite;
+import com.wilddog.video.CallStatus;
+import com.wilddog.video.Conversation;
+import com.wilddog.video.RemoteStream;
 import com.wilddog.video.WilddogVideo;
-import com.wilddog.video.WilddogVideoClient;
+import com.wilddog.video.WilddogVideoError;
+import com.wilddog.wilddogauth.WilddogAuth;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup rgMain;
     private Fragment onlineFragment = new OnlineFragment();
     private Fragment settingFragment = new SettingFragment();
-
-    private WilddogVideoClient client;
+    private WilddogVideo video;
 
 
     @Override
@@ -43,9 +45,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initWilddogVideo() {
-        WilddogVideo.initializeWilddogVideo(MainActivity.this, Contants.APP_ID);
-        client = WilddogVideo.getInstance().getClient();
-
+        WilddogVideo.initialize(MainActivity.this, Contants.APP_ID, WilddogAuth.getInstance().getCurrentUser().getToken(false).getResult().getToken());
+        video = WilddogVideo.getInstance();
     }
 
     @Override
@@ -55,32 +56,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setListener(){
-        client.setInviteListener(listener);
+        video.setListener(listener);
     }
 
-    private WilddogVideoClient.InviteListener listener = new WilddogVideoClient.Listener() {
+    private WilddogVideo.Listener listener = new WilddogVideo.Listener() {
         @Override
-        public void onIncomingInvite(WilddogVideoClient wilddogVideoClient, IncomingInvite incomingInvite) {
-            Log.d(TAG,"current state is "+incomingInvite.getStatus() +"::"+incomingInvite.getStatus().equals("pendding"));
-            // 有邀请过来，打开被叫界面
-            String uid = incomingInvite.getFromParticipantId();
+        public void onCalled(Conversation conversation, String s) {
+            String uid = conversation.getRemoteUid();
+            WilddogVideoManager.saveConversation(conversation);
+            conversation.setConversationListener(new Conversation.Listener() {
+                @Override
+                public void onCallResponse(CallStatus callStatus) {
+                }
+
+                @Override
+                public void onStreamReceived(RemoteStream remoteStream) {
+
+                }
+
+                @Override
+                public void onClosed() {
+
+                    AlertMessageUtil.showShortToast("对方已取消");
+                    // 发自定义广播，关闭界面回到主页
+                    Intent intent = new Intent();
+                    intent.setAction(Contants.INVITE_CANCEL);
+                    sendBroadcast(intent);
+                }
+
+                @Override
+                public void onError(WilddogVideoError wilddogVideoError) {
+
+                }
+            });
             Intent intent = new Intent(MainActivity.this,AcceptActivity.class);
             intent.putExtra("fromUid",uid);
-            WilddogVideoManager.saveIncomingInvite(incomingInvite);
             startActivity(intent);
-
         }
 
         @Override
-        public void onIncomingInviteCanceled(WilddogVideoClient wilddogVideoClient, IncomingInvite incomingInvite) {
-            Log.d(TAG,"current state is "+incomingInvite.getStatus() +"::"+incomingInvite.getStatus().equals("cancel"));
-            Log.d(TAG,"IncomingInviteCanceled");
-            // 取消邀请。 TODO 关闭被叫界面
-            AlertMessageUtil.showShortToast("对方已取消");
-            // 发自定义广播，关闭界面回到主页
-            Intent intent = new Intent();
-            intent.setAction(Contants.INVITE_CANCEL);
-            sendBroadcast(intent);
+        public void onTokenError(WilddogVideoError wilddogVideoError) {
+            AlertMessageUtil.showShortToast("token 出错,请查看详细日志");
+            Log.e("error",wilddogVideoError.toString());
         }
     };
 
