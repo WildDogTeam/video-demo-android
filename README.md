@@ -10,11 +10,13 @@ git clone git@github.com:WildDogTeam/video-demo-android.git
 cd  video-demo-android
 ```
 
-### 
+
 
 请将Contants中的APP_ID替换成自己的Video APPID。
 
-如果自己开发需要使用美颜效果:
+### 集成美颜
+
+本项目只提供美颜集成代码,如果自己开发需要使用美颜效果:
 
 1.去Camera360官网申请账号并获取KEY;
 
@@ -32,7 +34,7 @@ WilddogVideo SDK 2.0.0
 
 ## 注意
 
-Camera 360和TuSDK的key均和包名有关。
+Camera 360和TuSDK的key均和包名有关,如需查看美颜效果,需要自己集成或者下载[WilddogVideoDemo](http://fir.im/conversationDemo)。
 
 ### 更多示例
 
