@@ -10,17 +10,19 @@ git clone git@github.com:WildDogTeam/video-demo-android.git
 cd  video-demo-android
 ```
 
+### 
 
+请将Contants中的APP_ID替换成自己的Video APPID。
 
 如果自己开发需要使用美颜效果:
 
 1.去Camera360官网申请账号并获取KEY;
 
-2.去涂图官网申请账号，并且创建自己的应用，生成KEY
+2.去涂图官网申请账号，并且创建自己的应用，生成KEY;
 
-3.按照Camera 360或者涂图官网文档集成SDK
+3.按照Camera 360或者涂图官网文档集成SDK;
 
-4.将Camera360Util或者TuSDKUtil复制到你自己的项目,并且调用美颜处理方法
+4.将Camera360Util或者TuSDKUtil复制到你自己的项目,并且调用美颜处理方法;
 
 
 ## demo 使用的sdk
