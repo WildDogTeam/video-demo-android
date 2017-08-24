@@ -61,7 +61,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener{
         llSDKVersion = (LinearLayout) view.findViewById(R.id.ll_SDK_version);
         llLoginout = (LinearLayout) view.findViewById(R.id.ll_user_login_out);
         tvUid = (TextView) view.findViewById(R.id.tv_uid);
-        tvNickName = (TextView) view.findViewById(R.id.tv_nickname);
+        tvNickName = (TextView) view.findViewById(R.id.tv_nickName);
         civPhotoUrl = (CircleImageView) view.findViewById(R.id.civ_photo);
         tvDimension = (TextView) view.findViewById(R.id.tv_dimension);
         tvBeautyPlan = (TextView) view.findViewById(R.id.tv_beauty_plan);

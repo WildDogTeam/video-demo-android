@@ -15,7 +15,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
-import com.wilddog.conversation.utils.Contants;
+import com.wilddog.conversation.utils.Constant;
+import com.wilddog.conversation.utils.WXUtil;
 
 import io.fabric.sdk.android.Fabric;
 import org.lasque.tusdk.core.TuSdk;
@@ -46,7 +47,7 @@ public class ConversationApplication extends Application {
          *
          *  @param appkey 应用秘钥 (请前往 http://tusdk.com 申请秘钥)
          */
-        TuSdk.init(this.getApplicationContext(), Contants.TUSDK_KEY);
+        TuSdk.init(this.getApplicationContext(), Constant.TUSDK_KEY);
         ImageLoaderConfiguration config;
         // imageloader
         DisplayImageOptions options=new DisplayImageOptions.Builder()
@@ -75,7 +76,7 @@ public class ConversationApplication extends Application {
                 .discCacheFileCount(100)
                 .build();
         ImageLoader.getInstance().init(config);
-
+        WXUtil.initWeixin(this);
     }
 
     public static Context getContext() {

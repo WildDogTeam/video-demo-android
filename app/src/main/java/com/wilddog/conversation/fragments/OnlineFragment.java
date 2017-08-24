@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.wilddog.client.ChildEventListener;
@@ -172,7 +173,7 @@ public class OnlineFragment extends BaseFragment {
         mRef.child("onlineusers").addChildEventListener(childEventListener);
     }
 
-    class MyAdapter extends BaseAdapter {
+   public  class MyAdapter extends BaseAdapter implements SectionIndexer {
         private List<UserInfo> mList = new ArrayList<>();
         private LayoutInflater mInflater;
 
@@ -231,6 +232,30 @@ public class OnlineFragment extends BaseFragment {
             }
             ImageManager.Load(everyone.getPhotoUrl(),v.photoUrl);
             return view;
+        }
+
+        @Override
+        public Object[] getSections() {
+            return null;
+        }
+
+        @Override
+        public int getPositionForSection(int section) {
+            for (int i = 0; i < mList.size(); i++) {
+                UserInfo user = mList.get(i);
+                String l = PingYinUtil.converterToFirstSpell(user.getNickName())
+                        .substring(0, 1);
+                char firstChar = l.toUpperCase().charAt(0);
+                if (firstChar == section) {
+                    return i;
+                }
+            }
+            return 0;
+        }
+
+        @Override
+        public int getSectionForPosition(int position) {
+            return 0;
         }
 
         public class ViewHolder{

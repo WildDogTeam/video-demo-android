@@ -27,7 +27,7 @@ import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.receiver.InviteCancelBroadcastReceiver;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.Camera360Util;
-import com.wilddog.conversation.utils.Contants;
+import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ConvertUtil;
 import com.wilddog.conversation.utils.MyOpenHelper;
 import com.wilddog.conversation.utils.SharedpereferenceTool;
@@ -124,7 +124,7 @@ public class ConversationActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 super.onReceive(context, intent);
-                if (intent.getAction().equals(Contants.INVITE_CANCEL)) {
+                if (intent.getAction().equals(Constant.INVITE_CANCEL)) {
                     finish();
                 }
             }
@@ -199,12 +199,12 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     private void renameFile(String newFileName) {
-        File file = new File(Contants.filePath + fileName);
+        File file = new File(Constant.filePath + fileName);
         file.renameTo(new File(newFileName));
     }
 
     private void deletefile() {
-        File file = new File(Contants.filePath + fileName);
+        File file = new File(Constant.filePath + fileName);
         file.delete();
     }
 
@@ -546,7 +546,7 @@ public class ConversationActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter intentFilter = new IntentFilter(Contants.INVITE_CANCEL);
+        IntentFilter intentFilter = new IntentFilter(Constant.INVITE_CANCEL);
         registerReceiver(broadcastReceiver, intentFilter);
     }
 

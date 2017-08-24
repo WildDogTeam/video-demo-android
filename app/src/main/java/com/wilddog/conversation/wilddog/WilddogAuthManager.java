@@ -18,4 +18,7 @@ public class WilddogAuthManager {
         wilddogAuth = WilddogAuth.getInstance();}
         return wilddogAuth;
     }
+
+
+
 }

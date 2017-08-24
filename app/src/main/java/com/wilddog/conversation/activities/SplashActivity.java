@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
-import com.wilddog.conversation.utils.Contants;
+import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ObjectAndStringTool;
 import com.wilddog.conversation.utils.SharedpereferenceTool;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         // 自动跳转设置时间为2秒。
 
-        handler.sendEmptyMessageDelayed(gotoLoginAcitivity, Contants.AUTO_SKIP_TIME);
+        handler.sendEmptyMessageDelayed(gotoLoginAcitivity, Constant.AUTO_SKIP_TIME);
     }
 
     private void gotoLoginAcitivity(){

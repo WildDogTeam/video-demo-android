@@ -17,7 +17,7 @@ android {
         applicationId "com.wilddog.conversation"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 27
+        versionCode 28
         versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -92,7 +92,7 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     })
     compile 'com.wilddog.client:wilddog-auth-android:2.0.5'
-    compile 'com.wilddog.client:wilddog-video-android:2.0.0'
+    compile 'com.wilddog.client:wilddog-video-android:2.0.1'
     compile 'com.google.code.gson:gson:2.8.0'
     // TuSDK
     compile files('libs/TuSDKCore-2.7.0.jar')
@@ -108,6 +108,7 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics-ndk:1.1.6@aar') {
         transitive = true;
     }
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     compile files('libs/pinyin4j-2.5.0.jar')
 }
 

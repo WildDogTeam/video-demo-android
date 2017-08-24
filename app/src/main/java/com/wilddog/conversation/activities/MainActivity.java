@@ -20,7 +20,7 @@ import com.wilddog.conversation.fragments.OnlineFragment;
 import com.wilddog.conversation.fragments.MeFragment;
 import com.wilddog.conversation.fragments.CallFragment;
 import com.wilddog.conversation.utils.AlertMessageUtil;
-import com.wilddog.conversation.utils.Contants;
+import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.WilddogVideoManager;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 import com.wilddog.video.CallStatus;
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initWilddogVideo() {
-        WilddogVideo.initialize(MainActivity.this,Contants.APP_ID, WilddogAuth.getInstance().getCurrentUser().getToken(false).getResult().getToken());
+        WilddogVideo.initialize(MainActivity.this, Constant.WILDDOG_VIDEO_APP_ID, WilddogAuth.getInstance().getCurrentUser().getToken(false).getResult().getToken());
         video = WilddogVideo.getInstance();
     }
 
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 AlertMessageUtil.showShortToast("对方已取消");
                 // 发自定义广播，关闭界面回到主页
                 Intent intent = new Intent();
-                intent.setAction(Contants.INVITE_CANCEL);
+                intent.setAction(Constant.INVITE_CANCEL);
                 sendBroadcast(intent);
                 iscancel =true;
             }

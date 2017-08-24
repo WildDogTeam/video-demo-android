@@ -10,5 +10,5 @@
     android:maxWidth="70dip"
     android:padding="10dip"
     android:gravity="center"
-    android:background="@drawable/btn_bg_green"
+    android:background="@drawable/btn_orange_bg_normal"
 />

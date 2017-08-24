@@ -1,23 +1,35 @@
 package com.wilddog.conversation.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.wilddog.client.DataSnapshot;
+import com.wilddog.client.SyncError;
+import com.wilddog.client.ValueEventListener;
 import com.wilddog.conversation.R;
+import com.wilddog.conversation.activities.CallingActivity;
+import com.wilddog.conversation.activities.SendInviteActivity;
 import com.wilddog.conversation.bean.ConversationRecord;
+import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.MyOpenHelper;
 import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.String2DateUtil;
 import com.wilddog.conversation.view.CircleImageView;
+import com.wilddog.conversation.wilddog.WilddogSyncManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by fly on 17-6-9.
@@ -41,9 +53,45 @@ public class CallFragment extends BaseFragment {
         lvRecordList = (ListView) view.findViewById(R.id.lv_records);
         rlNoHistory = (RelativeLayout) view.findViewById(R.id.rl_no_history);
         adapter = new MyAdapter(records, getContext());
+        lvRecordList.setAdapter(adapter);
+        lvRecordList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final String uid = records.get(position).getRemoteId();
+                WilddogSyncManager.getWilddogSyncTool().getonlineUserInfos(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(dataSnapshot==null || dataSnapshot.getValue()==null){return;}
+                        Map map = (Map) dataSnapshot.getValue();
+                        if(map.containsKey(uid)){
+                            Map subMap = (Map) map.get(uid);
+                           UserInfo remoteUserInfo = new UserInfo();
+                            remoteUserInfo.setPhotoUrl(subMap.get("photoUrl").toString());
+                            remoteUserInfo.setUid(subMap.get("uid").toString());
+                            remoteUserInfo.setNickName(subMap.get("nickName").toString());
+                            gotoCallingActivity(remoteUserInfo);
+                        }else {
+                            Toast.makeText(getContext(),"你呼叫的用户不在线或者不存在",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(SyncError syncError) {
+
+                    }
+                });
+            }
+        });
         initDate();
         return view;
     }
+
+    private void gotoCallingActivity(UserInfo info) {
+        Intent intent = new Intent(getContext(), CallingActivity.class);
+        intent.putExtra("user",info);
+        startActivity(intent);
+    }
+
 
     private void showListViewOrTextView() {
         if (records.size() > 0) {
@@ -112,8 +160,8 @@ public class CallFragment extends BaseFragment {
             }
             ConversationRecord everyone = mList.get(position);
             v.tvNickName.setText(everyone.getNickName());
-            v.tvCallTime.setText(everyone.getTimeStamp());
-            v.tvDuration.setText(everyone.getDuration());
+            v.tvCallTime.setText(String2DateUtil.getStandardDate(everyone.getTimeStamp()));
+            v.tvDuration.setText(formatTime(everyone.getDuration()));
             ImageManager.Load(everyone.getPhotoUrl(), v.civPhoto);
             return view;
         }
@@ -123,6 +171,18 @@ public class CallFragment extends BaseFragment {
             public CircleImageView civPhoto;
             public TextView tvDuration;
             public TextView tvCallTime;
+        }
+        private String formatTime(String duration){
+            long time = Long.parseLong(duration);
+            if(time<60){
+                return duration+"秒";
+            }else {
+                if(time%60==0){
+                    return time/60+"分钟";
+                }else {
+                    return (time/60+1)+"分钟";
+                }
+            }
         }
     }
 

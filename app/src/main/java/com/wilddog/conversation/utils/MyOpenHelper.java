@@ -48,7 +48,7 @@ public class MyOpenHelper extends SQLiteOpenHelper {
     public List selectConversationRecords(String localId) {
         SQLiteDatabase db = this.getReadableDatabase();
         List list=new ArrayList();
-        String limit = "0 offset 30";
+        String limit = "30";
         Cursor cursor = db
                 .query(historyTableName, null, "localid=?", new String[]{localId}, null, null, "timestamp desc",limit);
         if(cursor!=null){

@@ -7,12 +7,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.AlertMessageUtil;
+import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ObjectAndStringTool;
 import com.wilddog.conversation.utils.PermissionHelper;
 import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.WXUtil;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 import com.wilddog.conversation.wilddog.WilddogAuthManager;
 import com.wilddog.wilddogauth.core.Task;
@@ -26,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
 
     private Button login;
-    private boolean isLoginClickable = true;
+
 
     private static final int REQUEST_CODE = 0; // 请求码
 
@@ -41,8 +45,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //点击登录
-                if (!isLoginClickable) return;
-                isLoginClickable = false;
+                if (!Constant.isLoginClickable) return;
+                Constant.isLoginClickable = false;
                 login();
 
             }
@@ -67,7 +71,32 @@ public class LoginActivity extends AppCompatActivity {
         this.overridePendingTransition(0, R.anim.bottom_out);
     }
 
+    private void weixinLogin(){
+        IWXAPI iwxapi= WXUtil.getIwxapi();
+        if (!iwxapi.isWXAppInstalled()) {
+            AlertMessageUtil.showShortToast("请先下载安装微信");
+            Constant.isLoginClickable = true;
+            return;
+        }
+        if (!iwxapi.isWXAppSupportAPI()) {
+            AlertMessageUtil.showShortToast("请先更新微信应用");
+            Constant.isLoginClickable = true;
+            return;
+        }
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "conversation_wx_login";
+        iwxapi.sendReq(req);
+        Log.d(TAG,"发送了微信授权请求");
+    }
+
     private void login() {
+      weixinLogin();
+    }
+
+
+    private void loginWithAnonymously(){
+
         WilddogAuthManager.getWilddogAuth().signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(Task<AuthResult> task) {
@@ -79,19 +108,19 @@ public class LoginActivity extends AppCompatActivity {
                     info.setNickName("匿名用户"+user.getUid().substring(0,5));
                     info.setUid(user.getUid());
                     info.setPhotoUrl("https://img.wdstatic.cn/imdemo/1.png");
-                   // WilddogSyncManager.getWilddogSyncTool().writeToUser(user.getUid());
+                    // WilddogSyncManager.getWilddogSyncTool().writeToUser(user.getUid());
                     WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(info);
                     SharedpereferenceTool.setUserInfo(LoginActivity.this, ObjectAndStringTool.getJsonFromObject(info));
                     SharedpereferenceTool.setLoginStatus(LoginActivity.this,true);
                     //TODO 需要记下所有的登录的用户的uid和昵称等用于推送
                     AlertMessageUtil.showShortToast("登录成功");
-                    isLoginClickable = true;
+                    Constant.isLoginClickable = true;
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     // 将用户信息缓存
                     finish();
                 } else {
                     // 失败
-                    isLoginClickable = true;
+                    Constant.isLoginClickable = true;
                     AlertMessageUtil.showShortToast("登录失败");
                     Log.e(TAG,task.getException().toString());
                 }
@@ -105,16 +134,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
+        Log.d("loginresultcode", requestCode + "" + resultCode);
         if (requestCode == REQUEST_CODE && resultCode == PermissionHelper.PERMISSIONS_DENIED) {
             AlertMessageUtil.showShortToast("PERMISSIONS_DENIED ,User refuse to give Permission ");
             finish();
         } else {
             Log.i(TAG, "Get Permission success");
         }
-    }
-
-    private void writeToToken(){
-
     }
 
 }

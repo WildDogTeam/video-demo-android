@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.receiver.InviteCancelBroadcastReceiver;
-import com.wilddog.conversation.utils.Contants;
+import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.WilddogVideoManager;
 import com.wilddog.conversation.view.CircleImageView;
@@ -50,7 +50,7 @@ public class AcceptActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 super.onReceive(context, intent);
-                if(intent.getAction().equals(Contants.INVITE_CANCEL)){
+                if(intent.getAction().equals(Constant.INVITE_CANCEL)){
                     finish();
                 }
             }
@@ -82,7 +82,7 @@ public class AcceptActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter intentFilter= new IntentFilter(Contants.INVITE_CANCEL);
+        IntentFilter intentFilter= new IntentFilter(Constant.INVITE_CANCEL);
         registerReceiver(broadcastReceiver,intentFilter);
     }
 

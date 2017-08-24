@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 
 import com.wilddog.conversation.R;
+import com.wilddog.conversation.fragments.OnlineFragment;
 import com.wilddog.conversation.utils.CommonUtil;
 
 public class SideBar extends View {
@@ -34,9 +35,9 @@ public class SideBar extends View {
 	}
 
 	private void init() {
-		l = new char[] { '#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+		l = new char[] {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
 				'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-				'W', 'X', 'Y', 'Z' };
+				'W', 'X', 'Y', 'Z', '#' };
 	}
 
 	public SideBar(Context context, AttributeSet attrs, int defStyle) {
@@ -66,9 +67,9 @@ public class SideBar extends View {
 			mDialogText.setVisibility(View.VISIBLE);
 			mDialogText.setText("" + l[idx]);
 			if (sectionIndexter == null) {
-				HeaderViewListAdapter ha = (HeaderViewListAdapter) list
+				OnlineFragment.MyAdapter ha = (OnlineFragment.MyAdapter) list
 						.getAdapter();
-				sectionIndexter = (SectionIndexer) ha.getWrappedAdapter();
+				sectionIndexter = (SectionIndexer) ha;
 			}
 			int position = sectionIndexter.getPositionForSection(l[idx]);
 			if (position == -1) {

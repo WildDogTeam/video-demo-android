@@ -71,6 +71,12 @@
 
         <activity android:name="com.wilddog.conversation.activities.AcceptActivity" />
         <activity android:name="com.wilddog.conversation.activities.ConversationActivity"/>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="62b476b8bec312542b8993f36ee2e14400600162" />

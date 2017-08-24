@@ -24,9 +24,11 @@ import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.Camera360Util;
 import com.wilddog.conversation.utils.ConvertUtil;
+import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.MyOpenHelper;
 import com.wilddog.conversation.utils.SharedpereferenceTool;
 import com.wilddog.conversation.utils.TuSDKUtil;
+import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.video.CallStatus;
 import com.wilddog.video.Conversation;
 import com.wilddog.video.LocalStream;
@@ -57,6 +59,8 @@ public class CallingActivity extends AppCompatActivity {
     private LinearLayout llHungup;
     private TextView tvHungup;
     private LinearLayout llFlipCamera;
+
+    private CircleImageView civPhotoUrl;
 
     private TextView tvDimension;
     private TextView tvFps;
@@ -285,6 +289,8 @@ public class CallingActivity extends AppCompatActivity {
         cbCamera.setChecked(isAudioEnable);
         llHungup = (LinearLayout) findViewById(R.id.ll_reject);
         tvHungup = (TextView) findViewById(R.id.tv_hungup);
+        civPhotoUrl = (CircleImageView) findViewById(R.id.civ_photo);
+        ImageManager.Load(remoteUserInfo.getPhotoUrl(),civPhotoUrl);
         tvHungup.setText("取消");
         llFlipCamera = (LinearLayout) findViewById(R.id.ll_filp_camera);
 
@@ -297,7 +303,7 @@ public class CallingActivity extends AppCompatActivity {
 
         llCalled = (LinearLayout) findViewById(R.id.ll_call);
         tvNickname = (TextView) findViewById(R.id.tv_nickname);
-        tvNickname.setText(remoteid);
+        tvNickname.setText(remoteUserInfo.getNickName());
 
         wvvBig = (WilddogVideoView) findViewById(R.id.wvv_big);
         wvvSmall = (WilddogVideoView) findViewById(R.id.wvv_small);
