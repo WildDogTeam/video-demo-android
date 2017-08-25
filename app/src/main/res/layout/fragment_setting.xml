@@ -28,8 +28,8 @@
         >
 
     <com.wilddog.conversation.view.CircleImageView
-        android:layout_width="56.7dp"
-        android:layout_height="56.7dp"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
         android:src="@drawable/uid"
         android:id="@+id/civ_photo"
         />
@@ -202,11 +202,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/line_color"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginLeft="@dimen/item_margen_left"
         android:background="@color/line_color"/>
 
     <LinearLayout
@@ -268,7 +264,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/item_text_image_space"
-            android:text="登出"
+            android:text="退出登录"
             android:textColor="@color/text_color"
             android:textSize="@dimen/item_left_text_size" />
 

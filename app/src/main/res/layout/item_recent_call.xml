@@ -7,8 +7,8 @@
     android:gravity="center"
     android:background="@drawable/selector_popupwin_item_bg">
   <com.wilddog.conversation.view.CircleImageView
-      android:layout_width="38.7dp"
-      android:layout_height="38.7dp"
+      android:layout_width="39dp"
+      android:layout_height="39dp"
       android:id="@+id/civ_photo"
       android:src="@drawable/logo"
       android:layout_marginLeft="10dp"

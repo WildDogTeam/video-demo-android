@@ -146,8 +146,8 @@
         android:orientation="vertical"
         >
         <com.wilddog.conversation.view.CircleImageView
-            android:layout_width="56.7dp"
-            android:layout_height="56.7dp"
+            android:layout_width="57dp"
+            android:layout_height="57dp"
             android:id="@+id/civ_photo"
             android:layout_gravity="center"
             android:src="@drawable/logo"

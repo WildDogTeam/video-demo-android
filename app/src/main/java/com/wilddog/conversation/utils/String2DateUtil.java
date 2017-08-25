@@ -40,7 +40,7 @@ public class String2DateUtil {
                 sb.append(minute + "分钟");
             }
         } else if (mill - 1 > 0) {
-            if (mill == 60) {
+            if (mill >= 60) {
                 sb.append("1分钟");
             } else {
                 sb.append(mill + "秒");

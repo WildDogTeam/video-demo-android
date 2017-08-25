@@ -74,6 +74,8 @@ public class ConversationActivity extends AppCompatActivity {
     private WilddogVideoView wwvBig;
     private WilddogVideoView wwvSmall;
 
+    private TextView tvNickName;
+
     private LinearLayout llData;
     private LinearLayout llState;
     private TextView tvRecordTime;
@@ -169,7 +171,7 @@ public class ConversationActivity extends AppCompatActivity {
     private void showSavePopupWindow() {
         View view = View.inflate(ConversationActivity.this, R.layout.popupwindow_record_file, null);
         final EditText etFileName = (EditText) view.findViewById(R.id.et_file_name);
-        etFileName.setText(fileName);
+        etFileName.setText(fileName.substring(0,fileName.indexOf(".mp4")));
         Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
         Button btnSave = (Button) view.findViewById(R.id.btn_save);
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -190,7 +192,7 @@ public class ConversationActivity extends AppCompatActivity {
                     etFileName.setText("");
                     AlertMessageUtil.showShortToast("你的文件命名不符合规范，不应该存在" + "/");
                 } else {
-                    renameFile(newFileName);
+                    renameFile(newFileName+".mp4");
                     popupWindow.dismiss();
                 }
             }
@@ -224,6 +226,9 @@ public class ConversationActivity extends AppCompatActivity {
         cbSpeaker.setChecked(isAudioEnable);
         cbCamera = (CheckBox) findViewById(R.id.cb_camera);
         cbCamera.setChecked(isAudioEnable);
+
+        tvNickName = (TextView) findViewById(R.id.tv_nickname);
+        tvNickName.setText(remoteUserInfo.getNickName());
 
         llHungup = (LinearLayout) findViewById(R.id.ll_reject);
         llFlipCamera = (LinearLayout) findViewById(R.id.ll_filp_camera);

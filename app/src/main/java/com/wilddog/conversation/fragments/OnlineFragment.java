@@ -2,6 +2,7 @@ package com.wilddog.conversation.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,13 +55,26 @@ public class OnlineFragment extends BaseFragment {
     private List<UserInfo> userList = new ArrayList<>();
 
     private MyAdapter adapter;
+    private String[] names = new String[]{
+            "囚徒","秋日","王师傅","2009","sol君","JY","熊二","桃子","少帮主","小舞"
+    };
+
+/*    private void initUserInfo(){
+        for(int i=0;i<10;i++){
+            UserInfo info = new UserInfo();
+            info.setUid("188"+i);
+            info.setNickName(names[i]);
+            info.setPhotoUrl("https://img.wdstatic.cn/imdemo/"+i+".png");
+            userList.add(info);
+        }
+    }*/
 
     private ChildEventListener childEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             if (dataSnapshot != null) {
                 String key = dataSnapshot.getKey();
-                 if (!mUid.equals(key)) {
+                 if (!mUid.equals(key) && !userList.contains(key)) {
                   Map value = (Map) dataSnapshot.getValue();
                      UserInfo info = new UserInfo();
                      info.setUid(value.get("uid").toString());
@@ -68,6 +82,7 @@ public class OnlineFragment extends BaseFragment {
                      info.setPhotoUrl(value.get("photoUrl").toString());
                      userList.add(info);
                   }
+                 /* initUserInfo();*/
                 adapter.notifyDataSetChanged();
                 showListViewOrTextView();
             }
@@ -181,7 +196,6 @@ public class OnlineFragment extends BaseFragment {
             mList = userList;
             mInflater = LayoutInflater.from(context);
             // 排序(实现了中英文混排)
-            Collections.sort(mList, new PinyinComparator());
         }
 
         @Override
@@ -263,7 +277,13 @@ public class OnlineFragment extends BaseFragment {
             public CircleImageView photoUrl;
             public TextView tvCatalog;
         }
-    }
+
+       @Override
+       public void notifyDataSetChanged() {
+           Collections.sort(mList, new PinyinComparator());
+           super.notifyDataSetChanged();
+       }
+   }
 
     @Override
     public void onPause() {

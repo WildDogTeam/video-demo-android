@@ -8,6 +8,7 @@
       style="@style/MMListCatalog"
       android:layout_height="wrap_content"
       android:gravity="center_vertical"
+      android:textSize="14.7sp"
       android:layout_gravity="center_vertical"
       android:paddingRight="5.0dip" />
   <LinearLayout
@@ -19,9 +20,9 @@
       android:minHeight="50dp"
       >
   <com.wilddog.conversation.view.CircleImageView
-      android:layout_width="38.7dp"
+      android:layout_width="39dp"
       android:layout_marginLeft="20dp"
-      android:layout_height="38.7dp"
+      android:layout_height="39dp"
       android:id="@+id/civ_photo"
       android:src="@drawable/logo"
 
@@ -30,6 +31,7 @@
     android:layout_width="match_parent"
     android:padding="5dp"
     android:layout_marginLeft="10dp"
+    android:textSize="14.7sp"
     android:text="ARY"
     android:id="@+id/tv_uid"
     android:textColor="@drawable/selector_item_text_color"

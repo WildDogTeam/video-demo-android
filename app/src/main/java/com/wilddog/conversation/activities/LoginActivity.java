@@ -11,6 +11,7 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
+import com.wilddog.conversation.utils.ActivityHolder;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ObjectAndStringTool;
@@ -87,11 +88,13 @@ public class LoginActivity extends AppCompatActivity {
         req.scope = "snsapi_userinfo";
         req.state = "conversation_wx_login";
         iwxapi.sendReq(req);
+        ActivityHolder.setActivity(this);
         Log.d(TAG,"发送了微信授权请求");
     }
 
     private void login() {
-      weixinLogin();
+         loginWithAnonymously();
+        // weixinLogin();
     }
 
 
@@ -105,10 +108,9 @@ public class LoginActivity extends AppCompatActivity {
                     WilddogUser user = task.getResult().getWilddogUser();
                     SharedpereferenceTool.saveUserId(LoginActivity.this, user.getUid());
                     UserInfo info = new UserInfo();
-                    info.setNickName("匿名用户"+user.getUid().substring(0,5));
+                    info.setNickName(user.getUid());
                     info.setUid(user.getUid());
                     info.setPhotoUrl("https://img.wdstatic.cn/imdemo/1.png");
-                    // WilddogSyncManager.getWilddogSyncTool().writeToUser(user.getUid());
                     WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(info);
                     SharedpereferenceTool.setUserInfo(LoginActivity.this, ObjectAndStringTool.getJsonFromObject(info));
                     SharedpereferenceTool.setLoginStatus(LoginActivity.this,true);
