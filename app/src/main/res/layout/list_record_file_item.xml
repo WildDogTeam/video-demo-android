@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:minHeight="42.7dp"
     android:layout_height="match_parent">
-  <com.wilddog.demo.view.SideslipView
+  <com.wilddog.conversation.view.SideslipView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
@@ -51,5 +51,5 @@
           android:text="@string/delete"
           android:textSize="16sp" />
       </LinearLayout>
-  </com.wilddog.demo.view.SideslipView>
+  </com.wilddog.conversation.view.SideslipView>
 </RelativeLayout>

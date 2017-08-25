@@ -6,32 +6,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/callbg"
-    tools:context="com.wilddog.demo.activities.AcceptActivity">
+    tools:context="com.wilddog.conversation.activities.AcceptActivity">
     
-    <ImageView
-        android:layout_width="57.3dp"
-        android:layout_height="57.3dp"
-        android:layout_marginTop="181.3dp"
+    <com.wilddog.conversation.view.CircleImageView
+        android:layout_width="57dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/called_user"
         android:layout_gravity="center"
+        android:id="@+id/civ_photo"
         />
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textColor="@color/text_color_e5e5e5"
-    android:textSize="25sp"
-    android:text="54641353412123"
+    android:textColor="@color/text_color_white"
+    android:textSize="22.7sp"
+    android:text="据说微信最长昵称是十三个字"
     android:layout_marginTop="15dp"
     android:layout_gravity="center"
     android:gravity="center"
-    android:id="@+id/tv_uid"
+    android:id="@+id/tv_nickname"
     />
 <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="邀你视频通话"
-    android:textColor="@color/text_color_e5e5e5"
-    android:textSize="15sp"
+    android:textColor="@color/text_color_white"
+    android:textSize="14.7sp"
     android:layout_marginTop="13.3dp"
     android:gravity="center"
     />

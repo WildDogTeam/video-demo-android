@@ -14,10 +14,10 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.wilddog.demo"
+        applicationId "com.wilddog.conversation"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 26
+        versionCode 28
         versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -84,11 +84,10 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
-   // compile 'com.wilddog.client:wilddog-video-android:1.2.0-beta'
+    // compile 'com.wilddog.client:wilddog-video-android:1.2.0-beta'
     testCompile 'junit:junit:4.12'
     // camera 360 美颜库
     compile(name: 'PgPrettifyEngine-release_1.7', ext: 'aar')
-
     compile('com.wilddog.client:wilddog-sync-android:2.3.3', {
         exclude group: 'org.json', module: 'json'
     })
@@ -106,10 +105,11 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
-
     compile('com.crashlytics.sdk.android:crashlytics-ndk:1.1.6@aar') {
         transitive = true;
     }
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    compile files('libs/pinyin4j-2.5.0.jar')
 }
 
 crashlytics {

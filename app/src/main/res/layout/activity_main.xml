@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.wilddog.demo.activities.MainActivity">
+    tools:context="com.wilddog.conversation.activities.MainActivity">
 
     <FrameLayout
         android:id="@+id/fl_content"
@@ -22,30 +22,18 @@
 
         <RadioButton
             android:id="@+id/rb_main_online"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:button="@null"
-            android:checked="false"
+            style="@style/RadiaButton"
             android:drawableTop="@drawable/selector_tab_online"
-            android:gravity="center"
-            android:paddingTop="10dp"
-            android:background="@drawable/selector_radiobutton_bg"
             android:text="@string/online" />
-
         <RadioButton
-            android:id="@+id/rb_main_settings"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:button="@null"
-            android:checked="false"
-            android:drawableTop="@drawable/selector_tab_setting"
-            android:gravity="center"
-            android:background="@drawable/selector_radiobutton_bg"
-            android:paddingTop="10dp"
-            android:text="@string/settings" />
+            android:id="@+id/rb_main_call"
+            style="@style/RadiaButton"
+            android:drawableTop="@drawable/selector_tab_call"
+            android:text="@string/call" />
+        <RadioButton
+            android:id="@+id/rb_main_me"
+            style="@style/RadiaButton"
+            android:drawableTop="@drawable/selector_tab_me"
+            android:text="@string/me" />
     </RadioGroup>
 </LinearLayout>

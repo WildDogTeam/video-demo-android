@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wilddog.demo.activities.LoginActivity">
+    tools:context="com.wilddog.conversation.activities.LoginActivity">
     <ImageView
         android:layout_width="74dp"
         android:layout_height="74dp"
@@ -14,25 +14,14 @@
         android:id="@+id/iv_login_logo"
         />
     <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/logo_des"
-        android:textSize="24sp"
-        android:textColor="@color/text_color"
-        android:layout_below="@+id/iv_login_logo"
-        android:gravity="center"
-        android:id="@+id/tv_logo_desc"
-        />
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/app_des"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/tv_conversation_program"
-        android:textSize="14sp"
+        android:textSize="24sp"
         android:textColor="@color/text_color"
-        android:layout_below="@+id/tv_logo_desc"
+        android:layout_below="@+id/iv_login_logo"
         android:gravity="center"
         />
     <Button
