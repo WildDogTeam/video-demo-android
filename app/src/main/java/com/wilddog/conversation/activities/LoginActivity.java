@@ -93,8 +93,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
-         loginWithAnonymously();
-        // weixinLogin();
+        // loginWithAnonymously();
+         weixinLogin();
     }
 
 

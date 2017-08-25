@@ -55,19 +55,8 @@ public class OnlineFragment extends BaseFragment {
     private List<UserInfo> userList = new ArrayList<>();
 
     private MyAdapter adapter;
-    private String[] names = new String[]{
-            "囚徒","秋日","王师傅","2009","sol君","JY","熊二","桃子","少帮主","小舞"
-    };
 
-/*    private void initUserInfo(){
-        for(int i=0;i<10;i++){
-            UserInfo info = new UserInfo();
-            info.setUid("188"+i);
-            info.setNickName(names[i]);
-            info.setPhotoUrl("https://img.wdstatic.cn/imdemo/"+i+".png");
-            userList.add(info);
-        }
-    }*/
+
 
     private ChildEventListener childEventListener = new ChildEventListener() {
         @Override
@@ -82,7 +71,6 @@ public class OnlineFragment extends BaseFragment {
                      info.setPhotoUrl(value.get("photoUrl").toString());
                      userList.add(info);
                   }
-                 /* initUserInfo();*/
                 adapter.notifyDataSetChanged();
                 showListViewOrTextView();
             }
