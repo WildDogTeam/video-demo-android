@@ -72,8 +72,8 @@ public class LoginActivity extends AppCompatActivity {
         this.overridePendingTransition(0, R.anim.bottom_out);
     }
 
-    private void weixinLogin(){
-        IWXAPI iwxapi= WXUtil.getIwxapi();
+    private void weixinLogin() {
+        IWXAPI iwxapi = WXUtil.getIwxapi();
         if (!iwxapi.isWXAppInstalled()) {
             AlertMessageUtil.showShortToast("请先下载安装微信");
             Constant.isLoginClickable = true;
@@ -89,16 +89,17 @@ public class LoginActivity extends AppCompatActivity {
         req.state = "conversation_wx_login";
         iwxapi.sendReq(req);
         ActivityHolder.setActivity(this);
-        Log.d(TAG,"发送了微信授权请求");
+        Log.d(TAG, "发送了微信授权请求");
     }
 
     private void login() {
-        // loginWithAnonymously();
-         weixinLogin();
+        AlertMessageUtil.showprogressbar("微新登录中", LoginActivity.this);
+        //loginWithAnonymously();
+        weixinLogin();
     }
 
 
-    private void loginWithAnonymously(){
+    private void loginWithAnonymously() {
 
         WilddogAuthManager.getWilddogAuth().signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -113,10 +114,11 @@ public class LoginActivity extends AppCompatActivity {
                     info.setPhotoUrl("https://img.wdstatic.cn/imdemo/1.png");
                     WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(info);
                     SharedpereferenceTool.setUserInfo(LoginActivity.this, ObjectAndStringTool.getJsonFromObject(info));
-                    SharedpereferenceTool.setLoginStatus(LoginActivity.this,true);
+                    SharedpereferenceTool.setLoginStatus(LoginActivity.this, true);
                     //TODO 需要记下所有的登录的用户的uid和昵称等用于推送
                     AlertMessageUtil.showShortToast("登录成功");
                     Constant.isLoginClickable = true;
+                    AlertMessageUtil.dismissprogressbar();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     // 将用户信息缓存
                     finish();
@@ -124,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                     // 失败
                     Constant.isLoginClickable = true;
                     AlertMessageUtil.showShortToast("登录失败");
-                    Log.e(TAG,task.getException().toString());
+                    Log.e(TAG, task.getException().toString());
                 }
 
             }

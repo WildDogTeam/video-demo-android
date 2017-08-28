@@ -85,6 +85,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                                 //TODO 需要记下所有的登录的用户的uid和昵称等用于推送
                                 AlertMessageUtil.showShortToast("登录成功");
                                 Constant.isLoginClickable = true;
+                                AlertMessageUtil.dismissprogressbar();
                                 startActivity(new Intent(WXEntryActivity.this, MainActivity.class));
                                 //将登录界面关闭
                                 ActivityHolder.finish();

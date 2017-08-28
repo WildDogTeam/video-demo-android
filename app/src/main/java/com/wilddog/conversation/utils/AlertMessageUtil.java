@@ -1,5 +1,7 @@
 package com.wilddog.conversation.utils;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ public class AlertMessageUtil {
 
     public static Toast toast;
     private static TextView tv;
+    public static ProgressDialog progressDialog;
 
     public static void showShortToast(String content) {
         if (toast == null) {
@@ -32,5 +35,17 @@ public class AlertMessageUtil {
         toast.show();
     }
 
+    public static void showprogressbar(String title, Context context) {
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle(title);
+        progressDialog.setMessage("载入中");
+        progressDialog.show();
+    }
+
+    public static void dismissprogressbar() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
 
 }

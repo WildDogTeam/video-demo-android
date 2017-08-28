@@ -69,8 +69,8 @@
                         >
                         <CheckBox
                             android:id="@+id/cb_mic"
-                            android:layout_width="17.3dp"
-                            android:layout_height="30.7dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:drawableTop="@drawable/selector_button_mic"
@@ -123,8 +123,8 @@
                         >
                         <CheckBox
                             android:id="@+id/cb_camera"
-                            android:layout_width="23.3dp"
-                            android:layout_height="29.3dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:drawableTop="@drawable/selector_button_camera"

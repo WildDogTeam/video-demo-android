@@ -24,6 +24,7 @@ import com.wilddog.conversation.R;
 import com.wilddog.conversation.activities.CallingActivity;
 import com.wilddog.conversation.activities.SendInviteActivity;
 import com.wilddog.conversation.bean.UserInfo;
+import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.PingYinUtil;
 import com.wilddog.conversation.utils.PinyinComparator;
@@ -110,9 +111,11 @@ public class OnlineFragment extends BaseFragment {
 
     private void showListViewOrTextView(){
         if(userList.size()>0){
+            AlertMessageUtil.dismissprogressbar();
             rlNoUser.setVisibility(View.GONE);
             rlListView.setVisibility(View.VISIBLE);
         }else {
+            AlertMessageUtil.dismissprogressbar();
             rlNoUser.setVisibility(View.VISIBLE);
             rlListView.setVisibility(View.GONE);
         }
@@ -163,6 +166,7 @@ public class OnlineFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         initData();
+        AlertMessageUtil.showprogressbar("载入数据中",getContext());
     }
 
 
