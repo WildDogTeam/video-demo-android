@@ -10,7 +10,7 @@
         android:layout_height="148dp"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:background="@color/text_color_white"
+        android:background="@drawable/dialog_bg"
         >
         <TextView
             android:layout_width="match_parent"
@@ -57,6 +57,11 @@
                 android:id="@+id/btn_cancel"
                 android:background="@drawable/selector_record_button"
 
+                />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/line_color"
                 />
             <Button
                 android:layout_width="match_parent"

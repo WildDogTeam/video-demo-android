@@ -9,7 +9,7 @@ import android.provider.MediaStore;
 
 public final class Constant {
     public static final int AUTO_SKIP_TIME = 2000;
-    public static final String WILDDOG_VIDEO_APP_ID = <Your MediaStore.Video AppID>;
+    public static final String WILDDOG_VIDEO_APP_ID = "wd6029736988xhigqo";
     public static final String INVITE_CANCEL = "com.wilddog.conversation.inviteCancel";
 
     // 微信appId

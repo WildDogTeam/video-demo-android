@@ -12,7 +12,7 @@ cd  video-demo-android
 
 
 
-请将Contants中的APP_ID替换成自己的Video APPID。
+
 
 ### 集成美颜
 
@@ -34,7 +34,7 @@ WilddogVideo SDK 2.0.0
 
 ## 注意
 
-Camera 360和TuSDK的key均和包名有关,如需查看美颜效果,需要自己集成或者下载[WilddogVideoDemo](http://fir.im/conversationDemo)。
+Camera 360和TuSDK的key均和包名有关,如需查看美颜效果,需要自己集成或者下载[WilddogVideoDemo](http://fir.im/conversationapp)。
 
 ### 更多示例
 

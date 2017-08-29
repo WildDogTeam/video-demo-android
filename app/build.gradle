@@ -17,7 +17,7 @@ android {
         applicationId "com.wilddog.conversation"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 28
+        versionCode 29
         versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -110,6 +110,7 @@ dependencies {
     }
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     compile files('libs/pinyin4j-2.5.0.jar')
+
 }
 
 crashlytics {
