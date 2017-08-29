@@ -1,6 +1,6 @@
 ## Wilddog 视频通话Demo
 
-video-demo-android是一个基于 Wilddog video 1.20+ SDK 开发的视频通话demo。包含美颜效果和录像功能。
+video-demo-android是一个基于 Wilddog video 2.0.0+ SDK 开发的视频通话demo。包含美颜效果和录像功能。
 
 ### 本地运行
 首先确认本机已经安装 [Android] (http://developer.android.com/index.html)运行环境,git和 Andriod Studio 开发环境 ，然后执行下列指令：
@@ -11,7 +11,13 @@ cd  video-demo-android
 ```
 
 
+## 认证集成
 
+需要在Wilddog官网创建video应用,在身份认证中打开微信登录方式,将本应用中的微信appid和secrect填写到配置中
+
+## 填写Video APPID 
+
+将申请的video appId 替换到constant中的WILDDOG_VIDEO_APP_ID
 
 
 ### 集成美颜

@@ -9,7 +9,7 @@ import android.provider.MediaStore;
 
 public final class Constant {
     public static final int AUTO_SKIP_TIME = 2000;
-    public static final String WILDDOG_VIDEO_APP_ID = "wd6029736988xhigqo";
+    public static final String WILDDOG_VIDEO_APP_ID = <Your APP ID>;
     public static final String INVITE_CANCEL = "com.wilddog.conversation.inviteCancel";
 
     // 微信appId
@@ -22,8 +22,7 @@ public final class Constant {
     //Camera360 key
     public static final String SDK_KEY_NEW = "";
 
-    //录制视频存储路径
-    public static  String filePath = Environment.getExternalStorageDirectory().getPath()+"/wilddogConversaton/";
+
 
     public static boolean isLoginClickable = true;
 }

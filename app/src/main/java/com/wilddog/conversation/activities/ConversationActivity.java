@@ -20,6 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.ConversationRecord;
 import com.wilddog.conversation.bean.UserInfo;
@@ -148,6 +150,8 @@ public class ConversationActivity extends AppCompatActivity {
     private String fileName;
 
     private File getRecordFile() {
+
+
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "wilddog");
         if (!file.exists()) {
             boolean a = file.mkdirs();
@@ -195,12 +199,12 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
     private void renameFile(String newFileName) {
-        File file = new File(Constant.filePath + fileName);
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES)+"/wilddog/" + fileName);
         file.renameTo(new File(newFileName));
     }
 
     private void deletefile() {
-        File file = new File(Constant.filePath + fileName);
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES)+"/wilddog/" + fileName);
         file.delete();
     }
 
@@ -284,6 +288,10 @@ public class ConversationActivity extends AppCompatActivity {
                     showSavePopupWindow();
 
                 } else {
+                    if(!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+                        Toast.makeText(ConversationActivity.this,"存储设备不存在,无法录制",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     //开始录制
                     ivRecordFile.setBackgroundResource(R.drawable.record_selected);
                     isrecording = true;

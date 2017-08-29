@@ -17,7 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.wilddog.conversation.ConversationApplication;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.ConversationRecord;
 import com.wilddog.conversation.bean.UserInfo;
@@ -366,6 +368,10 @@ public class CallingActivity extends AppCompatActivity {
                     endRecordTime();
                     showSavePopupWindow();
                 } else {
+                    if(!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+                        Toast.makeText(CallingActivity.this,"存储设备不存在,无法录制",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     //开始录制
                     ivRecordFile.setBackgroundResource(R.drawable.record_selected);
                     isrecording = true;
