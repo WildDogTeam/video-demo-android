@@ -71,19 +71,21 @@
                             android:id="@+id/cb_mic"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:drawableTop="@drawable/selector_button_mic"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:background="@drawable/selector_button_mic"
                             android:button="@null"
+                            android:layout_marginBottom="9dp"
                             />
                         <TextView
-                            android:layout_marginTop="9dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
                             android:textColor="@color/text_color_white"
                             android:text="麦克风"
+                            android:layout_marginBottom="1dp"
+                            android:textSize="14sp"
                             />
                     </LinearLayout>
                     <LinearLayout
@@ -96,21 +98,24 @@
                         >
                         <CheckBox
                             android:id="@+id/cb_speaker"
-                            android:layout_width="28dp"
-                            android:layout_height="26dp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:drawableTop="@drawable/selector_button_speaker"
-                            android:button="@null"
-                            />
-                        <TextView
-                            android:layout_marginTop="11.3dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:background="@drawable/selector_button_speaker"
+                            android:button="@null"
+                            android:layout_marginBottom="11.3dp"
+                            />
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
                             android:textColor="@color/text_color_white"
                             android:text="扬声器"
+                            android:layout_marginBottom="1dp"
+                            android:textSize="14sp"
                             />
                     </LinearLayout>
                     <LinearLayout
@@ -125,19 +130,21 @@
                             android:id="@+id/cb_camera"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:drawableTop="@drawable/selector_button_camera"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
+                            android:background="@drawable/selector_button_camera"
                             android:button="@null"
+                            android:layout_marginBottom="9.3dp"
                             />
                         <TextView
-                            android:layout_marginTop="9.3dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
+                            android:layout_gravity="center_horizontal"
+                            android:gravity="center_horizontal"
                             android:textColor="@color/text_color_white"
                             android:text="摄像头"
+                            android:layout_marginBottom="1dp"
+                            android:textSize="14sp"
                             />
                     </LinearLayout>
                     <LinearLayout
@@ -148,20 +155,22 @@
                         android:id="@+id/ll_filp_camera"
                         >
                         <ImageView
-                            android:layout_width="30.7dp"
-                            android:layout_height="22dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:src="@drawable/flip_camera"
-                            android:gravity="center"
-                            android:layout_gravity="center"
+                            android:gravity="center_horizontal"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="14dp"
                             />
                         <TextView
                             android:id="@+id/tv_flipCamera"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="14dp"
-                            android:gravity="center"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
                             android:textColor="@color/text_color_white"
-                            android:layout_gravity="center"
+                            android:layout_gravity="center_horizontal"
+                            android:textSize="14sp"
+                            android:layout_marginBottom="1dp"
                             android:text="翻转相机" />
                     </LinearLayout>
 

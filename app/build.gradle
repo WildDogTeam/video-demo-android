@@ -92,7 +92,7 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     })
     compile 'com.wilddog.client:wilddog-auth-android:2.0.5'
-    compile 'com.wilddog.client:wilddog-video-android:2.0.1'
+    compile 'com.wilddog.client:wilddog-video-android:2.0.3'
     compile 'com.google.code.gson:gson:2.8.0'
     // TuSDK
     compile files('libs/TuSDKCore-2.7.0.jar')

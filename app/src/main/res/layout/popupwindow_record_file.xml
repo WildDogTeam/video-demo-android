@@ -55,7 +55,7 @@
                 android:gravity="center"
                 android:textColor="@drawable/selector_record_button_text_color"
                 android:id="@+id/btn_cancel"
-                android:background="@drawable/selector_record_button"
+                android:background="@drawable/selector_record_left_button"
 
                 />
             <View
@@ -73,7 +73,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:id="@+id/btn_save"
-                android:background="@drawable/selector_record_button"
+                android:background="@drawable/selector_record_right_button"
                 />
 
         </LinearLayout>
