@@ -1,8 +1,5 @@
 package com.wilddog.conversation.utils;
 
-import android.os.Environment;
-import android.provider.MediaStore;
-
 /**
  * Created by fly on 17-6-9.
  */
@@ -25,4 +22,5 @@ public final class Constant {
 
 
     public static boolean isLoginClickable = true;
+
 }
