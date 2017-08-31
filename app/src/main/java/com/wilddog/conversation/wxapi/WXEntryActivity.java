@@ -110,6 +110,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     //用户拒绝授权
                     Constant.isLoginClickable = true;
                     AlertMessageUtil.showShortToast("用户拒绝授权");
+                    AlertMessageUtil.dismissprogressbar();
                 }
 
                 break;
@@ -119,6 +120,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 } else {
                     Constant.isLoginClickable = true;
                     AlertMessageUtil.showShortToast("取消授权");
+                    AlertMessageUtil.dismissprogressbar();
                 }
 
                 break;
@@ -126,6 +128,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 if (ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX == baseResp.getType()) {
                     Constant.isLoginClickable = true;
                     AlertMessageUtil.showShortToast("分享到微信出现未知错误");
+                    AlertMessageUtil.dismissprogressbar();
                 }
                 break;
 
