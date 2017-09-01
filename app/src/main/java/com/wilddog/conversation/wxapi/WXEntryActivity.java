@@ -129,6 +129,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     Constant.isLoginClickable = true;
                     AlertMessageUtil.showShortToast("分享到微信出现未知错误");
                     AlertMessageUtil.dismissprogressbar();
+                }else {
+                    AlertMessageUtil.dismissprogressbar();
                 }
                 break;
 
