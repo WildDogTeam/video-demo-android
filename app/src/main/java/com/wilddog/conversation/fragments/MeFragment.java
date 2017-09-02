@@ -86,8 +86,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     private void initDate() {
         info = ObjectAndStringTool.getObjectFromJson(SharedpereferenceTool.getUserInfo(getContext()), UserInfo.class);
         tvUid.setText("ID:" + info.getUid());
-        tvNickName.setText(info.getNickName());
-        ImageManager.Load(info.getPhotoUrl(), civPhotoUrl);
+        tvNickName.setText(info.getNickname());
+        ImageManager.Load(info.getFaceurl(), civPhotoUrl);
         tvDimension.setText(SharedpereferenceTool.getDimension(getContext()));
         tvBeautyPlan.setText(SharedpereferenceTool.getBeautyPlan(getContext()));
     }

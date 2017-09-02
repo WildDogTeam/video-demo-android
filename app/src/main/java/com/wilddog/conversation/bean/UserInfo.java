@@ -8,11 +8,19 @@ import java.io.Serializable;
 
 public class UserInfo implements Serializable{
     private String uid;
-    private String nickName;
-    private String photoUrl;
-
+    private String nickname;
+    private String faceurl;
+    private String deviceid;
     public UserInfo(){
 
+    }
+
+    public String getDeviceid() {
+        return deviceid;
+    }
+
+    public void setDeviceid(String deviceid) {
+        this.deviceid = deviceid;
     }
 
     public String getUid() {
@@ -23,28 +31,29 @@ public class UserInfo implements Serializable{
         this.uid = uid;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
+    public String getFaceurl() {
+        return faceurl;
     }
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setFaceurl(String faceurl) {
+        this.faceurl = faceurl;
     }
 
     @Override
     public String toString() {
         return "UserInfo{" +
                 "uid='" + uid + '\'' +
-                ", nickName='" + nickName + '\'' +
-                ", photoUrl='" + photoUrl + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", faceurl='" + faceurl + '\'' +
+                ", deviceid='" + deviceid + '\'' +
                 '}';
     }
 }

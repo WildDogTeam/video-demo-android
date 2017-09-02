@@ -226,7 +226,7 @@ public class ConversationActivity extends AppCompatActivity {
         cbCamera.setChecked(isAudioEnable);
 
         tvNickName = (TextView) findViewById(R.id.tv_nickname);
-        tvNickName.setText(remoteUserInfo.getNickName());
+        tvNickName.setText(remoteUserInfo.getNickname());
 
         llHungup = (LinearLayout) findViewById(R.id.ll_reject);
         llFlipCamera = (LinearLayout) findViewById(R.id.ll_filp_camera);
@@ -569,16 +569,16 @@ public class ConversationActivity extends AppCompatActivity {
             record.setRemoteId(remoteid);
             record.setDuration(String.valueOf(conversationTime));
             record.setLocalId(localid);
-            record.setNickName(remoteUserInfo.getNickName());
-            record.setPhotoUrl(remoteUserInfo.getPhotoUrl());
+            record.setNickName(remoteUserInfo.getNickname());
+            record.setPhotoUrl(remoteUserInfo.getFaceurl());
             record.setTimeStamp(String.valueOf(System.currentTimeMillis()));
             MyOpenHelper.getInstance().insertRecord(record);
         }else {
             record = new ConversationRecord();
             record.setRemoteId(remoteid);
             record.setDuration(String.valueOf(conversationTime));
-            record.setNickName(remoteUserInfo.getNickName());
-            record.setPhotoUrl(remoteUserInfo.getPhotoUrl());
+            record.setNickName(remoteUserInfo.getNickname());
+            record.setPhotoUrl(remoteUserInfo.getFaceurl());
             record.setLocalId(localid);
             record.setTimeStamp(String.valueOf(System.currentTimeMillis()));
             MyOpenHelper.getInstance().updateRecord(localid,remoteid,record);

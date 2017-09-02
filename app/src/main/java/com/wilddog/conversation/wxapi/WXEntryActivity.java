@@ -75,9 +75,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                                 WilddogUser user = task.getResult().getWilddogUser();
                                 SharedpereferenceTool.saveUserId(WXEntryActivity.this, user.getUid());
                                 UserInfo info = new UserInfo();
-                                info.setNickName(user.getDisplayName());
+                                info.setNickname(user.getDisplayName());
                                 info.setUid(user.getUid());
-                                info.setPhotoUrl(user.getPhotoUrl().toString());
+                                info.setFaceurl(user.getPhotoUrl().toString());
                                 // WilddogSyncManager.getWilddogSyncTool().writeToUser(user.getUid());
                                 WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(info);
                                 SharedpereferenceTool.setUserInfo(WXEntryActivity.this, ObjectAndStringTool.getJsonFromObject(info));

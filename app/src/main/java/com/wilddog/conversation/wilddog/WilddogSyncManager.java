@@ -10,6 +10,9 @@ import com.wilddog.client.WilddogSync;
 import com.wilddog.conversation.ConversationApplication;
 import com.wilddog.conversation.bean.UserInfo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by fly on 17-8-16.
  */
@@ -17,7 +20,7 @@ import com.wilddog.conversation.bean.UserInfo;
 public class WilddogSyncManager {
     private static SyncReference syncReference;
     private static WilddogSyncManager tool = new WilddogSyncManager();
-
+    public static String ONLINEUSER = "users/";
     private WilddogSyncManager(){
 
     }
@@ -35,7 +38,7 @@ public class WilddogSyncManager {
 
 
     public void writeToUser(String uid) {
-        syncReference.child("onlineusers/" + uid).setValue(true, new SyncReference.CompletionListener() {
+        syncReference.child(ONLINEUSER + uid).setValue(true, new SyncReference.CompletionListener() {
             @Override
             public void onComplete(SyncError error, SyncReference ref) {
                 if (error != null) {
@@ -43,11 +46,15 @@ public class WilddogSyncManager {
                 }
             }
         });
-        syncReference.child("onlineusers/" + uid).onDisconnect().removeValue();
+        syncReference.child(ONLINEUSER + uid).onDisconnect().removeValue();
     }
 
     public void writeToUserInfo(UserInfo info){
-        syncReference.child("onlineusers/"+info.getUid()).setValue(info, new SyncReference.CompletionListener() {
+        Map user = new HashMap();
+        user.put("faceurl",info.getFaceurl());
+        user.put("inckname",info.getNickname());
+        //TODO deviceid
+        syncReference.child(ONLINEUSER+info.getUid()).setValue(user, new SyncReference.CompletionListener() {
             @Override
             public void onComplete(SyncError error, SyncReference syncReference) {
                 if (error != null) {
@@ -55,15 +62,15 @@ public class WilddogSyncManager {
                 }
             }
         });
-        syncReference.child("onlineusers/" + info.getUid()).onDisconnect().removeValue();
+        syncReference.child(ONLINEUSER + info.getUid()).onDisconnect().removeValue();
     }
 
     public void  removeUserInfo(String uid){
-        syncReference.child("onlineusers/" + uid).removeValue();
+        syncReference.child(ONLINEUSER + uid).removeValue();
     }
 
     public void getonlineUserInfos(ValueEventListener listener){
-        syncReference.child("onlineusers").addListenerForSingleValueEvent(listener);
+        syncReference.child(ONLINEUSER).addListenerForSingleValueEvent(listener);
     }
 
 }

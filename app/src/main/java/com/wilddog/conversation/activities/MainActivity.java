@@ -131,9 +131,9 @@ public class MainActivity extends AppCompatActivity {
                             if(map.containsKey(uid)){
                                 Map subMap = (Map) map.get(uid);
                                 remoteUserInfo = new UserInfo();
-                                remoteUserInfo.setPhotoUrl(subMap.get("photoUrl").toString());
-                                remoteUserInfo.setUid(subMap.get("uid").toString());
-                                remoteUserInfo.setNickName(subMap.get("nickName").toString());
+                                remoteUserInfo.setFaceurl(subMap.get("faceurl").toString());
+                                remoteUserInfo.setUid(uid);
+                                remoteUserInfo.setNickname(subMap.get("nickname").toString());
                                 gotoAcceptActivity(remoteUserInfo);
                             }else {
                                 Toast.makeText(MainActivity.this,"呼叫者已经离线",Toast.LENGTH_SHORT).show();
@@ -150,7 +150,8 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onTokenError(WilddogVideoError wilddogVideoError) {
-
+                    Toast.makeText(MainActivity.this,"token 存在问题",Toast.LENGTH_SHORT).show();
+                    Log.e("tokenerror",wilddogVideoError.getMessage());
                 }
             };
 

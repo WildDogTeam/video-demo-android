@@ -6,7 +6,8 @@ package com.wilddog.conversation.utils;
 
 public final class Constant {
     public static final int AUTO_SKIP_TIME = 2000;
-    public static final String WILDDOG_VIDEO_APP_ID = <Your APP ID>;
+    public static final String WILDDOG_VIDEO_APP_ID = <Your VIDEO APPID>;
+    public static final String WILDDOG_SYNC_APP_ID = <Your SYNC APPID>;
     public static final String INVITE_CANCEL = "com.wilddog.conversation.inviteCancel";
 
     // 微信appId

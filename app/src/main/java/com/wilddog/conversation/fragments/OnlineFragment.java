@@ -2,7 +2,6 @@ package com.wilddog.conversation.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +30,7 @@ import com.wilddog.conversation.utils.PinyinComparator;
 import com.wilddog.conversation.utils.SharedpereferenceTool;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.view.SideBar;
+import com.wilddog.conversation.wilddog.WilddogSyncManager;
 
 
 import java.util.ArrayList;
@@ -68,8 +68,8 @@ public class OnlineFragment extends BaseFragment {
                   Map value = (Map) dataSnapshot.getValue();
                      UserInfo info = new UserInfo();
                      info.setUid(value.get("uid").toString());
-                     info.setNickName(value.get("nickName").toString());
-                     info.setPhotoUrl(value.get("photoUrl").toString());
+                     info.setNickname(value.get("nickname").toString());
+                     info.setFaceurl(value.get("faceurl").toString());
                      userList.add(info);
                   }
                 adapter.notifyDataSetChanged();
@@ -177,7 +177,7 @@ public class OnlineFragment extends BaseFragment {
         if(userList.size()>0){
             userList.clear();
         }
-        mRef.child("onlineusers").addChildEventListener(childEventListener);
+        mRef.child(WilddogSyncManager.ONLINEUSER).addChildEventListener(childEventListener);
     }
 
    public  class MyAdapter extends BaseAdapter implements SectionIndexer {
@@ -219,8 +219,8 @@ public class OnlineFragment extends BaseFragment {
                v= (ViewHolder) view.getTag();
             }
             UserInfo everyone = mList.get(position);
-            v.id.setText(everyone.getNickName());
-            String catalog = PingYinUtil.converterToFirstSpell(everyone.getNickName())
+            v.id.setText(everyone.getNickname());
+            String catalog = PingYinUtil.converterToFirstSpell(everyone.getNickname())
                     .substring(0, 1);
             if (position == 0) {
                 v.tvCatalog.setVisibility(View.VISIBLE);
@@ -228,7 +228,7 @@ public class OnlineFragment extends BaseFragment {
             } else {
                 UserInfo Nextuser = mList.get(position - 1);
                 String lastCatalog = PingYinUtil.converterToFirstSpell(
-                        Nextuser.getNickName()).substring(0, 1);
+                        Nextuser.getNickname()).substring(0, 1);
                 if (catalog.equals(lastCatalog)) {
                     v.tvCatalog.setVisibility(View.GONE);
                 } else {
@@ -236,7 +236,7 @@ public class OnlineFragment extends BaseFragment {
                     v.tvCatalog.setText(catalog);
                 }
             }
-            ImageManager.Load(everyone.getPhotoUrl(),v.photoUrl);
+            ImageManager.Load(everyone.getFaceurl(),v.photoUrl);
             return view;
         }
 
@@ -249,7 +249,7 @@ public class OnlineFragment extends BaseFragment {
         public int getPositionForSection(int section) {
             for (int i = 0; i < mList.size(); i++) {
                 UserInfo user = mList.get(i);
-                String l = PingYinUtil.converterToFirstSpell(user.getNickName())
+                String l = PingYinUtil.converterToFirstSpell(user.getNickname())
                         .substring(0, 1);
                 char firstChar = l.toUpperCase().charAt(0);
                 if (firstChar == section) {
@@ -280,6 +280,6 @@ public class OnlineFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        mRef.child("onlineusers").removeEventListener(childEventListener);
+        mRef.child(WilddogSyncManager.ONLINEUSER).removeEventListener(childEventListener);
     }
 }

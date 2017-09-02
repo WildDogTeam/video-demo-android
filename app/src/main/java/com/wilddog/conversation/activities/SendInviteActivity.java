@@ -53,9 +53,9 @@ public class SendInviteActivity extends AppCompatActivity {
                             if(map.containsKey(uid)){
                                Map subMap = (Map) map.get(uid);
                                 remoteUserInfo = new UserInfo();
-                                remoteUserInfo.setPhotoUrl(subMap.get("photoUrl").toString());
-                                remoteUserInfo.setUid(subMap.get("uid").toString());
-                                remoteUserInfo.setNickName(subMap.get("nickName").toString());
+                                remoteUserInfo.setFaceurl(subMap.get("faceurl").toString());
+                                remoteUserInfo.setUid(uid);
+                                remoteUserInfo.setNickname(subMap.get("nickname").toString());
                                 gotoCallingActivity(remoteUserInfo);
                             }else {
                                 Toast.makeText(SendInviteActivity.this,"你呼叫的用户不在线或者不存在",Toast.LENGTH_SHORT).show();

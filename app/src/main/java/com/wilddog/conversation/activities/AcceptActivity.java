@@ -44,8 +44,8 @@ public class AcceptActivity extends AppCompatActivity {
 
         remoteUserInfo = (UserInfo) getIntent().getSerializableExtra("user");
         mConversation = WilddogVideoManager.getConversation();
-        tvNickname.setText(remoteUserInfo.getNickName());
-        ImageManager.Load(remoteUserInfo.getPhotoUrl(),civPhotoUrl);
+        tvNickname.setText(remoteUserInfo.getNickname());
+        ImageManager.Load(remoteUserInfo.getFaceurl(),civPhotoUrl);
         broadcastReceiver = new InviteCancelBroadcastReceiver(){
             @Override
             public void onReceive(Context context, Intent intent) {

@@ -109,9 +109,9 @@ public class LoginActivity extends AppCompatActivity {
                     WilddogUser user = task.getResult().getWilddogUser();
                     SharedpereferenceTool.saveUserId(LoginActivity.this, user.getUid());
                     UserInfo info = new UserInfo();
-                    info.setNickName(user.getUid());
+                    info.setNickname(user.getUid());
                     info.setUid(user.getUid());
-                    info.setPhotoUrl("https://img.wdstatic.cn/imdemo/1.png");
+                    info.setFaceurl("https://img.wdstatic.cn/imdemo/1.png");
                     WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(info);
                     SharedpereferenceTool.setUserInfo(LoginActivity.this, ObjectAndStringTool.getJsonFromObject(info));
                     SharedpereferenceTool.setLoginStatus(LoginActivity.this, true);

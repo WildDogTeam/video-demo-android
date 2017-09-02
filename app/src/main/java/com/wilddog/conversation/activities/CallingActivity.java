@@ -19,7 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wilddog.conversation.ConversationApplication;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.ConversationRecord;
 import com.wilddog.conversation.bean.UserInfo;
@@ -304,9 +303,9 @@ public class CallingActivity extends AppCompatActivity {
         civPhotoUrl = (CircleImageView) findViewById(R.id.civ_photo);
         tvNickName = (TextView) findViewById(R.id.tv_nickname);
         tvCallNickName = (TextView) findViewById(R.id.tv_call_nickname);
-        tvNickName.setText(remoteUserInfo.getNickName());
-        tvCallNickName.setText(remoteUserInfo.getNickName());
-        ImageManager.Load(remoteUserInfo.getPhotoUrl(), civPhotoUrl);
+        tvNickName.setText(remoteUserInfo.getNickname());
+        tvCallNickName.setText(remoteUserInfo.getNickname());
+        ImageManager.Load(remoteUserInfo.getFaceurl(), civPhotoUrl);
         tvHungup.setText("取消");
         llFlipCamera = (LinearLayout) findViewById(R.id.ll_filp_camera);
 
@@ -599,16 +598,16 @@ public class CallingActivity extends AppCompatActivity {
             record.setRemoteId(remoteid);
             record.setDuration(String.valueOf(conversationTime));
             record.setLocalId(localid);
-            record.setNickName(remoteUserInfo.getNickName());
-            record.setPhotoUrl(remoteUserInfo.getPhotoUrl());
+            record.setNickName(remoteUserInfo.getNickname());
+            record.setPhotoUrl(remoteUserInfo.getFaceurl());
             record.setTimeStamp(String.valueOf(System.currentTimeMillis()));
             MyOpenHelper.getInstance().insertRecord(record);
         } else {
             record = new ConversationRecord();
             record.setRemoteId(remoteid);
             record.setDuration(String.valueOf(conversationTime));
-            record.setNickName(remoteUserInfo.getNickName());
-            record.setPhotoUrl(remoteUserInfo.getPhotoUrl());
+            record.setNickName(remoteUserInfo.getNickname());
+            record.setPhotoUrl(remoteUserInfo.getFaceurl());
             record.setLocalId(localid);
             record.setTimeStamp(String.valueOf(System.currentTimeMillis()));
             MyOpenHelper.getInstance().updateRecord(localid, remoteid, record);

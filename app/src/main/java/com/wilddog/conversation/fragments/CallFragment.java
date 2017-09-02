@@ -17,7 +17,6 @@ import com.wilddog.client.SyncError;
 import com.wilddog.client.ValueEventListener;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.activities.CallingActivity;
-import com.wilddog.conversation.activities.SendInviteActivity;
 import com.wilddog.conversation.bean.ConversationRecord;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.ImageManager;
@@ -66,9 +65,9 @@ public class CallFragment extends BaseFragment {
                         if(map.containsKey(uid)){
                             Map subMap = (Map) map.get(uid);
                            UserInfo remoteUserInfo = new UserInfo();
-                            remoteUserInfo.setPhotoUrl(subMap.get("photoUrl").toString());
+                            remoteUserInfo.setFaceurl(subMap.get("faceurl").toString());
                             remoteUserInfo.setUid(subMap.get("uid").toString());
-                            remoteUserInfo.setNickName(subMap.get("nickName").toString());
+                            remoteUserInfo.setNickname(subMap.get("nickname").toString());
                             gotoCallingActivity(remoteUserInfo);
                         }else {
                             Toast.makeText(getContext(),"你呼叫的用户不在线或者不存在",Toast.LENGTH_SHORT).show();
