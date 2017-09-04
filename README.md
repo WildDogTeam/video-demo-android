@@ -15,9 +15,10 @@ cd  video-demo-android
 
 需要在Wilddog官网创建video应用,在身份认证中打开微信登录方式,将本应用中的微信appid和secrect填写到配置中
 
-## 填写Video APPID 
+## 填写 APPID 
 
 将申请的video appId 替换到constant中的WILDDOG_VIDEO_APP_ID
+将申请的sync appId 替换到constant中的WILDDOG_SYNC_APP_ID
 
 
 ### 集成美颜
