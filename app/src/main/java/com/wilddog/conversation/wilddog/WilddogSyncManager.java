@@ -52,7 +52,7 @@ public class WilddogSyncManager {
     public void writeToUserInfo(UserInfo info){
         Map user = new HashMap();
         user.put("faceurl",info.getFaceurl());
-        user.put("inckname",info.getNickname());
+        user.put("nickname",info.getNickname());
         //TODO deviceid
         syncReference.child(ONLINEUSER+info.getUid()).setValue(user, new SyncReference.CompletionListener() {
             @Override
