@@ -16,6 +16,7 @@ import com.wilddog.conversation.activities.MainActivity;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.ActivityHolder;
 import com.wilddog.conversation.utils.AlertMessageUtil;
+import com.wilddog.conversation.utils.CollectionDeviceIdTool;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ObjectAndStringTool;
 import com.wilddog.conversation.utils.SharedpereferenceTool;
@@ -78,6 +79,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                                 info.setNickname(user.getDisplayName());
                                 info.setUid(user.getUid());
                                 info.setFaceurl(user.getPhotoUrl().toString());
+                                info.setDeviceid(CollectionDeviceIdTool.getDeviceId());
                                 // WilddogSyncManager.getWilddogSyncTool().writeToUser(user.getUid());
                                 WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(info);
                                 SharedpereferenceTool.setUserInfo(WXEntryActivity.this, ObjectAndStringTool.getJsonFromObject(info));

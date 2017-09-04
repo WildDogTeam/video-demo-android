@@ -13,6 +13,7 @@ import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.ActivityHolder;
 import com.wilddog.conversation.utils.AlertMessageUtil;
+import com.wilddog.conversation.utils.CollectionDeviceIdTool;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ObjectAndStringTool;
 import com.wilddog.conversation.utils.PermissionHelper;
@@ -112,6 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                     info.setNickname(user.getUid());
                     info.setUid(user.getUid());
                     info.setFaceurl("https://img.wdstatic.cn/imdemo/1.png");
+                    info.setDeviceid(CollectionDeviceIdTool.getDeviceId());
                     WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(info);
                     SharedpereferenceTool.setUserInfo(LoginActivity.this, ObjectAndStringTool.getJsonFromObject(info));
                     SharedpereferenceTool.setLoginStatus(LoginActivity.this, true);

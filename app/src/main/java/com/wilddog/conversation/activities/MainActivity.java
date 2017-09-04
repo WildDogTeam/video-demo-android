@@ -134,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                                 remoteUserInfo.setFaceurl(subMap.get("faceurl").toString());
                                 remoteUserInfo.setUid(uid);
                                 remoteUserInfo.setNickname(subMap.get("nickname").toString());
+                                remoteUserInfo.setDeviceid(subMap.get("deviceid").toString());
                                 gotoAcceptActivity(remoteUserInfo);
                             }else {
                                 Toast.makeText(MainActivity.this,"呼叫者已经离线",Toast.LENGTH_SHORT).show();

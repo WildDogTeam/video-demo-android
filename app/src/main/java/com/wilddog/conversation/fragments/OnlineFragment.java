@@ -67,7 +67,7 @@ public class OnlineFragment extends BaseFragment {
                  if (!mUid.equals(key) && !userList.contains(key)) {
                   Map value = (Map) dataSnapshot.getValue();
                      UserInfo info = new UserInfo();
-                     info.setUid(value.get("uid").toString());
+                     info.setUid(key);
                      info.setNickname(value.get("nickname").toString());
                      info.setFaceurl(value.get("faceurl").toString());
                      userList.add(info);
