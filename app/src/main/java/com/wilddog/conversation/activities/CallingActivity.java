@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wilddog.conversation.ConversationApplication;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.ConversationRecord;
 import com.wilddog.conversation.bean.UserInfo;
@@ -27,6 +28,7 @@ import com.wilddog.conversation.utils.Camera360Util;
 import com.wilddog.conversation.utils.ConvertUtil;
 import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.MyOpenHelper;
+import com.wilddog.conversation.utils.RingUtil;
 import com.wilddog.conversation.utils.SharedpereferenceTool;
 import com.wilddog.conversation.utils.TuSDKUtil;
 import com.wilddog.conversation.view.CircleImageView;
@@ -135,6 +137,16 @@ public class CallingActivity extends AppCompatActivity {
         mConversation = video.call(remoteid, localStream, "conversationDemo");
 
         mConversation.setConversationListener(listener);
+        startRing();
+    }
+
+    private void startRing() {
+        RingUtil.paly(true, ConversationApplication.getContext().getApplicationContext());
+    }
+
+    private void stop(){
+        if(RingUtil.isRing){
+        RingUtil.stop();}
     }
 
     public void frameProcess(byte[] data, int textureId, boolean isFirstFrame, boolean isInitEGL, int frameWidth, int frameHeight, int rotation) {
@@ -214,19 +226,23 @@ public class CallingActivity extends AppCompatActivity {
                 public void run() {
                     switch (callStatus) {
                         case ACCEPTED:
+                            stop();
                             llCalled.setVisibility(View.INVISIBLE);
                             tvHungup.setText("挂断");
                             llData.setVisibility(View.VISIBLE);
                             break;
                         case REJECTED:
+                            stop();
                             AlertMessageUtil.showShortToast("对方拒绝邀请");
                             finish();
                             break;
                         case BUSY:
+                            stop();
                             AlertMessageUtil.showShortToast("对方在通话中，请稍后");
                             finish();
                             break;
                         case TIMEOUT:
+                            stop();
                             AlertMessageUtil.showShortToast("呼叫超时,请稍后重试");
                             finish();
                             break;
@@ -421,7 +437,7 @@ public class CallingActivity extends AppCompatActivity {
                 if (mConversation != null) {
                     mConversation.close();
                 }
-
+                stop();
                 finish();
             }
         });
@@ -612,6 +628,7 @@ public class CallingActivity extends AppCompatActivity {
             record.setTimeStamp(String.valueOf(System.currentTimeMillis()));
             MyOpenHelper.getInstance().updateRecord(localid, remoteid, record);
         }
+        stop();
         super.onDestroy();
         if (timer != null) {
             timer.cancel();

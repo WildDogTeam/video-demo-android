@@ -9,11 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.wilddog.conversation.ConversationApplication;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.receiver.InviteCancelBroadcastReceiver;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ImageManager;
+import com.wilddog.conversation.utils.RingUtil;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.wilddog.WilddogVideoManager;
 import com.wilddog.video.Conversation;
@@ -76,7 +79,19 @@ public class AcceptActivity extends AppCompatActivity {
                 finish();
             }
         });
+        startRing();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(RingUtil.isRing){
+        RingUtil.stop();}
+    }
+
+    private void startRing() {
+        RingUtil.paly(false, ConversationApplication.getContext().getApplicationContext());
     }
 
     @Override

@@ -64,12 +64,13 @@ public class OnlineFragment extends BaseFragment {
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             if (dataSnapshot != null) {
                 String key = dataSnapshot.getKey();
-                 if (!mUid.equals(key) && !userList.contains(key)) {
+                 if ((!mUid.equals(key)) && (!userList.contains(key))) {
                   Map value = (Map) dataSnapshot.getValue();
                      UserInfo info = new UserInfo();
                      info.setUid(key);
                      info.setNickname(value.get("nickname").toString());
                      info.setFaceurl(value.get("faceurl").toString());
+                     info.setDeviceid(value.get("deviceid").toString());
                      userList.add(info);
                   }
                 adapter.notifyDataSetChanged();
