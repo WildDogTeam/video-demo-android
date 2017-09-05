@@ -1,53 +1,179 @@
 {
     "filterGroups":[
         {
-            "file":"lsq_filter_VideoYoungGirl_26.gfilter",
-            "name":"lsq_filter_group_VideoYoungGirl",
-            "default_filter_id":192,
+            "file":"lsq_filter_Scenery_14.gfilter",
+            "name":"lsq_filter_group_Scenery",
+            "default_filter_id":129,
             "filters":[
                 {
-                    "id":192,
-                    "name":"lsq_filter_VideoYoungGirl",
-                    "color":"#ffbc9f",
-                    "args":{
-                        "smoothing":0.45,
-                        "mixied":1,
-                        "smoothType":1,
-                        "skinColor":1
-                    }
+                    "id":127,
+                    "name":"lsq_filter_Spring",
+                    "color":"#8fc31f"
+                },
+                {
+                    "id":128,
+                    "name":"lsq_filter_Green",
+                    "color":"#8fc31f"
+                },
+                {
+                    "id":129,
+                    "name":"lsq_filter_Summer",
+                    "color":"#8fc31f"
+                },
+                {
+                    "id":130,
+                    "name":"lsq_filter_Gorgeous",
+                    "color":"#8fc31f"
+                },
+                {
+                    "id":131,
+                    "name":"lsq_filter_Autumn",
+                    "color":"#8fc31f"
+                },
+                {
+                    "id":132,
+                    "name":"lsq_filter_Qiushi",
+                    "color":"#8fc31f"
+                },
+                {
+                    "id":133,
+                    "name":"lsq_filter_Winter",
+                    "color":"#8fc31f"
+                },
+                {
+                    "id":134,
+                    "name":"lsq_filter_Fade",
+                    "color":"#8fc31f"
                 }
             ]
         },
         {
-            "file":"lsq_filter_VideoWhiteSkin_27.gfilter",
-            "name":"lsq_filter_group_VideoWhiteSkin",
-            "default_filter_id":193,
+            "file":"lsq_filter_ForBeauty_17.gfilter",
+            "name":"lsq_filter_group_ForBeauty",
+            "default_filter_id":149,
             "filters":[
                 {
-                    "id":193,
-                    "name":"lsq_filter_VideoWhiteSkin",
-                    "color":"#ffbc9f",
+                    "id":149,
+                    "name":"lsq_filter_WarmSunshine",
+                    "color":"#ff7f95",
                     "args":{
-                        "smoothing":0.45,
+                        "smoothing":0.8,
+                        "mixied":1
+                    }
+                },
+                {
+                    "id":150,
+                    "name":"lsq_filter_NaturalWhitening",
+                    "color":"#ff7f95",
+                    "args":{
+                        "smoothing":0.8,
+                        "mixied":1
+                    }
+                },
+                {
+                    "id":151,
+                    "name":"lsq_filter_DeepWhitening",
+                    "color":"#ff7f95",
+                    "args":{
+                        "smoothing":0.8,
+                        "mixied":1
+                    }
+                },
+                {
+                    "id":152,
+                    "name":"lsq_filter_FreshBeauty",
+                    "color":"#ff7f95",
+                    "args":{
+                        "smoothing":0.8,
+                        "mixied":1
+                    }
+                },
+                {
+                    "id":153,
+                    "name":"lsq_filter_PinkLady",
+                    "color":"#ff7f95",
+                    "args":{
+                        "smoothing":0.8,
+                        "mixied":1
+                    }
+                },
+                {
+                    "id":154,
+                    "name":"lsq_filter_ClearWhite",
+                    "color":"#ff7f95",
+                    "args":{
+                        "smoothing":0.8,
+                        "mixied":1
+                    }
+                },
+                {
+                    "id":155,
+                    "name":"lsq_filter_BeautifulWhite",
+                    "color":"#ff7f95",
+                    "args":{
+                        "smoothing":0.8,
                         "mixied":1
                     }
                 }
             ]
         },
         {
-            "file":"lsq_filter_VideoHuaJiao_44.gfilter",
-            "name":"lsq_filter_group_VideoHuaJiao",
-            "default_filter_id":210,
+            "file":"lsq_filter_LipGloss_66.gfilter",
+            "name":"lsq_filter_group_LipGloss",
+            "default_filter_id":388,
             "filters":[
                 {
-                    "id":210,
-                    "name":"lsq_filter_VideoHuaJiao",
-                    "color":"#9d1616",
+                    "id":386,
+                    "name":"lsq_filter_Missing",
+                    "color":"#fe7d99",
                     "args":{
-                        "smoothing":0.6,
-                        "mixied":1,
-                        "smoothType":1,
-                        "skinColor":1
+                        "smoothing":0.8,
+                        "mixied":1
+                    }
+                },
+                {
+                    "id":388,
+                    "name":"lsq_filter_Grapefruit",
+                    "color":"#fe7d99",
+                    "args":{
+                        "smoothing":0.8,
+                        "mixied":1
+                    }
+                },
+                {
+                    "id":389,
+                    "name":"lsq_filter_RoseCarmine",
+                    "color":"#fe7d99",
+                    "args":{
+                        "smoothing":0.8,
+                        "mixied":1
+                    }
+                },
+                {
+                    "id":390,
+                    "name":"lsq_filter_Nude",
+                    "color":"#fe7d99",
+                    "args":{
+                        "smoothing":0.8,
+                        "mixied":1
+                    }
+                },
+                {
+                    "id":391,
+                    "name":"lsq_filter_Orange",
+                    "color":"#fe7d99",
+                    "args":{
+                        "smoothing":0.8,
+                        "mixied":1
+                    }
+                },
+                {
+                    "id":392,
+                    "name":"lsq_filter_BabyPink",
+                    "color":"#fe7d99",
+                    "args":{
+                        "smoothing":0.8,
+                        "mixied":1
                     }
                 }
             ]
@@ -70,5 +196,5 @@
     "stickerGroups":[
         
     ],
-    "master":"A2LFQ1g1Nh7mNhpwyjHydyU6dCudscrll57W1HM8uMhAnyYezlUsUssz8tP4vf5c6PnI6h95+eQ+s3yAmv7Xv2hYJGpEkYaggxwhRsA2Sb5X8XW1trKw7nNtrV1fZPXy1vjQJ73Nb1Audpob1E53SiXBSDtgSYZLJMQazoYU06YfaRhddSeSEQl+w3RCaQMSKMdMXRmXk26FefxOntdcw4RZrXSxKEu10CfJAxQ+0n2pjS1gmGlTk6OjMqTE5J5KVN+oTNFUzl2yzaglOI33vlA\/oQiI1IJsf6SAK67WitUU2aeMtxezg3rwNnhf66HJAq2xrnYsx1AMGgFkgYne8\/BhWmgjZV76HfDMnmUZ6QkHi+FJ9vRcYYVJAFYRCwKSaKpiqGIuVXL6UWrfkPZ3JWhx8a\/y97bjNc4DnaePbCtGIREz35jkWjN2Fs\/mlH\/61XlLbhx4aXPmPgPl625RbFy\/kCe+qbcQge6VLVK+wfYvQzuK45I\/qjyptOVApAfUIVOye0Z1w\/3mskCwO\/10cGPlOH6Y5HF1m1S8bzbDlzywwlmI7vBsqtTYUK2+a\/XuJtMCQmLekhg6gBkKt2eAOBl+vqyOGry6cD43OhmVT3sEOQ8t2THglAnfaAq9P0cG2qwSn0BlXTdtHeO5ofLUioggXD9jvVXDhglYOmlb\/USp8tHaVQCNbjNKbkWrzCzfpYgnbmEfHOqZNkjLr41JW8p+nSr61TB8HFodDgF4qPOVvmKjP6Pf5mjpH5zVf0Blc36D2V8oAEpe\/qMta8YeSg==60403CA50C"
+    "master":"4+i6K+6TD\/BBzTYVQbt1jpi9HDNT\/URrMrX+mBaOTTIsgm3hEUmv1l+ZZSlxWx+qZ0CW0dzmujpmlss5a8uWAuzEuv1eXU8IsY4lIvX8OiVbN0lRD1BcjCsGP7dS8wAqjug2fMdIpgqt5FtpmKqUEOWsQxvXqNs\/4Ga7p0dnoaOB6KPwyx9Bwf3lMHQeZ+dRKTaXGUREzKjiZMK+VZgHmnn7viYVBLiyaGVAsXHGVGY\/5nKzjEwoxi+btcEswdYfllCRdF3oizEOn6zPVL\/IBA+k\/T\/uQZVfVUKCUrEMZ+EsAomPrniXZu71G4sQi2qR6tAIRgz5u1QgG8m3I+K7KYNqpTarkR5Sp9YWsJme1gNptXprpyzPs7NF5466BYuScW0+D0iNgFZEOliwl5mvlT4n9hhyoZmPrmAI4XgyN4K9Rq0N9378+6xkL1hszUXtKoMfCOMih7KpvjBeqndPcL2SFUHAP71GMNxlPGeHiKPlsM7bWC164e4YFjGqMHlqNPvzoLc\/N1Mod3\/brlK5BjvaquVNkMnbT+mc1V4fwmE\/uLrPePCFjNk\/1Stcm50VL0ymF9K9v4VedU2MPaDpZiXrwGQ\/3Ulr6W93KiJCMaz3w\/wB1Ex27WuOKr42UmyQbzFMYv0mwh1mgrOmbdBZDkhtJWuLK9bch6vmAJcoXEYjiM8nHyMfl3s6rqz5E7DSDsHuufGcMoYNpFSBTcByYiqbqTp\/0Wl5kCn5\/ptypToB+3mDHUem9gNsaBbv4ZrbvUCRefMTiC6RJxUKuteUXkSSNWuQ1pPhSbo9HXsVuV0lyqGeyzoiCVzD64s2+vQrVcC2Rz0xrhsZwbdv8ze9DwnNUgD9xuUKvBWzS11HQ5FTdrSD7Fhd6pZ9Anfu58wpvpAZQ4Br+pXYgZzYmJOH+gvKU3fHPv+JzKdfnCERW9eavr5ojn+ReWvUp\/OT6HVU5aDXUvapo6DuROVDn52KhQCHdn70YW64ptHLMCdC1+PQPGigD\/ffS6gEnwYZz5E9vDNQdPNfVoKslDR9o1zY+SHeHA10+LbBb7KcTIuYNITx3Bg6WPk9NOAwryH2VII6E3B73C9D0B"
 }

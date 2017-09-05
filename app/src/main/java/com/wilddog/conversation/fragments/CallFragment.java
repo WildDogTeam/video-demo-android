@@ -65,9 +65,11 @@ public class CallFragment extends BaseFragment {
                         if(map.containsKey(uid)){
                             Map subMap = (Map) map.get(uid);
                            UserInfo remoteUserInfo = new UserInfo();
-                            remoteUserInfo.setFaceurl(subMap.get("faceurl").toString());
-                            remoteUserInfo.setUid(subMap.get("uid").toString());
-                            remoteUserInfo.setNickname(subMap.get("nickname").toString());
+                            String strFaceurl = subMap.get("faceurl")==null?"https://img.wdstatic.cn/imdemo/1.png":subMap.get("faceurl").toString();
+                            remoteUserInfo.setFaceurl(strFaceurl);
+                            String strNickname = subMap.get("nickname")==null?uid:subMap.get("nickname").toString();
+                            remoteUserInfo.setNickname(strNickname);
+                            remoteUserInfo.setUid(uid);
                             gotoCallingActivity(remoteUserInfo);
                         }else {
                             Toast.makeText(getContext(),"你呼叫的用户不在线或者不存在",Toast.LENGTH_SHORT).show();

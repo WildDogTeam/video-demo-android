@@ -68,8 +68,10 @@ public class OnlineFragment extends BaseFragment {
                   Map value = (Map) dataSnapshot.getValue();
                      UserInfo info = new UserInfo();
                      info.setUid(key);
-                     info.setNickname(value.get("nickname").toString());
-                     info.setFaceurl(value.get("faceurl").toString());
+                     String strFaceurl = value.get("faceurl")==null?"https://img.wdstatic.cn/imdemo/1.png":value.get("faceurl").toString();
+                     info.setFaceurl(strFaceurl);
+                     String strNickname = value.get("nickname")==null?key:value.get("nickname").toString();
+                     info.setNickname(strNickname);
                      info.setDeviceid(value.get("deviceid").toString());
                      userList.add(info);
                   }

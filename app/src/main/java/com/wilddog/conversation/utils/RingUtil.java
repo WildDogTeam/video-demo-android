@@ -51,11 +51,7 @@ public class RingUtil {
             isRing = false;
         }
     }
-
-    public static boolean isRing(){
-        return isRing;
-    }
-
+    
     public static void destory() {
         if (mediaPlayer != null) {
             mediaPlayer.release();

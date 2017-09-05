@@ -53,9 +53,11 @@ public class SendInviteActivity extends AppCompatActivity {
                             if(map.containsKey(uid)){
                                Map subMap = (Map) map.get(uid);
                                 remoteUserInfo = new UserInfo();
-                                remoteUserInfo.setFaceurl(subMap.get("faceurl").toString());
+                                String strFaceurl = subMap.get("faceurl")==null?"https://img.wdstatic.cn/imdemo/1.png":subMap.get("faceurl").toString();
+                                remoteUserInfo.setFaceurl(strFaceurl);
+                                String strNickname = subMap.get("nickname")==null?uid:subMap.get("nickname").toString();
+                                remoteUserInfo.setNickname(strNickname);
                                 remoteUserInfo.setUid(uid);
-                                remoteUserInfo.setNickname(subMap.get("nickname").toString());
                                 remoteUserInfo.setDeviceid(subMap.get("deviceid").toString());
                                 gotoCallingActivity(remoteUserInfo);
                             }else {
