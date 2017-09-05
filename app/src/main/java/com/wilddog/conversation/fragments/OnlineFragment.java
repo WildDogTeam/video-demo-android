@@ -2,6 +2,9 @@ package com.wilddog.conversation.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by fly on 17-6-9.
@@ -52,7 +57,13 @@ public class OnlineFragment extends BaseFragment {
     private TextView mDialogText;
     private SyncReference mRef;
     private String mUid;
-
+    private List<String> userIds = new ArrayList<>();
+    private Handler handler =new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
     private List<UserInfo> userList = new ArrayList<>();
 
     private MyAdapter adapter;
@@ -61,39 +72,55 @@ public class OnlineFragment extends BaseFragment {
 
     private ChildEventListener childEventListener = new ChildEventListener() {
         @Override
-        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        public void onChildAdded(final DataSnapshot dataSnapshot, String s) {
             if (dataSnapshot != null) {
-                String key = dataSnapshot.getKey();
-                 if ((!mUid.equals(key)) && (!userList.contains(key))) {
-                  Map value = (Map) dataSnapshot.getValue();
-                     UserInfo info = new UserInfo();
-                     info.setUid(key);
-                     String strFaceurl = value.get("faceurl")==null?"https://img.wdstatic.cn/imdemo/1.png":value.get("faceurl").toString();
-                     info.setFaceurl(strFaceurl);
-                     String strNickname = value.get("nickname")==null?key:value.get("nickname").toString();
-                     info.setNickname(strNickname);
-                     info.setDeviceid(value.get("deviceid").toString());
-                     userList.add(info);
-                  }
-                adapter.notifyDataSetChanged();
-                showListViewOrTextView();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String key = dataSnapshot.getKey();
+                        if ((!mUid.equals(key)) && (!userIds.contains(key))) {
+                            Map value = (Map) dataSnapshot.getValue();
+                            UserInfo info = new UserInfo();
+                            info.setUid(key);
+                            String strFaceurl = value.get("faceurl")==null?"https://img.wdstatic.cn/imdemo/1.png":value.get("faceurl").toString();
+                            info.setFaceurl(strFaceurl);
+                            String strNickname = value.get("nickname")==null?key:value.get("nickname").toString();
+                            info.setNickname(strNickname);
+                            info.setDeviceid(value.get("deviceid").toString());
+                            userList.add(info);
+                            userIds.add(key);
+                        }
+                        adapter.notifyDataSetChanged();
+                        showListViewOrTextView();
+                    }
+                });
+
             }
         }
 
         @Override
         public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+            Log.e("onChildChanged","onChildChanged");
         }
 
         @Override
-        public void onChildRemoved(DataSnapshot dataSnapshot) {
+        public void onChildRemoved(final DataSnapshot dataSnapshot) {
             if (dataSnapshot != null) {
-                String key = dataSnapshot.getKey();
-                if (!mUid.equals(key)) {
-                    userList.remove(key);
-                    adapter.notifyDataSetChanged();
-                    showListViewOrTextView();
-                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String key = dataSnapshot.getKey();
+                        if (!mUid.equals(key)) {
+                           UserInfo removeUserInfo = getUserInfoByUid(key);
+                            if(removeUserInfo!=null){
+                            userList.remove(removeUserInfo);
+                            userIds.remove(key);
+                            adapter.notifyDataSetChanged();
+                            showListViewOrTextView();}
+                        }
+                    }
+                });
+
             }
         }
 
@@ -106,10 +133,20 @@ public class OnlineFragment extends BaseFragment {
         public void onCancelled(SyncError wilddogError) {
 
         }
-    }; ;
+    };
 
     public OnlineFragment(){
 
+    }
+
+
+    private UserInfo getUserInfoByUid(String uid){
+        for(UserInfo info : userList){
+            if(info.getUid().equals(uid)){
+                return info;
+            }
+        }
+        return null;
     }
 
     private void showListViewOrTextView(){
@@ -175,12 +212,19 @@ public class OnlineFragment extends BaseFragment {
 
 
     private void initData() {
-        mRef = WilddogSync.getInstance().getReference();
-        mUid = SharedpereferenceTool.getUserId(getContext());
-        if(userList.size()>0){
-            userList.clear();
-        }
-        mRef.child(WilddogSyncManager.ONLINEUSER).addChildEventListener(childEventListener);
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                mRef = WilddogSync.getInstance().getReference();
+                mUid = SharedpereferenceTool.getUserId(getContext());
+                if(userList.size()>0){
+                    userList.clear();
+                    userIds.clear();
+                }
+                mRef.child(WilddogSyncManager.ONLINEUSER).addChildEventListener(childEventListener);
+            }
+        });
+
     }
 
    public  class MyAdapter extends BaseAdapter implements SectionIndexer {

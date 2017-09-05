@@ -23,7 +23,7 @@ public class PinyinComparator implements Comparator {
 				&& user1.getNickname().length() > 1)
 			catalog1 = PingYinUtil.converterToFirstSpell(user1.getNickname())
 					.substring(0, 1);
-		int flag = catalog0.compareTo(catalog1);
+		int flag = catalog0.compareToIgnoreCase(catalog1);
 		return flag;
 
 	}
