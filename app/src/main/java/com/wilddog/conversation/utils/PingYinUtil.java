@@ -53,16 +53,35 @@ public class PingYinUtil {
 		defaultFormat.setCaseType(HanyuPinyinCaseType.UPPERCASE);
 		defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
 		for (int i = 0; i < nameChar.length; i++) {
-			if (nameChar[i] > 128) {
-				try {
-					pinyinName += PinyinHelper.toHanyuPinyinStringArray(
-							nameChar[i], defaultFormat)[0].charAt(0);
-				} catch (BadHanyuPinyinOutputFormatCombination e) {
-					e.printStackTrace();
+			if (nameChar != null && nameChar.length != 0) {
+				//处理特殊符号，例如：￥哈哈
+				if(i==0){
+					if (java.lang.Character.toString(nameChar[i]).matches("[\\u4E00-\\u9FA5]+")) {
+					} else{
+						if(Character.isUpperCase(nameChar[i])|Character.isLowerCase(nameChar[i])){}else{
+							return "#";
+						}
+					}
 				}
-			} else {
-				pinyinName += nameChar[i];
+				if (nameChar[i] > 128) {
+					// 是汉字
+					try {
+						String[] pinyinNameStart = PinyinHelper.toHanyuPinyinStringArray(nameChar[i], defaultFormat);
+						if (pinyinNameStart != null&&pinyinNameStart.length != 0)
+							pinyinName = pinyinName + pinyinNameStart[0].charAt(0);
+
+					} catch (BadHanyuPinyinOutputFormatCombination e) {
+						e.printStackTrace();
+					}
+				} else if (Character.isUpperCase(nameChar[i])) {
+					pinyinName += nameChar[i];
+				} else if (Character.isLowerCase(nameChar[i])) {
+					pinyinName += (char) (nameChar[i] - 32) + "";
+				}
 			}
+		}
+		if (pinyinName == ""){
+			pinyinName = "#";
 		}
 		return pinyinName;
 	}

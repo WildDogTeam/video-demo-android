@@ -23,8 +23,14 @@ public class PinyinComparator implements Comparator {
 				&& user1.getNickname().length() > 1)
 			catalog1 = PingYinUtil.converterToFirstSpell(user1.getNickname())
 					.substring(0, 1);
-		int flag = catalog0.compareToIgnoreCase(catalog1);
-		return flag;
+		if(catalog0.contains("#")&&!catalog1.contains("#")){
+			return 1;
+		}else if (catalog1.contains("#")&&!catalog0.contains("#")){
+			return -1;
+		}else{
+			return catalog0.compareToIgnoreCase(catalog1);
+		}
+
 
 	}
 
