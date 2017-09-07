@@ -64,7 +64,9 @@ public class RecordFileActivity extends AppCompatActivity {
     }
 
     private void initData(){
-        if(recordFiles.length<=0){return;}
+        if(recordFiles ==null || recordFiles.length<=0){
+            return;
+        }
        for(File file:recordFiles){
            if(file.getName().endsWith(".mp4")){
                RecordFileData fileData = new RecordFileData();

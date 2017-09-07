@@ -13,7 +13,9 @@ cd  video-demo-android
 
 ## 认证集成
 
-需要在Wilddog官网创建video应用,在身份认证中打开微信登录方式,将本应用中的微信appid和secrect填写到配置中
+需要在Wilddog官网创建video应用,在身份认证中打开微信个人帐号登录方式,将本应用中的微信appid和secrect填写到配置中
+
+
 
 ## 填写 APPID 
 
