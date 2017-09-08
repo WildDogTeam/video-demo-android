@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
-        AlertMessageUtil.showprogressbar("微新登录中", LoginActivity.this);
+        AlertMessageUtil.showprogressbar("微信登录中", LoginActivity.this);
         //loginWithAnonymously();
         weixinLogin();
     }
