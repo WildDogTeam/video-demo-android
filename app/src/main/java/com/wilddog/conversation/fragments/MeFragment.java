@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -112,11 +113,32 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 gotoSDKVersionActivity();
                 break;
             case R.id.ll_user_login_out:
-                loginout();
+                showLoginDialog();
                 break;
             default:
                 break;
         }
+    }
+
+
+    private void showLoginDialog(){
+        View view = View.inflate(getContext(), R.layout.popupwindow_loginout, null);
+        Button btnYes = (Button) view.findViewById(R.id.btn_yes);
+        Button btnNo = (Button) view.findViewById(R.id.btn_no);
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindowDismiss();
+                loginout();
+            }
+        });
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindowDismiss();
+            }
+        });
+        showPopupWindow(view);
     }
 
     private void loginout() {

@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wilddog.conversation.R;
@@ -25,13 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecordFileActivity extends AppCompatActivity {
-     private ImageView ivCancel;
+    private ImageView ivCancel;
     private ListView lvRecordFile;
-    private List<RecordFileData> files= new ArrayList();
-     private BaseAdapter adapter;
+    private List<RecordFileData> files = new ArrayList();
+    private BaseAdapter adapter;
     private File file;
     private File[] recordFiles;
-    private MediaMetadataRetriever  metadataRetriever = new MediaMetadataRetriever();;
+    private RelativeLayout rlNoRecord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,22 +40,22 @@ public class RecordFileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_record_file);
         ivCancel = (ImageView) findViewById(R.id.iv_cancel);
         lvRecordFile = (ListView) findViewById(R.id.lv_record_file);
-         ivCancel.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 finish();
-             }
-         });
-        file= getFile();
+        rlNoRecord = (RelativeLayout) findViewById(R.id.rl_no_file);
+        ivCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        file = getFile();
         recordFiles = file.listFiles();
-        initData();
-         adapter= new MyAdapter(files,this);
+        adapter = new MyAdapter(files, this);
         lvRecordFile.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        initData();
 
     }
 
-    private File getFile(){
+    private File getFile() {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "wilddog");
         if (!file.exists()) {
             boolean a = file.mkdirs();
@@ -63,27 +64,32 @@ public class RecordFileActivity extends AppCompatActivity {
 
     }
 
-    private void initData(){
-        if(recordFiles ==null || recordFiles.length<=0){
+    private void initData() {
+        if (recordFiles == null || recordFiles.length <= 0) {
+            rlNoRecord.setVisibility(View.VISIBLE);
+            lvRecordFile.setVisibility(View.GONE);
             return;
         }
-       for(File file:recordFiles){
-           if(file.getName().endsWith(".mp4")){
-               RecordFileData fileData = new RecordFileData();
-               fileData.setFileName(file.getName());
-               ExtractVideoInfo extractVideoInfo = new ExtractVideoInfo(file.getAbsolutePath());
-               fileData.setDuration(convertToSeconds(extractVideoInfo.getVideoLength()));
-               extractVideoInfo.release();
-               files.add(fileData);
-           }
-       }
+        lvRecordFile.setVisibility(View.VISIBLE);
+        rlNoRecord.setVisibility(View.GONE);
+        for (File file : recordFiles) {
+            if (file.getName().endsWith(".mp4")) {
+                RecordFileData fileData = new RecordFileData();
+                fileData.setFileName(file.getName());
+                ExtractVideoInfo extractVideoInfo = new ExtractVideoInfo(file.getAbsolutePath());
+                fileData.setDuration(convertToSeconds(extractVideoInfo.getVideoLength()));
+                extractVideoInfo.release();
+                files.add(fileData);
+            }
+        }
+        adapter.notifyDataSetChanged();
 
     }
 
 
-    private String convertToSeconds(String time){
+    private String convertToSeconds(String time) {
         long duration = Long.parseLong(time);
-       return ConvertUtil.secToTime((int)duration/1000);
+        return ConvertUtil.secToTime((int) duration / 1000);
     }
 
     class MyAdapter extends BaseAdapter {
@@ -113,18 +119,18 @@ public class RecordFileActivity extends AppCompatActivity {
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             MyAdapter.ViewHolder v;
-            if(view==null) {
+            if (view == null) {
                 view = mInflater.inflate(R.layout.list_record_file_item, null);
-                v=new MyAdapter.ViewHolder();
+                v = new MyAdapter.ViewHolder();
                 v.fileName = (TextView) view.findViewById(R.id.widget_channel_name);
                 v.duration = (TextView) view.findViewById(R.id.widget_channel_time);
                 v.delete = (Button) view.findViewById(R.id.widget_channel_delete);
                 view.setTag(v);
-            }else {
-                v= (MyAdapter.ViewHolder) view.getTag();
+            } else {
+                v = (MyAdapter.ViewHolder) view.getTag();
             }
             String name = mList.get(i).getFileName();
-            v.fileName.setText(name.substring(0,name.indexOf(".mp4")));
+            v.fileName.setText(name.substring(0, name.indexOf(".mp4")));
             v.duration.setText(mList.get(i).getDuration());
             v.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -134,26 +140,32 @@ public class RecordFileActivity extends AppCompatActivity {
                     deleteFile(mList.get(i).getFileName());
                     mList.remove(i);
                     notifyDataSetChanged();
+                    if(mList.size()==0){
+                        rlNoRecord.setVisibility(View.VISIBLE);
+                        lvRecordFile.setVisibility(View.GONE);
+                    }else {
+                        rlNoRecord.setVisibility(View.VISIBLE);
+                        lvRecordFile.setVisibility(View.GONE);
+                    }
 
                 }
             });
             return view;
         }
 
-        public class ViewHolder{
+        public class ViewHolder {
             public TextView fileName;
             public TextView duration;
             public Button delete;
 
         }
 
-        private void deleteFile(String fileName){
-            File file = new File(getFile().getAbsolutePath()+"/"+fileName);
+        private void deleteFile(String fileName) {
+            File file = new File(getFile().getAbsolutePath() + "/" + fileName);
             file.delete();
         }
 
     }
-
 
 
 }
