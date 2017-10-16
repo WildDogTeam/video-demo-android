@@ -35,7 +35,7 @@ public class Camera360Util {
 
     public static void initEngine(Context context, boolean isInitEGL, int frameWidth, int frameHeight, int rotation) {
         if (prettifySDK == null) {
-            prettifySDK = new PGPrettifySDK(context);
+            prettifySDK = new PGPrettifySDK(context,false);
         }
         // 初始化引擎
         if (IS_HAS_STICKER) {

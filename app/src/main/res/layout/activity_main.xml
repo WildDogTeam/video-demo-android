@@ -25,11 +25,13 @@
             style="@style/RadiaButton"
             android:drawableTop="@drawable/selector_tab_online"
             android:text="@string/online" />
+
         <RadioButton
             android:id="@+id/rb_main_call"
             style="@style/RadiaButton"
             android:drawableTop="@drawable/selector_tab_call"
             android:text="@string/call" />
+
         <RadioButton
             android:id="@+id/rb_main_me"
             style="@style/RadiaButton"

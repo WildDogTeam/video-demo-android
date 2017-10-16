@@ -23,11 +23,12 @@ import com.wilddog.client.SyncError;
 import com.wilddog.client.SyncReference;
 import com.wilddog.client.WilddogSync;
 import com.wilddog.conversation.R;
-import com.wilddog.conversation.activities.CallingActivity;
+import com.wilddog.conversation.activities.DetailInfoActivity;
 import com.wilddog.conversation.activities.SendInviteActivity;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.ImageManager;
+import com.wilddog.conversation.utils.MyOpenHelper;
 import com.wilddog.conversation.utils.PingYinUtil;
 import com.wilddog.conversation.utils.PinyinComparator;
 import com.wilddog.conversation.utils.SharedpereferenceTool;
@@ -40,8 +41,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by fly on 17-6-9.
@@ -65,6 +64,7 @@ public class OnlineFragment extends BaseFragment {
         }
     };
     private List<UserInfo> userList = new ArrayList<>();
+    private List<String> blackUserIDs;
 
     private MyAdapter adapter;
 
@@ -87,8 +87,12 @@ public class OnlineFragment extends BaseFragment {
                             String strNickname = value.get("nickname")==null?key:value.get("nickname").toString();
                             info.setNickname(strNickname);
                             info.setDeviceid(value.get("deviceid").toString());
-                            userList.add(info);
-                            userIds.add(key);
+
+                            if(!blackUserIDs.contains(key)){
+                                userList.add(info);
+                                userIds.add(key);
+                            }
+
                         }
                         adapter.notifyDataSetChanged();
                         showListViewOrTextView();
@@ -193,7 +197,10 @@ public class OnlineFragment extends BaseFragment {
     }
 
     private void gotoCallingAcivity(UserInfo info) {
-        Intent intent = new Intent(getContext(), CallingActivity.class);
+//
+//        Intent intent = new Intent(getContext(), CallingActivity.class);
+//        startActivity(intent);
+        Intent intent = new Intent(getContext(), DetailInfoActivity.class);
         intent.putExtra("user",info);
         startActivity(intent);
     }
@@ -217,6 +224,7 @@ public class OnlineFragment extends BaseFragment {
             public void run() {
                 mRef = WilddogSync.getInstance().getReference();
                 mUid = SharedpereferenceTool.getUserId(getContext());
+                blackUserIDs=MyOpenHelper.getInstance().selectBlackIds(mUid);
                 if(userList.size()>0){
                     userList.clear();
                     userIds.clear();

@@ -5,7 +5,7 @@
     <string name="app_des">野狗视频通话</string>
     <string name="login">微信登录</string>
     <string name="online">在线</string>
-    <string name="call">通话</string>
+    <string name="call">好友</string>
     <string name="me">我</string>
     <string name="personnal_settings">我</string>
     <string name="user_id">用户ID</string>
@@ -26,6 +26,17 @@
     <string name="delete">删除</string>
     <string name="online_now">当前在线</string>
     <string name="camera360_sdk_version">Camera360 SDK v1.7</string>
-    <string name="call_history">最近通话</string>
+    <string name="call_history">好友</string>
     <string name="about">关于</string>
+    <string name="detailinfo">详细资料</string>
+    <string name="blacklist">加入黑名单</string>
+    <string name="report">举报</string>
+    <string name="videocall">视频通话</string>
+    <string name="dec_blacklist">加入黑名单，你将无法与对方进行视频通话</string>
+    <string name="add_blacklist">加入黑名单</string>
+    <string name="submmit">提交</string>
+    <string name="reported">被举报人</string>
+    <string name="report_dsc">举报说明</string>
+    <string name="count">还可以输入200个字</string>
+    <string name="blackusers">黑名单</string>
 </resources>

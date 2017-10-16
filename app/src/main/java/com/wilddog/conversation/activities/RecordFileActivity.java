@@ -1,7 +1,9 @@
 package com.wilddog.conversation.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -122,6 +125,7 @@ public class RecordFileActivity extends AppCompatActivity {
             if (view == null) {
                 view = mInflater.inflate(R.layout.list_record_file_item, null);
                 v = new MyAdapter.ViewHolder();
+                v.llRecord = (LinearLayout) view.findViewById(R.id.ll_record);
                 v.fileName = (TextView) view.findViewById(R.id.widget_channel_name);
                 v.duration = (TextView) view.findViewById(R.id.widget_channel_time);
                 v.delete = (Button) view.findViewById(R.id.widget_channel_delete);
@@ -129,7 +133,7 @@ public class RecordFileActivity extends AppCompatActivity {
             } else {
                 v = (MyAdapter.ViewHolder) view.getTag();
             }
-            String name = mList.get(i).getFileName();
+            final String name = mList.get(i).getFileName();
             v.fileName.setText(name.substring(0, name.indexOf(".mp4")));
             v.duration.setText(mList.get(i).getDuration());
             v.delete.setOnClickListener(new View.OnClickListener() {
@@ -150,6 +154,15 @@ public class RecordFileActivity extends AppCompatActivity {
 
                 }
             });
+            v.llRecord.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    String bpath = "file://" + recordFiles[i].getPath();
+                    intent.setDataAndType(Uri.parse(bpath), "video/*");
+                    startActivity(intent);
+                }
+            });
             return view;
         }
 
@@ -158,6 +171,7 @@ public class RecordFileActivity extends AppCompatActivity {
             public TextView duration;
             public Button delete;
 
+            public LinearLayout llRecord;
         }
 
         private void deleteFile(String fileName) {

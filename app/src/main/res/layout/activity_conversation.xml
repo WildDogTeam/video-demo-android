@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             >
-            <com.wilddog.video.WilddogVideoView
+            <com.wilddog.video.base.WilddogVideoView
                 android:id="@+id/wvv_big"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -206,7 +206,7 @@
 
     </LinearLayout>
 
-    <com.wilddog.video.WilddogVideoView
+    <com.wilddog.video.base.WilddogVideoView
         android:layout_width="105dp"
         android:layout_height="160dp"
         android:id="@+id/wvv_small"
@@ -236,6 +236,13 @@
             android:layout_height="33dp"
             android:id="@+id/iv_record"
             android:src="@drawable/record_normal"
+            />
+        <ImageView
+            android:layout_marginTop="20dp"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:id="@+id/iv_fullscreen"
+            android:src="@drawable/fullscreen"
             />
     </LinearLayout>
     <TextView

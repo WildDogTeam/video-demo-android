@@ -20,6 +20,8 @@ public final class Constant {
     //Camera360 key
     public static final String SDK_KEY_NEW = "";
 
+    public static final String UPDATE_VIEW = "com.wilddog.conversation.updateview";
+
 
 
     public static boolean isLoginClickable = true;

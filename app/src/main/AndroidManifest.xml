@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wilddog.conversation">
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature
@@ -15,13 +18,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
-    <!--TuSDK-->
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <!-- TuSDK -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 允许访问GPS -->
-  <!--  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> -->
     <!-- 允许应用程序写数据到外部存储设备（主要是SD卡） -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -38,31 +40,30 @@
 
     <uses-feature android:name="android.hardware.camera.flash" />
 
-
     <application
-        android:name="com.wilddog.conversation.ConversationApplication"
+        android:name=".ConversationApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/wilddog"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/wilddog"
-        android:hardwareAccelerated="true"
         android:largeHeap="true"
+        android:roundIcon="@drawable/wilddog"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="com.wilddog.conversation.activities.MainActivity" />
-        <activity android:name="com.wilddog.conversation.activities.SplashActivity">
+        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.wilddog.conversation.activities.LoginActivity" />
-        <activity android:name="com.wilddog.conversation.activities.SDKVersionActivity" />
-        <activity android:name="com.wilddog.conversation.activities.RecordFileActivity" />
-        <activity android:name="com.wilddog.conversation.activities.SendInviteActivity" />
-        <activity android:name="com.wilddog.conversation.activities.CallingActivity" />
-        <activity android:name="com.wilddog.conversation.activities.PermissionActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.SDKVersionActivity" />
+        <activity android:name=".activities.RecordFileActivity" />
+        <activity android:name=".activities.SendInviteActivity" />
+        <activity android:name=".activities.CallingActivity" />
+        <activity android:name=".activities.PermissionActivity" />
 
         <receiver android:name="com.wilddog.client.receiver.WilddogAuthCastReceiver">
             <intent-filter>
@@ -71,17 +72,28 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name="com.wilddog.conversation.activities.AcceptActivity" />
-        <activity android:name="com.wilddog.conversation.activities.ConversationActivity"/>
+        <activity android:name=".activities.AcceptActivity" />
+        <activity
+            android:name=".activities.ConversationActivity"
+            android:launchMode="singleTask" />
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="62b476b8bec312542b8993f36ee2e14400600162" />
+
+        <activity android:name=".activities.DeclarActivity" />
+        <activity android:name=".activities.DetailInfoActivity" />
+
+        <service android:name=".floatingwindow.WindowService" />
+
+        <activity android:name=".activities.ReportActivity" />
+        <activity android:name=".activities.BlackUsersActivity"></activity>
     </application>
 
 </manifest>

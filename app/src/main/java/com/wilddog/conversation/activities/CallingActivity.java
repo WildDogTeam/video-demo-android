@@ -1,9 +1,12 @@
 package com.wilddog.conversation.activities;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,25 +26,29 @@ import com.wilddog.conversation.ConversationApplication;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.ConversationRecord;
 import com.wilddog.conversation.bean.UserInfo;
+import com.wilddog.conversation.floatingwindow.PermissionUtils;
+import com.wilddog.conversation.floatingwindow.StreamsHolder;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.Camera360Util;
 import com.wilddog.conversation.utils.ConvertUtil;
 import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.MyOpenHelper;
+import com.wilddog.conversation.utils.ParamsStore;
 import com.wilddog.conversation.utils.RingUtil;
 import com.wilddog.conversation.utils.SharedpereferenceTool;
 import com.wilddog.conversation.utils.TuSDKUtil;
 import com.wilddog.conversation.view.CircleImageView;
-import com.wilddog.video.CallStatus;
-import com.wilddog.video.Conversation;
-import com.wilddog.video.LocalStream;
-import com.wilddog.video.LocalStreamOptions;
-import com.wilddog.video.RemoteStream;
-import com.wilddog.video.WilddogVideo;
-import com.wilddog.video.WilddogVideoError;
-import com.wilddog.video.WilddogVideoView;
-import com.wilddog.video.core.stats.LocalStreamStatsReport;
-import com.wilddog.video.core.stats.RemoteStreamStatsReport;
+import com.wilddog.conversation.wilddog.WilddogVideoManager;
+import com.wilddog.video.base.LocalStream;
+import com.wilddog.video.base.LocalStreamOptions;
+import com.wilddog.video.base.WilddogVideoError;
+import com.wilddog.video.base.WilddogVideoView;
+import com.wilddog.video.call.CallStatus;
+import com.wilddog.video.call.Conversation;
+import com.wilddog.video.call.RemoteStream;
+import com.wilddog.video.call.WilddogVideoCall;
+import com.wilddog.video.call.stats.LocalStreamStatsReport;
+import com.wilddog.video.call.stats.RemoteStreamStatsReport;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +61,7 @@ public class CallingActivity extends AppCompatActivity {
 
     private String remoteid;
 
-    private WilddogVideo video = WilddogVideo.getInstance();
+    private WilddogVideoCall video = WilddogVideoCall.getInstance();
 
     private CheckBox cbMic;
     private CheckBox cbSpeaker;
@@ -114,30 +121,54 @@ public class CallingActivity extends AppCompatActivity {
     private UserInfo remoteUserInfo = null;
 
     private AudioManager audioManager;
+    private ImageView ivFullScreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calling);
-        remoteUserInfo = (UserInfo) getIntent().getSerializableExtra("user");
+//        remoteUserInfo = (UserInfo) getIntent().getSerializableExtra("user");
+        remoteUserInfo= WilddogVideoManager.getRemoteUser();
         remoteid = remoteUserInfo.getUid();
         initView();
-        LocalStreamOptions localStreamOptions = genLocalStreamOptions();
-        localStream = video.createLocalStream(localStreamOptions);
-        localStream.setOnFrameListener(new LocalStream.CameraFrameListener() {
-            @Override
-            public void onByteFrame(byte[] bytes, int i, int i1, int i2, long l) {
-                // TODO 设置美颜效果
-                frameProcess(bytes, 0, mFirstFrame, true, i, i1, i2);//data 可以传空 根据TextureId进行美颜
-                mFirstFrame = false;
+        if(!StreamsHolder.getMyBinder().isWindowShow()) {
+            LocalStreamOptions localStreamOptions = genLocalStreamOptions();
+            localStream = video.createLocalStream(localStreamOptions);
+            localStream.setOnFrameListener(new LocalStream.CameraFrameListener() {
+                @Override
+                public void onByteFrame(byte[] bytes, int i, int i1, int i2, long l) {
+                    // TODO 设置美颜效果
+                    frameProcess(bytes, 0, mFirstFrame, true, i, i1, i2);//data 可以传空 根据TextureId进行美颜
+                    mFirstFrame = false;
+                }
+            });
+            localStream.attach(wvvBig);
+
+            if(StreamsHolder.getLocalStream()!=null&& !localStream.isClosed()){
+                StreamsHolder.getLocalStream().close();
             }
-        });
-        localStream.attach(wvvBig);
 
-        mConversation = video.call(remoteid, localStream, "conversationDemo");
+            StreamsHolder.setLocalStream(localStream);
 
-        mConversation.setConversationListener(listener);
-        startRing();
+            mConversation = video.call(remoteid, localStream, "conversationDemo");
+
+            mConversation.setConversationListener(listener);
+
+            if(WilddogVideoManager.getConversation()!=null){
+                WilddogVideoManager.getConversation().close();
+            }
+
+            WilddogVideoManager.saveConversation(mConversation);
+            startRing();
+        }else  {
+            mConversation=WilddogVideoManager.getConversation();
+            mConversation.setConversationListener(listener);
+            localStream=StreamsHolder.getLocalStream();
+            llCalled.setVisibility(View.INVISIBLE);
+            tvHungup.setText("挂断");
+            llData.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void startRing() {
@@ -230,6 +261,7 @@ public class CallingActivity extends AppCompatActivity {
                             llCalled.setVisibility(View.INVISIBLE);
                             tvHungup.setText("挂断");
                             llData.setVisibility(View.VISIBLE);
+                            ParamsStore.isInitiativeCall =true;
                             break;
                         case REJECTED:
                             stop();
@@ -258,6 +290,12 @@ public class CallingActivity extends AppCompatActivity {
         public void onStreamReceived(final RemoteStream remoteStream) {
             //有参与者成功加入会话后，会触发此方法
             //设置音视频全部开启
+            StreamsHolder.setRemoteStream(remoteStream);
+//            StreamsHolder.setRemoteStream(remoteStream);
+//
+//            Intent intent = new Intent();
+//            intent.setAction(Constant.UPDATE_VIEW);
+//            sendBroadcast(intent);
             remoteStream.enableAudio(true);
             remoteStream.enableVideo(true);
             //在视频展示控件中播放其他端媒体流
@@ -265,13 +303,7 @@ public class CallingActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    localStream.detach();
-                    remoteStream.attach(wvvBig);
-                    wvvSmall.setVisibility(View.VISIBLE);
-                    localStream.attach(wvvSmall);
-                    isSelfInBig = false;
-                    tvTime.setVisibility(View.VISIBLE);
-                    startTimer();
+                    updateView();
                 }
             });
         }
@@ -287,7 +319,10 @@ public class CallingActivity extends AppCompatActivity {
                     AlertMessageUtil.showShortToast("用户：" + mConversation.getRemoteUid() + "离开会话");
                 }
             });
-            mConversation.close();
+//            mConversation.close();
+            if(StreamsHolder.getMyBinder().isWindowShow())
+                StreamsHolder.getMyBinder().hidFloatingWindow();
+            release();
             finish();
         }
 
@@ -311,9 +346,9 @@ public class CallingActivity extends AppCompatActivity {
         cbMic = (CheckBox) findViewById(R.id.cb_mic);
         cbMic.setChecked(isAudioEnable);
         cbSpeaker = (CheckBox) findViewById(R.id.cb_speaker);
-        cbSpeaker.setChecked(isAudioEnable);
+        cbSpeaker.setChecked(isSpeakerOn);
         cbCamera = (CheckBox) findViewById(R.id.cb_camera);
-        cbCamera.setChecked(isAudioEnable);
+        cbCamera.setChecked(isVideoEnable);
         llHungup = (LinearLayout) findViewById(R.id.ll_reject);
         tvHungup = (TextView) findViewById(R.id.tv_hungup);
         civPhotoUrl = (CircleImageView) findViewById(R.id.civ_photo);
@@ -347,6 +382,9 @@ public class CallingActivity extends AppCompatActivity {
 
         ivState = (ImageView) findViewById(R.id.iv_report);
         ivRecordFile = (ImageView) findViewById(R.id.iv_record);
+
+        ivFullScreen = (ImageView) findViewById(R.id.iv_fullscreen);
+
 
         ivState.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -392,6 +430,7 @@ public class CallingActivity extends AppCompatActivity {
                     isrecording = true;
                     mConversation.startLocalRecording(getRecordFile(), wvvSmall, wvvBig);
                     tvRecordTime.setVisibility(View.VISIBLE);
+                    recordTime = 0;
                     startRecordTime();
                 }
             }
@@ -438,6 +477,7 @@ public class CallingActivity extends AppCompatActivity {
                     mConversation.close();
                 }
                 stop();
+                release();
                 finish();
             }
         });
@@ -450,17 +490,96 @@ public class CallingActivity extends AppCompatActivity {
 
             }
         });
+        ivFullScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFloatingWindow();
+            }
+        });
 
 
     }
+    public void showFloatWindow() {
+        //显示悬浮框
+//        PermissionUtils.requestPermissionsResult(this, 1,
+//                new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW
+//                }, new PermissionUtils.OnPermissionListener() {
+//                    @Override
+//                    public void onPermissionGranted() {
+//                        showFloatingWindow();
+//                    }
+//
+//                    @Override
+//                    public void onPermissionDenied() {
+////                        showFloatingWindow();
+//                        Toast.makeText(CallingActivity.this, "请打开悬浮窗权限", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
 
+    }
+
+    private void showFloatingWindow() {
+        moveTaskToBack(false);
+
+        StreamsHolder.getLocalStream().detach();
+        StreamsHolder.getRemoteStream().detach();
+
+        StreamsHolder.getMyBinder().showFloatingWindow();
+
+        storeInstanceState();
+
+
+        finish();
+
+    }
+    private void release() {
+        if (mConversation != null) {
+            mConversation.close();
+        }
+        if (localStream != null && !localStream.isClosed()) {
+            localStream.close();
+        }
+        String localid = SharedpereferenceTool.getUserId(getApplicationContext());
+        ConversationRecord record = MyOpenHelper.getInstance().selectConversationRecord(localid, remoteid);
+        if (record == null) {
+            record = new ConversationRecord();
+            record.setRemoteId(remoteid);
+            record.setDuration(String.valueOf(conversationTime));
+            record.setLocalId(localid);
+            record.setNickName(remoteUserInfo.getNickname());
+            record.setPhotoUrl(remoteUserInfo.getFaceurl());
+            record.setTimeStamp(String.valueOf(System.currentTimeMillis()));
+            MyOpenHelper.getInstance().insertRecord(record);
+        } else {
+            record = new ConversationRecord();
+            record.setRemoteId(remoteid);
+            record.setDuration(String.valueOf(conversationTime));
+            record.setNickName(remoteUserInfo.getNickname());
+            record.setPhotoUrl(remoteUserInfo.getFaceurl());
+            record.setLocalId(localid);
+            record.setTimeStamp(String.valueOf(System.currentTimeMillis()));
+            MyOpenHelper.getInstance().updateRecord(localid, remoteid, record);
+        }
+
+    }
+    private void storeInstanceState() {
+        ParamsStore.preconverstationTime =conversationTime;
+        ParamsStore.precurrentTime =System.currentTimeMillis();
+        ParamsStore.prerecordTime=recordTime;
+        ParamsStore.isrecording=isrecording;
+        ParamsStore.isAudioEnable=isAudioEnable;
+        ParamsStore.isVideoEnable=isVideoEnable;
+        ParamsStore.isSpeakerOn=isSpeakerOn;
+        ParamsStore.fileName=fileName;
+
+    }
     private Timer recordTimer;
 
     private void startRecordTime() {
         if (recordTimer == null) {
             recordTimer = new Timer();
         }
-        recordTime = 0;
+
         recordTask = new TimerTask() {
             @Override
             public void run() {
@@ -604,38 +723,26 @@ public class CallingActivity extends AppCompatActivity {
         return builder.captureAudio(true).build();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        release();
+        finish();
+    }
 
     @Override
     protected void onDestroy() {
-        String localid = SharedpereferenceTool.getUserId(getApplicationContext());
-        ConversationRecord record = MyOpenHelper.getInstance().selectConversationRecord(localid, remoteid);
-        if (record == null) {
-            record = new ConversationRecord();
-            record.setRemoteId(remoteid);
-            record.setDuration(String.valueOf(conversationTime));
-            record.setLocalId(localid);
-            record.setNickName(remoteUserInfo.getNickname());
-            record.setPhotoUrl(remoteUserInfo.getFaceurl());
-            record.setTimeStamp(String.valueOf(System.currentTimeMillis()));
-            MyOpenHelper.getInstance().insertRecord(record);
-        } else {
-            record = new ConversationRecord();
-            record.setRemoteId(remoteid);
-            record.setDuration(String.valueOf(conversationTime));
-            record.setNickName(remoteUserInfo.getNickname());
-            record.setPhotoUrl(remoteUserInfo.getFaceurl());
-            record.setLocalId(localid);
-            record.setTimeStamp(String.valueOf(System.currentTimeMillis()));
-            MyOpenHelper.getInstance().updateRecord(localid, remoteid, record);
-        }
-        stop();
-        super.onDestroy();
+
         if (timer != null) {
             timer.cancel();
         }
-        if (localStream != null && !localStream.isClosed()) {
-            localStream.close();
+        if(recordTimer!=null){
+            recordTimer.cancel();
         }
+        super.onDestroy();
+//        if (localStream != null && !localStream.isClosed()) {
+//            localStream.close();
+//        }
         if (wvvBig != null) {
             wvvBig.release();
             wvvBig = null;
@@ -644,12 +751,52 @@ public class CallingActivity extends AppCompatActivity {
             wvvSmall.release();
             wvvSmall = null;
         }
+    }
 
-        if (mConversation != null) {
-            mConversation.close();
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (StreamsHolder.getMyBinder().isWindowShow()) {
+            StreamsHolder.getMyBinder().hidFloatingWindow();
+            conversationTime=(System.currentTimeMillis()-ParamsStore.precurrentTime)/1000+ParamsStore.preconverstationTime;
+            reStoreInstanceState();
+            updateView();
+        }
+    }
+    private void reStoreInstanceState() {
+        if(ParamsStore.isrecording){
+            fileName=ParamsStore.fileName;
+            ivRecordFile.setBackgroundResource(R.drawable.record_selected);
+            isrecording = true;
+            tvRecordTime.setVisibility(View.VISIBLE);
+            recordTime= (int) ((System.currentTimeMillis()-ParamsStore.precurrentTime)/1000+ParamsStore.prerecordTime);
+            startRecordTime();
+        }
+        if(!ParamsStore.isAudioEnable){
+            cbMic.setChecked(false);
+            isAudioEnable=false;
+        }
+        if(!ParamsStore.isVideoEnable){
+            cbCamera.setChecked(false);
+            isVideoEnable=false;
+        }
+        if(!ParamsStore.isSpeakerOn){
+            cbSpeaker.setChecked(false);
+            isSpeakerOn=false;
         }
     }
 
+    private void updateView() {
+        localStream.detach();
+        StreamsHolder.getRemoteStream().attach(wvvBig);
+        wvvSmall.setVisibility(View.VISIBLE);
+        localStream.attach(wvvSmall);
+        isSelfInBig = false;
+        tvTime.setVisibility(View.VISIBLE);
+        mConversation.setStatsListener(statsListener);
+        startTimer();
+    }
 
     private AudioManager getAudioManager() {
         if (audioManager == null) {
@@ -695,5 +842,9 @@ public class CallingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        PermissionUtils.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 }
