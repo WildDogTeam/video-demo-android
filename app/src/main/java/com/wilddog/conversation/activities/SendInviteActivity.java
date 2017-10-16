@@ -16,6 +16,7 @@ import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
+import com.wilddog.conversation.wilddog.WilddogVideoManager;
 
 import java.util.Map;
 
@@ -78,8 +79,8 @@ public class SendInviteActivity extends AppCompatActivity {
     }
 
     private void gotoCallingActivity(UserInfo info) {
+        WilddogVideoManager.setWilddogUser(info);
         Intent intent = new Intent(SendInviteActivity.this, CallingActivity.class);
-        intent.putExtra("user",info);
         startActivity(intent);
         finish();
     }

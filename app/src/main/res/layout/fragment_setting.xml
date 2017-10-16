@@ -5,16 +5,18 @@
     android:id="@+id/ll_parent"
     android:background="@color/background"
     >
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/title_size"
-    android:background="@color/title_color"
-    android:text="@string/personnal_settings"
-    android:textSize="18sp"
-    android:textColor="@color/item_background"
-    android:layout_gravity="center"
-    android:gravity="center"
-    />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_size"
+        android:layout_gravity="center"
+        android:background="@color/title_color"
+        android:gravity="center"
+        android:text="@string/personnal_settings"
+        android:textColor="@color/item_background"
+        android:textSize="18sp" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
@@ -187,6 +189,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tv_record_file"
+            android:layout_weight="1"
+            android:text=""
+            android:gravity="center|right"
+            android:layout_marginLeft="20dp"
+            />
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/right_arraw"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/item_margen_left"
+        android:background="@color/line_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        style="@style/ItemStyle"
+        android:id="@+id/ll_blacklist"
+        >
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="15dp"
+            android:src="@drawable/blacklist"
+            />
+        <TextView
+            android:layout_marginLeft="@dimen/item_text_image_space"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/item_left_text_size"
+            android:text="@string/blackusers"
+            android:textColor="@color/text_color"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text=""
             android:gravity="center|right"

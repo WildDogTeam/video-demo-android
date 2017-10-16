@@ -16,10 +16,11 @@ import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.receiver.InviteCancelBroadcastReceiver;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ImageManager;
+import com.wilddog.conversation.utils.ParamsStore;
 import com.wilddog.conversation.utils.RingUtil;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.wilddog.WilddogVideoManager;
-import com.wilddog.video.Conversation;
+import com.wilddog.video.call.Conversation;
 
 public class AcceptActivity extends AppCompatActivity {
     private final String TAG = AcceptActivity.class.getName();
@@ -63,9 +64,10 @@ public class AcceptActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 接受 进入通话页
-
+                WilddogVideoManager.setWilddogUser(remoteUserInfo);
+                ParamsStore.isInitiativeCall =false;
                 Intent intent = new Intent(AcceptActivity.this,ConversationActivity.class);
-                intent.putExtra("user",remoteUserInfo);
+//                intent.putExtra("user",remoteUserInfo);
                 startActivity(intent);
                 finish();
             }

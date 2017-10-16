@@ -1,11 +1,15 @@
 package com.wilddog.conversation.activities;
 
+import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -16,19 +20,21 @@ import com.wilddog.client.SyncError;
 import com.wilddog.client.ValueEventListener;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
-import com.wilddog.conversation.fragments.OnlineFragment;
-import com.wilddog.conversation.fragments.MeFragment;
+import com.wilddog.conversation.floatingwindow.StreamsHolder;
+import com.wilddog.conversation.floatingwindow.WindowService;
 import com.wilddog.conversation.fragments.CallFragment;
+import com.wilddog.conversation.fragments.MeFragment;
+import com.wilddog.conversation.fragments.OnlineFragment;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.SharedpereferenceTool;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 import com.wilddog.conversation.wilddog.WilddogVideoManager;
-import com.wilddog.video.CallStatus;
-import com.wilddog.video.Conversation;
-import com.wilddog.video.RemoteStream;
-import com.wilddog.video.WilddogVideo;
-import com.wilddog.video.WilddogVideoError;
+import com.wilddog.video.base.WilddogVideoError;
+import com.wilddog.video.call.CallStatus;
+import com.wilddog.video.call.Conversation;
+import com.wilddog.video.call.RemoteStream;
+import com.wilddog.video.call.WilddogVideoCall;
 import com.wilddog.wilddogauth.WilddogAuth;
 
 import java.util.Map;
@@ -45,20 +51,47 @@ public class MainActivity extends AppCompatActivity {
     private Fragment meFragment = new MeFragment();
     private Fragment callFragment = new CallFragment();
     private boolean iscancel =true;
-    private WilddogVideo video;
+    private WilddogVideoCall video;
+    private WindowService.MyBinder mybinder;
+    private MyServiceConnection serviceConnection;
+
+
+
+    public class MyServiceConnection implements ServiceConnection {
+        private boolean isbind = false;
+
+        public boolean getIsbind() {
+            return isbind;
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            mybinder = (WindowService.MyBinder) iBinder;
+            isbind = true;
+            StreamsHolder.setMyBinder(mybinder);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         fragmentManager = getSupportFragmentManager();
-        initWilddogVideo();
+        serviceConnection = new MyServiceConnection();
+        Intent service = new Intent(this, WindowService.class);
+        bindService(service, serviceConnection, Service.BIND_AUTO_CREATE);
+        initWilddogVideoCall();
         initView();
     }
 
-    private void initWilddogVideo() {
-        WilddogVideo.initialize(MainActivity.this, Constant.WILDDOG_VIDEO_APP_ID, WilddogAuth.getInstance().getCurrentUser().getToken(false).getResult().getToken());
-        video = WilddogVideo.getInstance();
+    private void initWilddogVideoCall() {
+        WilddogVideoCall.initialize(MainActivity.this, Constant.WILDDOG_VIDEO_APP_ID, WilddogAuth.getInstance().getCurrentUser().getToken(false).getResult().getToken());
+        video = WilddogVideoCall.getInstance();
     }
 
     @Override
@@ -91,8 +124,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onStreamReceived(RemoteStream remoteStream) {
+        public void onStreamReceived(final RemoteStream remoteStream) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
+                    StreamsHolder.setRemoteStream(remoteStream);
+
+                    Intent intent = new Intent();
+                    intent.setAction(Constant.UPDATE_VIEW);
+                    sendBroadcast(intent);
+
+                }
+            });
         }
 
         @Override
@@ -105,7 +149,17 @@ public class MainActivity extends AppCompatActivity {
                 intent.setAction(Constant.INVITE_CANCEL);
                 sendBroadcast(intent);
                 iscancel =true;
+
+            }else {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AlertMessageUtil.showShortToast("用户：" +  WilddogVideoManager.getConversation().getRemoteUid() + "离开会话");
+                    }
+                });
+//                WilddogVideoManager.getConversation().close();
             }
+            release();
 
         }
 
@@ -113,12 +167,24 @@ public class MainActivity extends AppCompatActivity {
         public void onError(WilddogVideoError wilddogVideoError) {
             Log.e(TAG,wilddogVideoError.toString());
         }
+
     };
+
+    private void release() {
+        if(WilddogVideoManager.getConversation()!=null){
+            WilddogVideoManager.getConversation().close();
+        }
+        if(StreamsHolder.getLocalStream()!=null&&!StreamsHolder.getLocalStream().isClosed()){
+            StreamsHolder.getLocalStream().close();
+        }
+//        if(StreamsHolder.getMyBinder().isWindowShow())
+//            StreamsHolder.getMyBinder().hidFloatingWindow();
+    }
 
     private UserInfo remoteUserInfo;
 
-    private WilddogVideo.Listener listener =
-            new WilddogVideo.Listener() {
+    private WilddogVideoCall.Listener listener =
+            new WilddogVideoCall.Listener() {
                 @Override
                 public void onCalled(Conversation conversation, String s) {
                     final String uid = conversation.getRemoteUid();
@@ -153,9 +219,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onTokenError(WilddogVideoError wilddogVideoError) {
-                    Toast.makeText(MainActivity.this,"token 存在问题,推出登录",Toast.LENGTH_SHORT).show();
-                    Log.e("tokenerror",wilddogVideoError.getMessage());
+                public void onTokenError(WilddogVideoError WilddogVideoCallError) {
+                    Toast.makeText(MainActivity.this,"token 存在问题,退出登录",Toast.LENGTH_SHORT).show();
+                    Log.e("tokenerror",WilddogVideoCallError.getMessage());
                     WilddogSyncManager.getWilddogSyncTool().removeUserInfo(SharedpereferenceTool.getUserId(MainActivity.this));
                     SharedpereferenceTool.setUserInfo(MainActivity.this, "");
                     SharedpereferenceTool.setLoginStatus(MainActivity.this, false);
@@ -201,5 +267,13 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().replace(R.id.fl_content, fragment).commit();
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        release();
+        //解绑服务
+        if (serviceConnection != null && serviceConnection.getIsbind()) {
+            unbindService(serviceConnection);
+        }
+    }
 }

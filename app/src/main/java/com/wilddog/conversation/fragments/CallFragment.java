@@ -25,6 +25,7 @@ import com.wilddog.conversation.utils.SharedpereferenceTool;
 import com.wilddog.conversation.utils.String2DateUtil;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
+import com.wilddog.conversation.wilddog.WilddogVideoManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,8 +89,9 @@ public class CallFragment extends BaseFragment {
     }
 
     private void gotoCallingActivity(UserInfo info) {
+        WilddogVideoManager.setWilddogUser(info);
         Intent intent = new Intent(getContext(), CallingActivity.class);
-        intent.putExtra("user",info);
+//        intent.putExtra("user",info);
         startActivity(intent);
     }
 

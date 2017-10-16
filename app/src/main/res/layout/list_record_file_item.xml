@@ -10,6 +10,7 @@
       android:orientation="horizontal"
       >
       <LinearLayout
+          android:id="@+id/ll_record"
           android:orientation="horizontal"
           android:padding="5dip"
           android:layout_width="match_parent"

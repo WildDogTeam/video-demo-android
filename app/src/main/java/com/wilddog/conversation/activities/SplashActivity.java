@@ -14,24 +14,26 @@ import com.wilddog.conversation.utils.SharedpereferenceTool;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 
 public class SplashActivity extends AppCompatActivity {
-    private final int gotoLoginAcitivity=0;
-    private Handler handler = new Handler(){
+    private final int gotoLoginAcitivity = 0;
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case gotoLoginAcitivity:
-                    if(SharedpereferenceTool.getLoginStatus(SplashActivity.this)){
+                    if (SharedpereferenceTool.getLoginStatus(SplashActivity.this)) {
                         gotoMainActivity();
-                    }else {
-                    gotoLoginAcitivity();}
-                     finish();
+                    } else {
+                        gotoLoginAcitivity();
+                    }
+                    finish();
                     break;
                 default:
                     break;
             }
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +43,13 @@ public class SplashActivity extends AppCompatActivity {
         handler.sendEmptyMessageDelayed(gotoLoginAcitivity, Constant.AUTO_SKIP_TIME);
     }
 
-    private void gotoLoginAcitivity(){
-    startActivity(new Intent(SplashActivity.this,LoginActivity.class));
+    private void gotoLoginAcitivity() {
+        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
     }
 
-    private void gotoMainActivity(){
+    private void gotoMainActivity() {
         WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(ObjectAndStringTool.getObjectFromJson(SharedpereferenceTool.getUserInfo(SplashActivity.this), UserInfo.class));
-        startActivity(new Intent(SplashActivity.this,MainActivity.class));
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
     }
 
 }

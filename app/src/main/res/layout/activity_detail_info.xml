@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ll_parent"
+    tools:context="com.wilddog.conversation.activities.DetailInfoActivity">
+    <RelativeLayout
+        style="@style/TitleStyle"
+        android:layout_width="match_parent"
+        android:background="@color/title_color"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_cancel"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/detailinfo"
+            android:textSize="@dimen/title_text_size"
+            android:textColor="@color/item_background" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="17.3dp"
+        android:background="@color/line_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        style="@style/ItemStyle"
+        android:layout_height="76.7dp"
+        >
+
+        <com.wilddog.conversation.view.CircleImageView
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:src="@drawable/uid"
+            android:id="@+id/civ_photo"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginLeft="15dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="这是默认昵称"
+                android:id="@+id/tv_nickName"
+                android:textColor="@color/text_color"
+                android:textSize="17.3sp"
+                android:layout_marginBottom="13.3dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color"
+                android:textSize="11.3sp"
+                android:id="@+id/tv_uid"
+                android:layout_gravity="left"
+                android:text="ID:564521351456"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="19dp"
+        android:background="@color/line_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        style="@style/ItemStyle_child"
+        android:id="@+id/tv_blacklist"
+        >
+
+        <com.wilddog.conversation.view.DrawCenterButton
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/blacklist"
+            android:drawablePadding="@dimen/item_text_image_space"
+            android:text="@string/blacklist"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/item_left_text_size"
+            android:gravity="center_vertical"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="@dimen/item_margen_left"
+        android:background="@color/line_color"/>
+
+    <LinearLayout
+        android:id="@+id/tv_report"
+        style="@style/ItemStyle_child"
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+
+        <com.wilddog.conversation.view.DrawCenterButton
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/report"
+            android:drawablePadding="@dimen/item_text_image_space"
+            android:text="@string/report"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/item_left_text_size"
+            android:gravity="center_vertical"
+            />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/btn_call"
+        android:layout_width="232dp"
+        android:layout_height="40dp"
+        android:text="@string/videocall"
+        android:textSize="@dimen/button_text_size"
+        android:textColor="@color/text_color_white"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:background="@drawable/selector_button_login"
+        android:layout_marginBottom="17dp"
+        />
+</LinearLayout>
