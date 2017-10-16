@@ -37,4 +37,29 @@
         android:background="@drawable/selector_button_login"
         android:layout_below="@+id/tv_conversation_program"
         />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="18dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:text="登录代表你已同意 "
+            android:textColor="#666666"
+            />
+        <TextView
+            android:id="@+id/tv_declar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《用户协议》"
+            android:textColor="#e6501e"
+            android:textSize="11sp"
+            />
+    </LinearLayout>
 </RelativeLayout>

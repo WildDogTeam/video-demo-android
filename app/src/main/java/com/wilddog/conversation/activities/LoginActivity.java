@@ -27,6 +27,7 @@ import com.wilddog.wilddogauth.core.result.AuthResult;
 import com.wilddog.wilddogauth.model.WilddogUser;
 
 import android.Manifest;
+import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
@@ -36,13 +37,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 0; // 请求码
 
-    static final String[] PERMISSIONS = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
+    static final String[] PERMISSIONS = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private TextView declar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         login = (Button) findViewById(R.id.btn_login);
+        declar = (TextView) findViewById(R.id.tv_declar);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +54,13 @@ public class LoginActivity extends AppCompatActivity {
                 Constant.isLoginClickable = false;
                 login();
 
+            }
+        });
+        declar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(LoginActivity.this,DeclarActivity.class);
+                startActivity(intent);
             }
         });
         //动态申请权限
@@ -95,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login() {
         AlertMessageUtil.showprogressbar("微信登录中", LoginActivity.this);
-        //loginWithAnonymously();
+//        loginWithAnonymously();
         weixinLogin();
     }
 

@@ -13,6 +13,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.wilddog.conversation.activities.BlackUsersActivity;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.activities.LoginActivity;
@@ -49,6 +50,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     private ClipboardManager clipboardManager;
 
     private UserInfo info;
+    private LinearLayout llBlackList;
 
     public MeFragment() {
 
@@ -63,6 +65,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         llRecordFile = (LinearLayout) view.findViewById(R.id.ll_record_file);
         llSDKVersion = (LinearLayout) view.findViewById(R.id.ll_SDK_version);
         llLoginout = (LinearLayout) view.findViewById(R.id.ll_user_login_out);
+        llBlackList = (LinearLayout) view.findViewById(R.id.ll_blacklist);
+
         tvUid = (TextView) view.findViewById(R.id.tv_uid);
         tvNickName = (TextView) view.findViewById(R.id.tv_nickName);
         civPhotoUrl = (CircleImageView) view.findViewById(R.id.civ_photo);
@@ -75,6 +79,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         llRecordFile.setOnClickListener(this);
         llSDKVersion.setOnClickListener(this);
         llLoginout.setOnClickListener(this);
+        llBlackList.setOnClickListener(this);
         return view;
     }
 
@@ -109,6 +114,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             case R.id.ll_record_file:
                 gotoRecordFileActivity();
                 break;
+            case R.id.ll_blacklist:
+                gotoBlackUsersActivity();
+                break;
             case R.id.ll_SDK_version:
                 gotoSDKVersionActivity();
                 break;
@@ -118,6 +126,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    private void gotoBlackUsersActivity() {
+        startActivity(new Intent(getContext(), BlackUsersActivity.class));
     }
 
 

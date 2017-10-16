@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.wilddog.conversation.activities.ReportActivity">
+    <RelativeLayout
+        style="@style/TitleStyle"
+        android:layout_width="match_parent"
+        android:background="@color/title_color"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_cancel"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/detailinfo"
+            android:textSize="@dimen/title_text_size"
+            android:textColor="@color/item_background" />
+
+        <TextView
+            android:id="@+id/tv_commit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:text="@string/submmit"
+            android:textSize="@dimen/title_text_size"
+            android:textColor="@color/item_background" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="@string/reported"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/item_left_text_size" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        style="@style/ItemStyle"
+        android:layout_height="53dp"
+        >
+
+        <com.wilddog.conversation.view.CircleImageView
+            android:layout_width="39dp"
+            android:layout_height="39dp"
+            android:src="@drawable/uid"
+            android:id="@+id/civ_photo"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_marginLeft="15dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="这是默认昵称"
+                android:id="@+id/tv_nickName"
+                android:textColor="@color/text_color"
+                android:textSize="15sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:text="@string/report_dsc"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/item_left_text_size" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color"/>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="154dp">
+    <EditText
+        android:id="@+id/et_report"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:textAlignment="textStart"
+        android:cursorVisible="true"
+        android:gravity="start"
+        android:padding="2dp"
+        android:textSize="@dimen/content_text_size"
+        />
+    <TextView
+        android:id="@+id/tv_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/count"
+        android:textColor="@color/text_color_hint"
+        android:textSize="@dimen/item_right_text_size"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        />
+</RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color"/>
+</LinearLayout>

@@ -15,6 +15,7 @@ public class ConvertUtil {
     public static final String yyyyMMdd = "yyyyMMdd";
     public static final String HHmm = "HH:mm";
     public static final String yyyyMMddHHmm = "yyyy/MM/dd HH:mm";
+
     public static String longToDurationString(long duration){
         int h = (int) (duration/hourValue);
         int m = (int)((duration%hourValue)/minuteValue);
