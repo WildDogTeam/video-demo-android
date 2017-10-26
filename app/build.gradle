@@ -115,7 +115,7 @@ dependencies {
     //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.wilddog.client:wilddog-auth-android:2.0.5'
-    compile 'com.wilddog.client:wilddog-video-call-android:2.2.0'
+    compile 'com.wilddog.client:wilddog-video-call-android:2.2.1'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     testCompile 'junit:junit:4.12'

@@ -1,6 +1,7 @@
 package com.wilddog.conversation.activities;
 
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -104,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
+        Log.e(TAG, "login: "+ Environment.getExternalStorageDirectory() );
         AlertMessageUtil.showprogressbar("微信登录中", LoginActivity.this);
 //        loginWithAnonymously();
         weixinLogin();

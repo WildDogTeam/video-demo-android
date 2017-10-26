@@ -344,7 +344,7 @@ public class ConversationActivity extends AppCompatActivity {
                     //开始录制
                     ivRecordFile.setBackgroundResource(R.drawable.record_selected);
                     isrecording = true;
-                    mConversation.startLocalRecording(getRecordFile(), wwvSmall, wwvSmall);
+                    mConversation.startLocalRecording(getRecordFile(), wwvSmall, wwvBig);
                     tvRecordTime.setVisibility(View.VISIBLE);
                     recordTime = 0;
                     startRecordTime();

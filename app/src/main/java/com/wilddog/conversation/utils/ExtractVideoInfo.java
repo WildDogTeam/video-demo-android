@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 
 public class ExtractVideoInfo {
-    private MediaMetadataRetriever mMetadataRetriever;
+    private static MediaMetadataRetriever mMetadataRetriever;
     private long fileLength = 0;//毫秒
     public ExtractVideoInfo(String path) {
         if (TextUtils.isEmpty(path)) {
@@ -35,7 +35,7 @@ public class ExtractVideoInfo {
                 mMetadataRetriever.setDataSource(inputStream.getFD());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             try {

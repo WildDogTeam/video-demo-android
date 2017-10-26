@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaMetadataRetriever;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -158,8 +160,16 @@ public class RecordFileActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    String bpath = "file://" + recordFiles[i].getPath();
-                    intent.setDataAndType(Uri.parse(bpath), "video/*");
+                    Uri uriForFile;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        uriForFile = FileProvider.getUriForFile(RecordFileActivity.this, "com.wilddog.conversation.fileprovider", recordFiles[i]);
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    }else {
+                        String bpath = "file://" + recordFiles[i].getPath();
+                        uriForFile=Uri.parse(bpath);
+                    }
+                    intent.setDataAndType(uriForFile, "video/*");///storage/emulated/0/Movies/wilddog/wilddog-1508740600970.mp4
                     startActivity(intent);
                 }
             });

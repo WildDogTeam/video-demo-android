@@ -78,7 +78,7 @@ public class OnlineFragment extends BaseFragment {
                     @Override
                     public void run() {
                         String key = dataSnapshot.getKey();
-                        if ((!mUid.equals(key)) && (!userIds.contains(key))) {
+                        if ((!mUid.equals(key)) && (!userIds.contains(key)) && dataSnapshot.getValue() instanceof Map) {
                             Map value = (Map) dataSnapshot.getValue();
                             UserInfo info = new UserInfo();
                             info.setUid(key);
