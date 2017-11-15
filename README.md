@@ -20,7 +20,7 @@ cd  video-demo-android
 ## 填写 APPID 
 
 替换 `Constants.java` 中的 `WILDDOG_VIDEO_APP_ID` 为申请的 `VideoAppID` ，
-替换 `Constants.java` 中的 `WILDDOG_SYNC_APP_ID` 为 `Sync App Id` 。
+替换 `Constants.java` 中的 `WILDDOG_SYNC_APP_ID` 为 `SyncAppID` 。
 
 
 ### 集成美颜
