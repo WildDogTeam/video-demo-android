@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +82,7 @@ public class RecordFileActivity extends AppCompatActivity {
             if (file.getName().endsWith(".mp4")) {
                 RecordFileData fileData = new RecordFileData();
                 fileData.setFileName(file.getName());
-                ExtractVideoInfo extractVideoInfo = new ExtractVideoInfo(file.getAbsolutePath());
+                ExtractVideoInfo extractVideoInfo = new ExtractVideoInfo(fileData.getFileName(),file.getAbsolutePath());
                 fileData.setDuration(convertToSeconds(extractVideoInfo.getVideoLength()));
                 extractVideoInfo.release();
                 files.add(fileData);

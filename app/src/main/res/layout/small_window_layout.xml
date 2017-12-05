@@ -1,0 +1,204 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll"
+    android:layout_width="wrap_content"
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:fillViewport="true"
+    >
+
+    <LinearLayout
+        android:layout_width="50dp"
+        android:layout_height="300dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:orientation="vertical">
+
+            <com.wilddog.video.base.WilddogVideoView
+                android:id="@+id/wvv_local"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:padding="3dp">
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <com.wilddog.video.base.WilddogVideoView
+                android:id="@+id/wvv_remote1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:padding="3dp">
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <com.wilddog.video.base.WilddogVideoView
+                android:id="@+id/wvv_remote2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:padding="3dp">
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="50dp"
+
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <com.wilddog.video.base.WilddogVideoView
+                android:id="@+id/wvv_remote3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:padding="3dp">
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <com.wilddog.video.base.WilddogVideoView
+                android:id="@+id/wvv_remote4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="50dp"
+
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <com.wilddog.video.base.WilddogVideoView
+                android:id="@+id/wvv_remote5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:padding="3dp">
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="50dp"
+
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <com.wilddog.video.base.WilddogVideoView
+                android:id="@+id/wvv_remote6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="50dp"
+
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+
+            <com.wilddog.video.base.WilddogVideoView
+                android:id="@+id/wvv_remote7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/copy_invite"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:background="@mipmap/plus_ic"
+            >
+        </RelativeLayout>
+
+
+    </LinearLayout>
+</ScrollView>

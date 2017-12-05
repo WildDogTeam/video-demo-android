@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FloatingActionsMenu">
+
+        <attr name="fab_interval" format="dimension"/>
+
+        <attr name="fab_expandDirection" format="enum">
+            <enum name="up" value="0"/>
+            <enum name="down" value="1"/>
+            <enum name="left" value="2"/>
+            <enum name="right" value="3"/>
+        </attr>
+    </declare-styleable>
+    <!--floatingbutton-->
+    <declare-styleable name="FloatingButton">
+        <attr name="fab_type" format="enum">
+            <enum name="pen" value="0"/>
+            <enum name="line" value="1"/>
+            <enum name="rect" value="2"/>
+            <enum name="cicle" value="3"/>
+            <enum name="pic" value="4"/>
+            <enum name="text" value="5"/>
+            <enum name="undo" value="6"/>
+            <enum name="del" value="7"/>
+        </attr>
+    </declare-styleable>
+</resources>

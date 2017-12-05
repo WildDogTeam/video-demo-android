@@ -21,7 +21,7 @@ import com.wilddog.conversation.bean.ConversationRecord;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.MyOpenHelper;
-import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.SharedPereferenceTool;
 import com.wilddog.conversation.utils.String2DateUtil;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
@@ -116,7 +116,7 @@ public class CallFragment extends BaseFragment {
         if (records.size() > 0) {
             records.clear();
         }
-        records.addAll(MyOpenHelper.getInstance().selectConversationRecords(SharedpereferenceTool.getUserId(getContext())));
+        records.addAll(MyOpenHelper.getInstance().selectConversationRecords(SharedPereferenceTool.getUserId(getContext())));
         adapter.notifyDataSetChanged();
         showListViewOrTextView();
     }

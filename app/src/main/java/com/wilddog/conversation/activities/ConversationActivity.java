@@ -1,6 +1,5 @@
 package com.wilddog.conversation.activities;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -36,7 +35,7 @@ import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ConvertUtil;
 import com.wilddog.conversation.utils.MyOpenHelper;
 import com.wilddog.conversation.utils.ParamsStore;
-import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.SharedPereferenceTool;
 import com.wilddog.conversation.utils.TuSDKUtil;
 import com.wilddog.conversation.wilddog.WilddogVideoManager;
 import com.wilddog.video.base.LocalStream;
@@ -49,6 +48,8 @@ import com.wilddog.video.call.stats.RemoteStreamStatsReport;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -171,7 +172,7 @@ public class ConversationActivity extends AppCompatActivity {
         if (localStream != null && !localStream.isClosed()) {
             localStream.close();
         }
-        String localid = SharedpereferenceTool.getUserId(getApplicationContext());
+        String localid = SharedPereferenceTool.getUserId(getApplicationContext());
         ConversationRecord record = MyOpenHelper.getInstance().selectConversationRecord(localid, remoteid);
         if (record == null) {
             record = new ConversationRecord();
@@ -518,21 +519,24 @@ public class ConversationActivity extends AppCompatActivity {
                     tvDimension.setText(localStats.getWidth() + "x" + localStats.getHeight() + "px");
                     tvFps.setText(localStats.getFps() + "fps");
                     tvRate.setText(localStats.getBitsSentRate() + "kpbs");
-                    tvByte.setText("send " + convertToMB(localStats.getBytesSent()) + "MB");
+                    if(localStats.getBytesSent()!=null){
+                    tvByte.setText("send " + convertToMB(localStats.getBytesSent()) + "MB");}
                 } else {
                     // 显示远程统计数据
                     tvDimension.setText(remoteStats.getWidth() + "x" + remoteStats.getHeight() + "px");
                     tvFps.setText(remoteStats.getFps() + "fps");
                     tvRate.setText(remoteStats.getBitsReceivedRate() + "kpbs");
-                    tvByte.setText("recv " + convertToMB(remoteStats.getBytesReceived()) + "MB");
-                }
+                    if(remoteStats.getBytesReceived()!=null){
+                    tvByte.setText("recv " + convertToMB(remoteStats.getBytesReceived()) + "MB");}
+                    }
+
             }
         });
 
     }
 
     public void frameProcess(byte[] data, int textureId, boolean isFirstFrame, boolean isInitEGL, int frameWidth, int frameHeight, int rotation) {
-        switch (SharedpereferenceTool.getBeautyPlan(ConversationActivity.this)) {
+        switch (SharedPereferenceTool.getBeautyPlan(ConversationActivity.this)) {
             case "Camera360":
                 if (isFirstFrame)
                     Camera360Util.initEngine(ConversationActivity.this, isInitEGL, frameWidth, frameHeight, rotation);//  在第一帧视频到来时，初始化，指定需要的输出大小以及方向
@@ -550,10 +554,10 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
 
-    private String convertToMB(long value) {
-        float result = Float.parseFloat(String.valueOf(value)) / (1024 * 1024);
+    private String convertToMB(BigInteger value) {
+
+        float result = new BigDecimal(value.toString()).divide(new BigDecimal(new String ("1048576")),2,BigDecimal.ROUND_HALF_UP).floatValue();
         return decimalFormat.format(result);
-        // return String.format("%.2f", value);
     }
 
 
@@ -581,7 +585,7 @@ public class ConversationActivity extends AppCompatActivity {
 
     private LocalStreamOptions genLocalStreamOptions() {
         LocalStreamOptions.Builder builder = new LocalStreamOptions.Builder();
-        switch (SharedpereferenceTool.getDimension(ConversationActivity.this)) {
+        switch (SharedPereferenceTool.getDimension(ConversationActivity.this)) {
             case "360P":
                 builder.dimension(LocalStreamOptions.Dimension.DIMENSION_360P);
                 break;

@@ -10,7 +10,7 @@ import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ObjectAndStringTool;
-import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.SharedPereferenceTool;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 
 public class SplashActivity extends AppCompatActivity {
@@ -21,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case gotoLoginAcitivity:
-                    if (SharedpereferenceTool.getLoginStatus(SplashActivity.this)) {
+                    if (SharedPereferenceTool.getLoginStatus(SplashActivity.this)) {
                         gotoMainActivity();
                     } else {
                         gotoLoginAcitivity();
@@ -48,7 +48,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void gotoMainActivity() {
-        WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(ObjectAndStringTool.getObjectFromJson(SharedpereferenceTool.getUserInfo(SplashActivity.this), UserInfo.class));
+        WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(ObjectAndStringTool.getObjectFromJson(SharedPereferenceTool.getUserInfo(SplashActivity.this), UserInfo.class));
         startActivity(new Intent(SplashActivity.this, MainActivity.class));
     }
 

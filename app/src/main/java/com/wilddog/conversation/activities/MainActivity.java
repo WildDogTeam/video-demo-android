@@ -27,7 +27,7 @@ import com.wilddog.conversation.fragments.MeFragment;
 import com.wilddog.conversation.fragments.OnlineFragment;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.Constant;
-import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.SharedPereferenceTool;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 import com.wilddog.conversation.wilddog.WilddogVideoManager;
 import com.wilddog.video.base.WilddogVideoError;
@@ -222,9 +222,9 @@ public class MainActivity extends AppCompatActivity {
                 public void onTokenError(WilddogVideoError WilddogVideoCallError) {
                     Toast.makeText(MainActivity.this,"token 存在问题,退出登录",Toast.LENGTH_SHORT).show();
                     Log.e("tokenerror",WilddogVideoCallError.getMessage());
-                    WilddogSyncManager.getWilddogSyncTool().removeUserInfo(SharedpereferenceTool.getUserId(MainActivity.this));
-                    SharedpereferenceTool.setUserInfo(MainActivity.this, "");
-                    SharedpereferenceTool.setLoginStatus(MainActivity.this, false);
+                    WilddogSyncManager.getWilddogSyncTool().removeUserInfo(SharedPereferenceTool.getUserId(MainActivity.this));
+                    SharedPereferenceTool.setUserInfo(MainActivity.this, "");
+                    SharedPereferenceTool.setLoginStatus(MainActivity.this, false);
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 }

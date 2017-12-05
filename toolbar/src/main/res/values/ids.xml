@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="fab_small"/>
+    <item type="id" name="fab_middle"/>
+    <item type="id" name="fab_big"/>
+    <item type="id" name="fab_red"/>
+    <item type="id" name="fab_yellow"/>
+    <item type="id" name="fab_green"/>
+    <item type="id" name="fab_blue"/>
+    <item type="id" name="fab_gray"/>
+    <item type="id" name="fab_black"/>
+</resources>

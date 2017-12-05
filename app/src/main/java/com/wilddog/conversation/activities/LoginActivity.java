@@ -18,7 +18,7 @@ import com.wilddog.conversation.utils.CollectionDeviceIdTool;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ObjectAndStringTool;
 import com.wilddog.conversation.utils.PermissionHelper;
-import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.SharedPereferenceTool;
 import com.wilddog.conversation.utils.WXUtil;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 import com.wilddog.conversation.wilddog.WilddogAuthManager;
@@ -107,8 +107,8 @@ public class LoginActivity extends AppCompatActivity {
     private void login() {
         Log.e(TAG, "login: "+ Environment.getExternalStorageDirectory() );
         AlertMessageUtil.showprogressbar("微信登录中", LoginActivity.this);
-//        loginWithAnonymously();
-        weixinLogin();
+       loginWithAnonymously();
+        //   weixinLogin();
     }
 
 
@@ -120,15 +120,15 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     // 成功
                     WilddogUser user = task.getResult().getWilddogUser();
-                    SharedpereferenceTool.saveUserId(LoginActivity.this, user.getUid());
+                    SharedPereferenceTool.saveUserId(LoginActivity.this, user.getUid());
                     UserInfo info = new UserInfo();
                     info.setNickname(user.getUid());
                     info.setUid(user.getUid());
                     info.setFaceurl("https://img.wdstatic.cn/imdemo/1.png");
                     info.setDeviceid(CollectionDeviceIdTool.getDeviceId());
                     WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(info);
-                    SharedpereferenceTool.setUserInfo(LoginActivity.this, ObjectAndStringTool.getJsonFromObject(info));
-                    SharedpereferenceTool.setLoginStatus(LoginActivity.this, true);
+                    SharedPereferenceTool.setUserInfo(LoginActivity.this, ObjectAndStringTool.getJsonFromObject(info));
+                    SharedPereferenceTool.setLoginStatus(LoginActivity.this, true);
                     //TODO 需要记下所有的登录的用户的uid和昵称等用于推送
                     AlertMessageUtil.showShortToast("登录成功");
                     Constant.isLoginClickable = true;

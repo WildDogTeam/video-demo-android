@@ -17,11 +17,9 @@ import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.MyOpenHelper;
-import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.SharedPereferenceTool;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.wilddog.WilddogVideoManager;
-
-import java.io.Serializable;
 
 public class DetailInfoActivity extends AppCompatActivity {
 
@@ -100,7 +98,7 @@ public class DetailInfoActivity extends AppCompatActivity {
         addBlack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mid = SharedpereferenceTool.getUserId(DetailInfoActivity.this);
+                String mid = SharedPereferenceTool.getUserId(DetailInfoActivity.this);
                 BlackUser blackUser=new BlackUser();
                 blackUser.setLocalId(mid);
                 blackUser.setNickName(user.getNickname());

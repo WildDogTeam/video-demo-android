@@ -1,29 +1,36 @@
 package com.wilddog.conversation.utils;
 
+import android.os.Environment;
+
 /**
  * Created by fly on 17-6-9.
  */
 
 public final class Constant {
     public static final int AUTO_SKIP_TIME = 2000;
-    public static final String WILDDOG_VIDEO_APP_ID = <Your VIDEO APPID>;
-    public static final String WILDDOG_SYNC_APP_ID = <Your SYNC APPID>;
+    public static final String WILDDOG_VIDEO_APP_ID = "wd4449761657cslfcf";
+    public static final String WILDDOG_SYNC_APP_ID = "wd1621490197hjoglv";
     public static final String INVITE_CANCEL = "com.wilddog.conversation.inviteCancel";
+    //TuSDK key
+    public static final String TUSDK_KEY = "0f144d55c02e797d-00-f8g7r1";
 
     // 微信appId
     public static final String WX_APP_ID = "wxbe69b0b88cf233b7";
     public static final String WX_APP_SECRECT = "a08bc6844b8334678a6b78f36a1a6c7b";
 
-    //TuSDK key
-    public static final String TUSDK_KEY = "";
+
 
     //Camera360 key
-    public static final String SDK_KEY_NEW = "";
-
+    public static final String SDK_KEY_NEW = "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";
     public static final String UPDATE_VIEW = "com.wilddog.conversation.updateview";
 
 
+    //录制视频存储路径
+    public static  String filePath = Environment.getExternalStorageDirectory().getPath()+"/wilddogConversaton/";
 
     public static boolean isLoginClickable = true;
+
+    // 发邀请
+    public static final String INVITE_URL = "https://www.wilddog.com/product/webrtc-demo/join";
 
 }

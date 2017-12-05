@@ -24,6 +24,7 @@ import com.wilddog.client.SyncReference;
 import com.wilddog.client.WilddogSync;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.activities.DetailInfoActivity;
+import com.wilddog.conversation.activities.JoinRoomActivity;
 import com.wilddog.conversation.activities.SendInviteActivity;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.AlertMessageUtil;
@@ -31,7 +32,7 @@ import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.MyOpenHelper;
 import com.wilddog.conversation.utils.PingYinUtil;
 import com.wilddog.conversation.utils.PinyinComparator;
-import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.SharedPereferenceTool;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.view.SideBar;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
@@ -206,7 +207,7 @@ public class OnlineFragment extends BaseFragment {
     }
 
     private void gotoSendInviteActivity(){
-        startActivity(new Intent(getContext(), SendInviteActivity.class));
+        startActivity(new Intent(getContext(), JoinRoomActivity.class));
     }
 
     @Override
@@ -223,7 +224,7 @@ public class OnlineFragment extends BaseFragment {
             @Override
             public void run() {
                 mRef = WilddogSync.getInstance().getReference();
-                mUid = SharedpereferenceTool.getUserId(getContext());
+                mUid = SharedPereferenceTool.getUserId(getContext());
                 blackUserIDs=MyOpenHelper.getInstance().selectBlackIds(mUid);
                 if(userList.size()>0){
                     userList.clear();

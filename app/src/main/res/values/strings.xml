@@ -28,6 +28,7 @@
     <string name="camera360_sdk_version">Camera360 SDK v1.7</string>
     <string name="call_history">好友</string>
     <string name="about">关于</string>
+    <string name="join_room">加入多人房间</string>
     <string name="detailinfo">详细资料</string>
     <string name="blacklist">加入黑名单</string>
     <string name="report">举报</string>
@@ -39,4 +40,7 @@
     <string name="report_dsc">举报说明</string>
     <string name="count">还可以输入200个字</string>
     <string name="blackusers">黑名单</string>
+    <string name="write_room_id">请填写房间号</string>
+    <string name="choose_model">选择模式</string>
+    <string name="join">加入</string>
 </resources>

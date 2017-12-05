@@ -9,7 +9,7 @@ import com.wilddog.conversation.bean.UserInfo;
  * Created by fly on 17-6-12.
  */
 
-public class SharedpereferenceTool {
+public class SharedPereferenceTool {
     private static SharedPreferences sp;
     private static final String FILE_NAME = "share_data";
 
@@ -18,6 +18,20 @@ public class SharedpereferenceTool {
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("userId",uid);
         editor.commit();
+    }
+
+    public static  void saveRoomId(Context context, String uid){
+        sp= context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("roomId",uid);
+        editor.commit();
+    }
+
+    public static String getRoomId(Context context){
+        String userId = null;
+        sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        userId = sp.getString("roomId",null);
+        return userId;
     }
 
     public static String getUserId(Context context){

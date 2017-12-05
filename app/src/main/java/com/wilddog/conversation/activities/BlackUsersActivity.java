@@ -17,7 +17,7 @@ import com.wilddog.conversation.bean.BlackUser;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.MyOpenHelper;
-import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.SharedPereferenceTool;
 import com.wilddog.conversation.view.CircleImageView;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class BlackUsersActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        blackUsers = MyOpenHelper.getInstance().selectBlackUsers(SharedpereferenceTool.getUserId(this));
+        blackUsers = MyOpenHelper.getInstance().selectBlackUsers(SharedPereferenceTool.getUserId(this));
         updateView();
     }
 
