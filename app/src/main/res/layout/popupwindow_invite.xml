@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/popwin_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/transparent_background"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/DialogItemStyle"
+            android:layout_width="match_parent"
+            android:id="@+id/tv_roomId"
+            android:text="@string/roomId" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color" />
+
+        <TextView
+            android:id="@+id/tv_copy_roomId"
+            style="@style/DialogItemStyle"
+            android:layout_width="match_parent"
+            android:text="@string/copy_roomId" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/line_color" />
+
+        <TextView
+            android:id="@+id/tv_copy_room_url"
+            style="@style/DialogItemStyle"
+            android:layout_width="match_parent"
+            android:text="@string/copy_room_url" />
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            style="@style/DialogItemStyle"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:text="@string/cancel" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,23 +1,33 @@
 package com.wilddog.conversation.activities;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.StreamHolder;
+import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.video.base.LocalStream;
 import com.wilddog.video.base.LocalStreamOptions;
@@ -33,25 +43,26 @@ import com.wilddog.wilddogauth.WilddogAuth;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VideoModelActivity extends AppCompatActivity implements View.OnClickListener {
+public class VideoModelActivity extends AppCompatActivity {
     private String roomId ;
-
-
-    private TextView tvRoomId;
-    private Button camera;
-    private Button mic;
-    private Button video;
-    private Button leave;
-
-    private LocalStream localStream;
+    private CheckBox cbMic;
+    private CheckBox cbSpeaker;
+    private CheckBox cbCamera;
+    private LinearLayout llFlipCamera;
+    private ImageView ivLeave;
+    private LinearLayout llParent;
+    private TextView tvInvite;
     private boolean isAudioEnable = true;
     private boolean isVideoEnable = true;
-
+    private boolean isSpeakerOn = true;
+    private GridView gvStreams;
+    private LocalStream localStream;
+    private PopupWindow popupWindow;
     private WilddogVideoInitializer initializer;
     private WilddogRoom room;
 
-    private GridView gvStreams;
-
+    private int currVolume = 0;
+    private AudioManager audioManager;
     private boolean isLocalAttach = false;
 
     private MygridViewAdapter adapter;
@@ -77,6 +88,7 @@ public class VideoModelActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_video_model);
         roomId = getIntent().getStringExtra("roomId");
         initView();
+        setListener();
         initRoomSDK();
         createLocalStream();
         joinRoom();
@@ -200,49 +212,179 @@ public class VideoModelActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initView() {
-        tvRoomId = (TextView) findViewById(R.id.tv_roomid);
-        tvRoomId.setText(roomId);
-        camera = (Button) findViewById(R.id.btn_flip_camera);
-        camera.setOnClickListener(this);
-        mic = (Button) findViewById(R.id.btn_operation_mic);
-        mic.setOnClickListener(this);
-        video = (Button) findViewById(R.id.btn_operation_video);
-        video.setOnClickListener(this);
-        leave = (Button) findViewById(R.id.btn_operation_hangup);
-        leave.setOnClickListener(this);
+        llParent = (LinearLayout) findViewById(R.id.ll_parent);
+        cbMic = (CheckBox) findViewById(R.id.cb_mic);
+        cbMic.setChecked(isAudioEnable);
+        cbSpeaker = (CheckBox) findViewById(R.id.cb_speaker);
+        cbSpeaker.setChecked(isSpeakerOn);
+        cbCamera = (CheckBox) findViewById(R.id.cb_camera);
+        cbCamera.setChecked(isVideoEnable);
+        llFlipCamera = (LinearLayout) findViewById(R.id.ll_filp_camera);
+        ivLeave = (ImageView) findViewById(R.id.iv_leave);
+        tvInvite = (TextView) findViewById(R.id.tv_hungup);
+
         gvStreams = (GridView) findViewById(R.id.gv_streams);
         gvStreams.setSelector(new ColorDrawable(Color.TRANSPARENT));
         adapter = new MygridViewAdapter(this, streamHolders);
         gvStreams.setAdapter(adapter);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.btn_flip_camera:
-                if (localStream != null) {
-                    localStream.switchCamera();
-                }
-                break;
-            case R.id.btn_operation_mic:
+    private void setListener(){
+        cbMic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (localStream != null) {
                     isAudioEnable = !isAudioEnable;
                     localStream.enableAudio(isAudioEnable);
                 }
-                break;
-            case R.id.btn_operation_video:
+            }
+        });
+        cbCamera.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (localStream != null) {
                     isVideoEnable = !isVideoEnable;
                     localStream.enableVideo(isVideoEnable);
                 }
-                break;
-            case R.id.btn_operation_hangup:
+            }
+        });
+        cbSpeaker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // 设置设置扬声器
+                if (isSpeakerOn) {
+                    // 关闭，设为false
+                    closeSpeaker();
+                } else {
+                    openSpeaker();
+                }
+                isSpeakerOn = !isSpeakerOn;
+            }
+        });
+        llFlipCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (localStream != null) {
+                    localStream.switchCamera();
+                }
+
+            }
+        });
+        ivLeave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 leaveRoom();
-                break;
-            default:
-                break;
+                finish();
+            }
+        });
+
+        tvInvite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 弹出对话框
+                showInviteDialog();
+            }
+        });
+    }
+
+    private void showInviteDialog(){
+        View view = View.inflate(VideoModelActivity.this, R.layout.popupwindow_invite, null);
+        TextView tvRoomId = view.findViewById(R.id.tv_roomid);
+        TextView tvCopyRoomId = view.findViewById(R.id.tv_copy_roomId);
+        TextView tvCopyRoomUrl = view.findViewById(R.id.tv_copy_room_url);
+        TextView tvCancel = view.findViewById(R.id.tv_cancel);
+        tvRoomId.setText("房间号: "+roomId);
+        tvCopyRoomId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                copyRoomId();
+                popupWindowDismiss();
+            }
+        });
+        tvCopyRoomUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                copyRoomUrl();
+                popupWindowDismiss();
+            }
+        });
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindowDismiss();
+            }
+        });
+        showPopupWindow(view);
+    }
+
+    private void copyRoomId() {
+        ClipboardManager cmb = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+        cmb.setText(Constant.INVITE_URL);
+        AlertMessageUtil.showShortToast("房间号复制成功");
+    }
+    private void copyRoomUrl() {
+        ClipboardManager cmb = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+        cmb.setText(Constant.INVITE_URL);
+        AlertMessageUtil.showShortToast("房间地址复制成功");
+    }
+
+    private void popupWindowDismiss() {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            popupWindow.dismiss();
         }
     }
+
+    private void showPopupWindow(View view) {
+        popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        popupWindow.setFocusable(true);
+        popupWindow.showAtLocation(llParent, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+    }
+
+    private AudioManager getAudioManager() {
+        if (audioManager == null) {
+            audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        }
+        return audioManager;
+    }
+
+    /**
+     * 打开扬声器
+     */
+    private void openSpeaker() {
+        try {
+            getAudioManager().setMode(AudioManager.ROUTE_SPEAKER);
+            currVolume = audioManager.getStreamVolume(AudioManager.STREAM_VOICE_CALL);
+            if (!audioManager.isSpeakerphoneOn()) {
+                //setSpeakerphoneOn() only work when audio mode set to MODE_IN_CALL.
+                audioManager.setMode(AudioManager.MODE_IN_CALL);
+                audioManager.setSpeakerphoneOn(true);
+                audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL,
+                        audioManager.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL),
+                        AudioManager.STREAM_VOICE_CALL);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 关闭扬声器
+     */
+    public void closeSpeaker() {
+        try {
+            if (getAudioManager() != null) {
+                if (audioManager.isSpeakerphoneOn()) {
+                    audioManager.setSpeakerphoneOn(false);
+                    audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL, currVolume,
+                            AudioManager.STREAM_VOICE_CALL);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 

@@ -121,7 +121,7 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
                 remoteVideoViews) {
             remote.setVisibility(View.VISIBLE);
         }
-        roomNum.setText("成员("+(streamHolders.size()+1)+")");
+        roomNum.setText("房间成员("+(streamHolders.size()+1)+")");
     }
 
     private void joinRoom() {
@@ -134,7 +134,12 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
                     public void onComplete(WilddogVideoError wilddogVideoError) {
                         if(wilddogVideoError!=null){
                             //失败
-                            Toast.makeText(InteractModelActivity.this,"推送流失败", Toast.LENGTH_SHORT).show();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(InteractModelActivity.this,"推送流失败", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }
                 });
@@ -255,7 +260,7 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
 
         roomNum = (TextView) findViewById(R.id.room_num);
 
-        quit = (TextView) findViewById(R.id.quit_room);
+        quit = (TextView) findViewById(R.id.tv_quit_room);
         quit.setOnClickListener(this);
 
         findViewById(R.id.copy_invite).setOnClickListener(this);
@@ -353,10 +358,10 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
                 drawerLayout.closeDrawer(leftMenu);
                 drawerLayout.closeDrawer(rightMenu);
                 break;
-            case R.id.quit_room:
+            case R.id.tv_quit_room:
                 finish();
                 break;
-            case R.id.copy_invite:
+            case R.id.tv_invite_other:
                 ClipboardManager cmb = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
                 cmb.setText(Constant.INVITE_URL);
 

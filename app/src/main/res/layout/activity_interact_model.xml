@@ -35,7 +35,7 @@
     <LinearLayout
         android:id="@+id/ll_show"
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="265dp"
         android:layout_centerVertical="true"
         android:gravity="center"
         android:padding="2dp"
@@ -45,7 +45,7 @@
             android:id="@+id/room_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="成员(1)"
+            android:text="房间成员(1)"
             android:textColor="#fff"
             android:textSize="10sp"
             />
@@ -62,19 +62,46 @@
     </LinearLayout>
         
         <TextView
-            android:id="@+id/quit_room"
+            android:id="@+id/tv_quit_room"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="退出\n房间"
+            android:text="退出房间"
+            android:drawableLeft="@drawable/left_arrow"
+            android:drawablePadding="7dp"
             android:gravity="center"
             android:textColor="#fff"
-            android:textSize="12sp"
-            android:padding="2dp"
-            android:background="#2E2E2E"
-            android:layout_marginTop="3dp"
-            android:layout_marginLeft="3dp"
-            android:layout_alignParentLeft="true"
+            android:textSize="11sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
             android:layout_alignParentStart="true"
+            />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="02:04:38"
+            android:drawableLeft="@drawable/inclass"
+            android:drawablePadding="7dp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="11sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_centerHorizontal="true"
+            />
+        <TextView
+            android:id="@+id/tv_invite_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="邀请他人"
+            android:drawableLeft="@drawable/s_invite"
+            android:drawablePadding="7dp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="11sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
             />
 </RelativeLayout>
 

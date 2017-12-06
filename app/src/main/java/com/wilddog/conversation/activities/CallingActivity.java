@@ -111,8 +111,6 @@ public class CallingActivity extends AppCompatActivity {
     private boolean isrecording = false;
     DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
-    private int timeout = 30000;
-
     private boolean isAudioEnable = true;
     private boolean isVideoEnable = true;
     private boolean isSpeakerOn = true;

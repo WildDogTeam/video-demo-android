@@ -5,48 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/ll_parent"
     tools:context="com.wilddog.conversation.activities.VideoModelActivity">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/colorMeetingTitleBar"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="会议 ID"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tv_roomid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="111"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/btn_flip_camera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="3dp"
-            android:padding="5dp"
-            android:text="摄像头" />
-
-    </FrameLayout>
 
     <GridView
         android:layout_width="match_parent"
@@ -57,39 +17,167 @@
         ></GridView>
 
     <LinearLayout
-        android:id="@+id/ll_invite"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#999"
-        android:layout_marginBottom="2dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="visible">
-
-        <Button
-            android:id="@+id/btn_operation_mic"
-            android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/ll_contral_button"
+        android:background="@android:color/black"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:id="@+id/ll_mic"
+                android:descendantFocusability="afterDescendants"
+                >
+                <CheckBox
+                    android:id="@+id/cb_mic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:background="@drawable/selector_button_mic"
+                    android:button="@null"
+                    android:layout_marginBottom="9dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/text_color_white"
+                    android:text="麦克风"
+                    android:layout_marginBottom="1dp"
+                    android:textSize="14sp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:id="@+id/ll_speaker"
+                android:descendantFocusability="afterDescendants"
+                >
+                <CheckBox
+                    android:id="@+id/cb_speaker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:background="@drawable/selector_button_speaker"
+                    android:button="@null"
+                    android:layout_marginBottom="11.3dp"
+                    />
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/text_color_white"
+                    android:text="扬声器"
+                    android:layout_marginBottom="1dp"
+                    android:textSize="14sp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:id="@+id/ll_camera"
+                android:descendantFocusability="afterDescendants"
+                >
+                <CheckBox
+                    android:id="@+id/cb_camera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:background="@drawable/selector_button_camera"
+                    android:button="@null"
+                    android:layout_marginBottom="9.3dp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/text_color_white"
+                    android:text="摄像头"
+                    android:layout_marginBottom="1dp"
+                    android:textSize="14sp"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:id="@+id/ll_filp_camera"
+                >
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/flip_camera"
+                    android:gravity="center_horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="14dp"
+                    />
+                <TextView
+                    android:id="@+id/tv_flipCamera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/text_color_white"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="1dp"
+                    android:text="翻转相机" />
+            </LinearLayout>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="麦克风" />
-
-        <Button
-            android:id="@+id/btn_operation_hangup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="3dp"
-            android:layout_marginTop="5dp"
-            android:text="离开会议" />
-        <Button
-            android:id="@+id/btn_operation_video"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:text="视频" />
-
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:id="@+id/iv_leave"
+                android:src="@drawable/reject"
+                android:layout_centerInParent="true"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawableTop="@drawable/invite"
+                android:id="@+id/tv_invite"
+                android:layout_toRightOf="@+id/iv_leave"
+                android:layout_marginLeft="61dp"
+                android:text="@string/invite_other"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:drawablePadding="5dp"
+                android:textColor="@color/text_color_white"
+                android:layout_gravity="center"
+                />
+        </RelativeLayout>
     </LinearLayout>
+
+
 
 </LinearLayout>

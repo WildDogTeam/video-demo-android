@@ -19,6 +19,8 @@ import com.wilddog.client.WilddogSync;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.adapter.ChatListAdapter;
 import com.wilddog.conversation.bean.Chat;
+import com.wilddog.conversation.bean.UserInfo;
+import com.wilddog.conversation.utils.ObjectAndStringTool;
 import com.wilddog.conversation.utils.SharedPereferenceTool;
 
 import java.util.Random;
@@ -96,7 +98,8 @@ public class RightLayout extends RelativeLayout {
 
     private void setupUsername() {
         mUserId = SharedPereferenceTool.getUserId(context);
-        userName = SharedPereferenceTool.getUserInfo(context);
+        UserInfo info = ObjectAndStringTool.getObjectFromJson(SharedPereferenceTool.getUserInfo(getContext()), UserInfo.class);
+        userName = info.getNickname();
         if (mUserId == null|| mUserId.equals("")) {
             Random r = new Random();
             mUserId = "WilddogUser" + r.nextInt(100000);

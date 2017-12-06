@@ -121,7 +121,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
                 gotoSDKVersionActivity();
                 break;
             case R.id.ll_user_login_out:
-                showLoginDialog();
+                showLoginOutDialog();
                 break;
             default:
                 break;
@@ -133,7 +133,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     }
 
 
-    private void showLoginDialog(){
+    private void showLoginOutDialog(){
         View view = View.inflate(getContext(), R.layout.popupwindow_loginout, null);
         Button btnYes = (Button) view.findViewById(R.id.btn_yes);
         Button btnNo = (Button) view.findViewById(R.id.btn_no);

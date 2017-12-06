@@ -16,7 +16,7 @@
         android:id="@+id/message"
         android:text="aaaaaa"
         android:padding="3dp"
-        android:background="@drawable/chat_bg"
+        android:background="@drawable/old_chat_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
          />

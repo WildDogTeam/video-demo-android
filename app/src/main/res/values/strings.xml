@@ -43,4 +43,8 @@
     <string name="write_room_id">请填写房间号</string>
     <string name="choose_model">选择模式</string>
     <string name="join">加入</string>
+    <string name="invite_other">邀请他人</string>
+    <string name="roomId">房间号:</string>
+    <string name="copy_roomId">复制房间号</string>
+    <string name="copy_room_url">复制房间地址</string>
 </resources>
