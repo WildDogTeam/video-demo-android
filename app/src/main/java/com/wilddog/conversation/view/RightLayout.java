@@ -17,13 +17,11 @@ import android.widget.TextView;
 import com.wilddog.client.SyncReference;
 import com.wilddog.client.WilddogSync;
 import com.wilddog.conversation.R;
-import com.wilddog.conversation.adapter.ChatListAdapter;
+import com.wilddog.conversation.adapters.ChatListAdapter;
 import com.wilddog.conversation.bean.Chat;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.ObjectAndStringTool;
 import com.wilddog.conversation.utils.SharedPereferenceTool;
-
-import java.util.Random;
 
 
 public class RightLayout extends RelativeLayout {
@@ -57,7 +55,7 @@ public class RightLayout extends RelativeLayout {
         lvChat = (ListView) findViewById(R.id.lv_chat);
         inputText = (EditText) findViewById(R.id.et_msg);
         send = (Button) findViewById(R.id.btn_send);
-        mWilddogRef = WilddogSync.getInstance().getReference().child(roomId+"/chat");
+        mWilddogRef = WilddogSync.getInstance().getReference().child("room/"+roomId+"/chat");
 
         mChatListAdapter = new ChatListAdapter(mWilddogRef.limitToLast(50), context, mUserId);
         lvChat.setAdapter(mChatListAdapter);
@@ -100,11 +98,6 @@ public class RightLayout extends RelativeLayout {
         mUserId = SharedPereferenceTool.getUserId(context);
         UserInfo info = ObjectAndStringTool.getObjectFromJson(SharedPereferenceTool.getUserInfo(getContext()), UserInfo.class);
         userName = info.getNickname();
-        if (mUserId == null|| mUserId.equals("")) {
-            Random r = new Random();
-            mUserId = "WilddogUser" + r.nextInt(100000);
-            SharedPereferenceTool.saveUserId(context, mUserId);
-        }
     }
     private void sendMessage() {
         String input = inputText.getText().toString();

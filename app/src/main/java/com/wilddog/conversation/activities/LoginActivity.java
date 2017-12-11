@@ -30,6 +30,8 @@ import com.wilddog.wilddogauth.model.WilddogUser;
 import android.Manifest;
 import android.widget.TextView;
 
+import java.util.Random;
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
 
@@ -122,7 +124,8 @@ public class LoginActivity extends AppCompatActivity {
                     WilddogUser user = task.getResult().getWilddogUser();
                     SharedPereferenceTool.saveUserId(LoginActivity.this, user.getUid());
                     UserInfo info = new UserInfo();
-                    info.setNickname(user.getUid());
+                    Random r = new Random();
+                    info.setNickname("Android" + (r.nextInt(999999)+1));
                     info.setUid(user.getUid());
                     info.setFaceurl("https://img.wdstatic.cn/imdemo/1.png");
                     info.setDeviceid(CollectionDeviceIdTool.getDeviceId());

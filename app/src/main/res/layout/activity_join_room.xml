@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.wilddog.conversation.activities.JoinRoomActivity">
+
     <RelativeLayout
+        android:id="@+id/rl_title"
         style="@style/TitleStyle"
         android:layout_width="match_parent"
         android:background="@color/title_color"
-        android:id="@+id/rl_title"
         android:orientation="horizontal">
 
         <ImageView
@@ -36,20 +37,21 @@
         android:id="@+id/et_join_room_id"
         android:layout_width="266dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="69dp"
-        android:gravity="center"
-        android:textColorHint="@color/text_color_hint"
-        android:textSize="15sp"
         android:layout_gravity="center"
+        android:layout_marginTop="69dp"
         android:background="@null"
-        android:hint="@string/write_room_id" />
+        android:gravity="center"
+        android:hint="@string/write_room_id"
+        android:textColorHint="@color/text_color_hint"
+        android:textSize="15sp" />
+
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="266dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="8dp"
-        android:src="@drawable/edit_uid"
-        android:id="@+id/imageView" />
+        android:src="@drawable/edit_uid" />
 
     <TextView
         android:layout_width="match_parent"
@@ -59,41 +61,42 @@
         android:text="@string/choose_model"
         android:textColor="@color/text_color_666666"
         android:textSize="17sp" />
+
     <RadioGroup
+        android:id="@+id/rg_choose_mode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:id="@+id/rg_choose_mode"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
+
         <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="101dp"
-            android:layout_marginLeft="21dp"
-            android:layout_marginRight="21dp"
-            android:button="@null"
-            android:id="@+id/rb_interact"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/selector_radiobutton_room_interact_bg"
-            />
-        <RadioButton
-            android:layout_width="match_parent"
-            android:layout_height="101dp"
-            android:layout_marginLeft="21dp"
-            android:layout_marginRight="21dp"
-            android:button="@null"
             android:id="@+id/rb_video"
+            android:layout_width="match_parent"
+            android:layout_height="101dp"
+            android:layout_marginLeft="21dp"
+            android:layout_marginRight="21dp"
             android:background="@drawable/selector_radiobutton_room_video_bg"
-            />
+            android:button="@null" />
+
+        <RadioButton
+            android:id="@+id/rb_interact"
+            android:layout_width="match_parent"
+            android:layout_height="101dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="21dp"
+            android:layout_marginRight="21dp"
+            android:background="@drawable/selector_radiobutton_room_interact_bg"
+            android:button="@null" />
+
     </RadioGroup>
 
     <Button
         android:id="@+id/btn_join"
         android:layout_width="231dp"
         android:layout_height="39dp"
-        android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="43dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/selector_button_login"
         android:gravity="center"
         android:text="@string/join"

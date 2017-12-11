@@ -122,8 +122,8 @@ dependencies {
     testCompile 'org.robolectric:robolectric:3.3.2'
     testCompile 'org.robolectric:shadows-httpclient:3.0'
     androidTestCompile 'com.android.support.test:runner:0.5'
-    compile 'com.wilddog.client:wilddog-video-call-android:2.3.2'
-    compile ('com.wilddog.client:wilddog-video-room-android:2.2.2'){exclude group:"com.squareup.okhttp3",module:"okhttp"}
+    compile 'com.wilddog.client:wilddog-video-call-android:2.4.1'
+    compile ('com.wilddog.client:wilddog-video-room-android:2.2.3'){exclude group:"com.squareup.okhttp3",module:"okhttp"}
     // 权限申请
     compile 'me.weyye.hipermission:library:1.0.7'
     // 白板sdk

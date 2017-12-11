@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +14,14 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.wilddog.conversation.R;
+import com.wilddog.conversation.bean.Callback;
+import com.wilddog.conversation.bean.UserInfo;
+import com.wilddog.conversation.bean.VideoError;
+import com.wilddog.conversation.utils.AlertMessageUtil;
+import com.wilddog.conversation.utils.ObjectAndStringTool;
 import com.wilddog.conversation.utils.SharedPereferenceTool;
+import com.wilddog.conversation.wilddog.WilddogManager;
+import com.wilddog.conversation.wilddog.WilddogSyncManager;
 
 public class JoinRoomActivity extends AppCompatActivity {
     private EditText etRoomId;
@@ -23,9 +31,9 @@ public class JoinRoomActivity extends AppCompatActivity {
     private ImageView ivBack;
     private Button btnJoin;
     /**
-     *  1 表示多人互动
-     *  2 表示多人视频
-     * */
+     * 1 表示多人互动
+     * 2 表示多人视频
+     */
     private int type = 1;
 
     @Override
@@ -50,16 +58,16 @@ public class JoinRoomActivity extends AppCompatActivity {
                 join();
             }
         });
-        rgMode.check(R.id.rb_interact);
+        rgMode.check(R.id.rb_video);
         rgMode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_interact:
-                        type = 1;
+                        type = 2;
                         break;
                     case R.id.rb_video:
-                        type = 2;
+                        type = 1;
                         break;
                     default:
                         break;
@@ -69,24 +77,59 @@ public class JoinRoomActivity extends AppCompatActivity {
     }
 
     private void join() {
-        String roomId = etRoomId.getText().toString().trim();
-        if(TextUtils.isEmpty(roomId)){
-            Toast.makeText(JoinRoomActivity.this,"房间号不能为空!",Toast.LENGTH_SHORT).show();
+        final String roomId = etRoomId.getText().toString().trim();
+        if (TextUtils.isEmpty(roomId)) {
+            Toast.makeText(JoinRoomActivity.this, "房间号不能为空!", Toast.LENGTH_SHORT).show();
             return;
         }
-        SharedPereferenceTool.saveRoomId(JoinRoomActivity.this,roomId);
-        if(type==1){
-            Intent intent = new Intent(JoinRoomActivity.this,InteractModelActivity.class);
-            intent.putExtra("roomId",roomId);
-            startActivity(intent);
-            finish();
-        }else {
-            Intent intent = new Intent(JoinRoomActivity.this,VideoModelActivity.class);
-            intent.putExtra("roomId",roomId);
-            startActivity(intent);
-            finish();
-        }
+        WilddogSyncManager.getWilddogSyncTool().writeServerTimeStamp(roomId, new Callback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                writeUsers(roomId);
+            }
+
+            @Override
+            public void onFailed(VideoError error) {
+                Log.e("error", error.toString());
+                if (error != null && error.getErrCode() == 1) {
+                    writeUsers(roomId);
+                } else {
+                    AlertMessageUtil.showShortToast("加入房间出错,请重试");
+                }
+            }
+        });
+
     }
 
 
+    private void writeUsers(final String roomId) {
+        WilddogSyncManager.getWilddogSyncTool().getServerTimeStamp(roomId, new Callback<Long>() {
+            @Override
+            public void onSuccess(Long aLong) {
+                String uid = SharedPereferenceTool.getUserId(JoinRoomActivity.this);
+                UserInfo info = ObjectAndStringTool.getObjectFromJson(SharedPereferenceTool.getUserInfo(JoinRoomActivity.this), UserInfo.class);
+                WilddogSyncManager.getWilddogSyncTool().writeRoomUsers(roomId, uid,info.getNickname());
+                SharedPereferenceTool.saveRoomId(JoinRoomActivity.this, roomId);
+                if (type == 1) {
+                    Intent intent = new Intent(JoinRoomActivity.this, VideoModelActivity.class);
+                    intent.putExtra("roomId", roomId);
+                    intent.putExtra("time", aLong);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Intent intent = new Intent(JoinRoomActivity.this, InteractModelActivity.class);
+                    intent.putExtra("roomId", roomId);
+                    intent.putExtra("time", aLong);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailed(VideoError error) {
+                Log.e("error", error.toString());
+                AlertMessageUtil.showShortToast("加入房间出错,请重试");
+            }
+        });
+    }
 }

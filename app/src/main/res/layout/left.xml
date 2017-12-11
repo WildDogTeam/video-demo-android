@@ -12,13 +12,22 @@
     android:layout_height="match_parent"
     android:id="@+id/scroll"
     android:fillViewport="true"
+    android:layout_gravity="center"
     >
     <LinearLayout
-        android:layout_width="170dp"
+        android:layout_width="159dp"
         android:layout_height="match_parent"
         android:background="#2e2e2e"
         android:orientation="vertical">
-
+        <TextView
+            android:id="@+id/room_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="7dp"
+            android:text="房间成员(1)"
+            android:textColor="#fff"
+            android:textSize="10sp"
+            />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +36,7 @@
             <com.wilddog.video.base.WilddogVideoView
                 android:id="@+id/wvv_local_in"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
+                android:layout_height="106dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true" />
 
@@ -48,7 +57,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="106dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
@@ -75,7 +84,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="106dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
@@ -103,7 +112,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
 
-            android:layout_height="180dp"
+            android:layout_height="106dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
@@ -132,7 +141,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="106dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
@@ -160,7 +169,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
 
-            android:layout_height="180dp"
+            android:layout_height="106dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
@@ -188,7 +197,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
 
-            android:layout_height="180dp"
+            android:layout_height="106dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
@@ -216,7 +225,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
 
-            android:layout_height="180dp"
+            android:layout_height="106dp"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
@@ -240,14 +249,6 @@
                     />
             </LinearLayout>
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/copy_invite_left"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginTop="5dp"
-            android:orientation="vertical"
-            android:background="@mipmap/plus_ic"
-            />
     </LinearLayout>
 </ScrollView>
     <LinearLayout
@@ -258,8 +259,8 @@
         >
         <ImageView
             android:id="@+id/iv_hide"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="8dp"
+            android:layout_height="46dp"
             android:background="@drawable/division"
             />
 

@@ -10,18 +10,28 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.wilddog.board.BoardOption;
 import com.wilddog.board.WilddogBoard;
 import com.wilddog.conversation.R;
+import com.wilddog.conversation.bean.Callback;
 import com.wilddog.conversation.bean.StreamHolder;
+import com.wilddog.conversation.bean.VideoError;
+import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.Constant;
+import com.wilddog.conversation.utils.ConvertUtil;
 import com.wilddog.conversation.utils.SharedPereferenceTool;
 import com.wilddog.conversation.view.LeftLayout;
 import com.wilddog.conversation.view.RightLayout;
+import com.wilddog.conversation.wilddog.WilddogSyncManager;
 import com.wilddog.toolbar.boardtoolbar.ToolBarMenu;
 import com.wilddog.video.base.LocalStream;
 import com.wilddog.video.base.LocalStreamOptions;
@@ -35,6 +45,8 @@ import com.wilddog.wilddogauth.WilddogAuth;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.leefeng.promptlibrary.PromptDialog;
 
@@ -56,6 +68,7 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
     private WilddogVideoView remoteView5;
     private WilddogVideoView remoteView6;
     private WilddogVideoView remoteView7;
+    private PopupWindow popupWindow;
     private String roomId = "roomid";
     private WilddogRoom room;
     private List<WilddogVideoView> remoteVideoViews = new ArrayList<>();
@@ -82,24 +95,55 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
     private WilddogVideoView localViewIn;
     private TextView roomNum;
     private TextView quit;
+    private TextView time;
+    private TextView invite;
     private PromptDialog promptDialog;
-
+    private LinearLayout llParent;
+    private long startTimeStamp;
+    private Timer inClassTimer;
+    private int statusBarHeight = -1;
+    private TimerTask task = new TimerTask() {
+        @Override
+        public void run() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    time.setText(ConvertUtil.secToTime((int) ((System.currentTimeMillis()-startTimeStamp)/1000)));
+                }
+            });
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interact_model);
+       /* getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
 
         roomId = getIntent().getStringExtra("roomId");
-
+        startTimeStamp = getIntent().getLongExtra("time",System.currentTimeMillis());
         initView();
         initRoomSDK();
         createLocalStream();
         joinRoom();
 
         leftMenu.setStreamHolder(streamHolders);
+        setInclassTimer();
     }
 
+    private void setInclassTimer(){
+        if(inClassTimer==null){
+        inClassTimer = new Timer();
+        inClassTimer.schedule(task,0,1000);}
+    }
 
+    private void getStatusBarHeight(){
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            //根据资源ID获取响应的尺寸值
+            statusBarHeight = getResources().getDimensionPixelSize(resourceId);
+        }
+    }
 
     private void deteachAll() {
         for (int i = 0;i<streamHolders.size();i++) {
@@ -185,9 +229,15 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
             }
 
             @Override
-            public void onError(WilddogRoom wilddogRoom, WilddogVideoError wilddogVideoError) {
-                Toast.makeText(InteractModelActivity.this,"发生错误,请产看日志", Toast.LENGTH_SHORT).show();
-                Log.e("error","错误码:"+wilddogVideoError.getErrCode()+",错误信息:"+wilddogVideoError.getMessage());
+            public void onError(WilddogRoom wilddogRoom, final WilddogVideoError wilddogVideoError) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(InteractModelActivity.this,"发生错误,请产看日志", Toast.LENGTH_SHORT).show();
+                        Log.e("error","错误码:"+wilddogVideoError.getErrCode()+",错误信息:"+wilddogVideoError.getMessage());
+                    }
+                });
+
             }
         });
         room.connect();
@@ -236,11 +286,11 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         return builder.captureAudio(true).build();
     }
     private void initView() {
-
+        getStatusBarHeight();
         promptDialog = new PromptDialog(this);
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
-
+        llParent = (LinearLayout) findViewById(R.id.ll_parent);
         localView = (WilddogVideoView) findViewById(R.id.wvv_local);
         localViewIn = (WilddogVideoView) findViewById(R.id.wvv_local_in);
         remoteView1 = (WilddogVideoView) findViewById(R.id.wvv_remote1);
@@ -262,20 +312,24 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
 
         quit = (TextView) findViewById(R.id.tv_quit_room);
         quit.setOnClickListener(this);
+        time = (TextView) findViewById(R.id.tv_time);
+        invite = (TextView) findViewById(R.id.tv_invite_other);
+        invite.setOnClickListener(this);
 
         findViewById(R.id.copy_invite).setOnClickListener(this);
 
         leftMenu = (LeftLayout) findViewById(R.id.rl_leftmenu);
         ViewGroup.LayoutParams leftParams = leftMenu.getLayoutParams();
         leftParams.width = getWindowWidth() / 3;
-        leftParams.height = getWindowHeight();
+        // TODO: 17-12-11 fly 减去
+        leftParams.height = getWindowHeight()-statusBarHeight;
         leftMenu.setLayoutParams(leftParams);
         leftMenu.addDialog(promptDialog);
 
         rightMenu = (RightLayout) findViewById(R.id.rl_rightmenu);
         ViewGroup.LayoutParams rightParams = rightMenu.getLayoutParams();
         rightParams.width = getWindowWidth() * 2 / 3;
-        rightParams.height = getWindowHeight();
+        rightParams.height = getWindowHeight()-statusBarHeight;
         rightMenu.setLayoutParams(rightParams);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.v4_drawerlayout);
@@ -313,7 +367,7 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         boardView = (WilddogBoard) findViewById(R.id.board);
-        boardView.setup(Constant.WILDDOG_SYNC_APP_ID, roomId + "/board", "abc"+ System.currentTimeMillis(),new BoardOption(px2dip(1366),px2dip(768), BoardOption.WildBoardAuthorityMode.READWRITE));
+        boardView.setup(Constant.WILDDOG_SYNC_APP_ID, "room/"+roomId + "/board", SharedPereferenceTool.getUserId(InteractModelActivity.this),new BoardOption(px2dip(1366),px2dip(768), BoardOption.WildBoardAuthorityMode.READWRITE));
 
         boardView.setBackgroundColor(Color.BLACK);
         actionsMenu = (ToolBarMenu) findViewById(R.id.graphic_menu);
@@ -362,12 +416,62 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
                 finish();
                 break;
             case R.id.tv_invite_other:
-                ClipboardManager cmb = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
-                cmb.setText(Constant.INVITE_URL);
-
-                promptDialog.showSuccess("邀请链接已复制");
+                showInviteDialog();
                 break;
         }
+    }
+
+    private void showInviteDialog(){
+        View view = View.inflate(InteractModelActivity.this, R.layout.popupwindow_invite, null);
+        TextView tvRoomId = view.findViewById(R.id.tv_roomId);
+        TextView tvCopyRoomId = view.findViewById(R.id.tv_copy_roomId);
+        TextView tvCopyRoomUrl = view.findViewById(R.id.tv_copy_room_url);
+        TextView tvCancel = view.findViewById(R.id.tv_cancel);
+        tvRoomId.setText("房间号: "+roomId);
+        tvCopyRoomId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                copyRoomId();
+                popupWindowDismiss();
+            }
+        });
+        tvCopyRoomUrl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                copyRoomUrl();
+                popupWindowDismiss();
+            }
+        });
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindowDismiss();
+            }
+        });
+        showPopupWindow(view);
+    }
+
+    private void copyRoomId() {
+        ClipboardManager cmb = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+        cmb.setText(Constant.INVITE_URL);
+        AlertMessageUtil.showShortToast("房间号复制成功");
+    }
+    private void copyRoomUrl() {
+        ClipboardManager cmb = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+        cmb.setText(Constant.INVITE_URL);
+        AlertMessageUtil.showShortToast("房间地址复制成功");
+    }
+
+    private void popupWindowDismiss() {
+        if (popupWindow != null && popupWindow.isShowing()) {
+            popupWindow.dismiss();
+        }
+    }
+
+    private void showPopupWindow(View view) {
+        popupWindow = new PopupWindow(view, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+        popupWindow.setFocusable(true);
+        popupWindow.showAtLocation(llParent, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
     }
 
     private void hideLocalVideoView() {
@@ -385,6 +489,18 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
     protected void onDestroy() {
         super.onDestroy();
         leaveRoom();
+        WilddogSyncManager.getWilddogSyncTool().judgeAndRemoveTime(roomId, new Callback<String>() {
+            @Override
+            public void onSuccess(String s) {
+                WilddogSyncManager.getWilddogSyncTool().removeRoomUsers(roomId, SharedPereferenceTool.getUserId(InteractModelActivity.this));
+            }
+
+            @Override
+            public void onFailed(VideoError error) {
+
+            }
+        });
+
         if (!localStream.isClosed()) {
             localStream.detach();
             localStream.close();

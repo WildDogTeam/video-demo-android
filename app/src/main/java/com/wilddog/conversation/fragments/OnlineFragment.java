@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by fly on 17-6-9.
@@ -87,7 +88,8 @@ public class OnlineFragment extends BaseFragment {
                             info.setFaceurl(strFaceurl);
                             String strNickname = value.get("nickname")==null?key:value.get("nickname").toString();
                             info.setNickname(strNickname);
-                            info.setDeviceid(value.get("deviceid").toString());
+                            String devideId = value.get("deviceid")==null?UUID.randomUUID().toString():value.get("deviceid").toString();
+                            info.setDeviceid(devideId);
 
                             if(!blackUserIDs.contains(key)){
                                 userList.add(info);

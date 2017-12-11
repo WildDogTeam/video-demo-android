@@ -9,15 +9,21 @@
     <TextView
         android:id="@+id/author"
         android:layout_width="wrap_content"
+        android:textSize="9sp"
+        android:text="May"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/text_color_white"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/message"
-        android:text="aaaaaa"
-        android:padding="3dp"
-        android:background="@drawable/chat_bg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        />
+        android:layout_gravity="left|center_vertical"
+        android:background="@mipmap/chat_left_bg"
+        android:gravity="center"
+        android:padding="3dp"
+        android:textSize="15sp"
+        android:text="aaaaaa" />
 
 </LinearLayout>

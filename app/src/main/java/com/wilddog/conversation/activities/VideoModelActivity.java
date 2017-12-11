@@ -5,17 +5,18 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AlertDialog;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.GridView;
@@ -25,10 +26,15 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.wilddog.conversation.R;
+import com.wilddog.conversation.bean.Callback;
 import com.wilddog.conversation.bean.StreamHolder;
+import com.wilddog.conversation.bean.VideoError;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.Constant;
+import com.wilddog.conversation.utils.SharedPereferenceTool;
+import com.wilddog.conversation.wilddog.WilddogSyncManager;
 import com.wilddog.video.base.LocalStream;
 import com.wilddog.video.base.LocalStreamOptions;
 import com.wilddog.video.base.WilddogVideoError;
@@ -40,10 +46,12 @@ import com.wilddog.video.room.CompleteListener;
 import com.wilddog.video.room.RoomStream;
 import com.wilddog.video.room.WilddogRoom;
 import com.wilddog.wilddogauth.WilddogAuth;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class VideoModelActivity extends AppCompatActivity {
+    private final String TAG = VideoModelActivity.class.getCanonicalName();
     private String roomId ;
     private CheckBox cbMic;
     private CheckBox cbSpeaker;
@@ -67,7 +75,7 @@ public class VideoModelActivity extends AppCompatActivity {
 
     private MygridViewAdapter adapter;
     private List<StreamHolder> streamHolders = new ArrayList<>();
-
+    private long startTimeStamp;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -86,7 +94,12 @@ public class VideoModelActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_model);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         roomId = getIntent().getStringExtra("roomId");
+        startTimeStamp = getIntent().getLongExtra("time",System.currentTimeMillis());
+        Log.d(TAG,"roomId: "+roomId+" time:"+startTimeStamp);
         initView();
         setListener();
         initRoomSDK();
@@ -94,12 +107,11 @@ public class VideoModelActivity extends AppCompatActivity {
         joinRoom();
     }
 
-
     private void joinRoom() {
         room = new WilddogRoom(roomId, new WilddogRoom.Listener() {
             @Override
             public void onConnected(WilddogRoom wilddogRoom) {
-                Toast.makeText(VideoModelActivity.this, "已经连接上服务器", Toast.LENGTH_SHORT).show();
+                Log.d(TAG,"room connected");
                 // 此时服务器返回用户id
                 setLocalStreamId();
                 room.publish(localStream, new CompleteListener() {
@@ -110,9 +122,11 @@ public class VideoModelActivity extends AppCompatActivity {
                             public void run() {
                                 if (wilddogVideoError != null) {
                                     //失败
+                                    Log.d(TAG,"publish failed");
                                     Log.e("error", "error:" + wilddogVideoError.getMessage());
                                     Toast.makeText(VideoModelActivity.this, "推送流失败", Toast.LENGTH_SHORT).show();
                                 } else {
+                                    Log.d(TAG,"publish succeed");
                                     Toast.makeText(VideoModelActivity.this, "推送流成功", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -123,6 +137,7 @@ public class VideoModelActivity extends AppCompatActivity {
 
             @Override
             public void onDisconnected(WilddogRoom wilddogRoom) {
+                Log.d(TAG,"room disconnected");
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -134,6 +149,7 @@ public class VideoModelActivity extends AppCompatActivity {
 
             @Override
             public void onStreamAdded(WilddogRoom wilddogRoom, RoomStream roomStream) {
+                Log.d(TAG,"room onStreamAdded roomStream id:"+ roomStream.getStreamId());
                 room.subscribe(roomStream, new CompleteListener() {
                     @Override
                     public void onComplete(WilddogVideoError wilddogVideoError) {
@@ -143,6 +159,7 @@ public class VideoModelActivity extends AppCompatActivity {
 
             @Override
             public void onStreamRemoved(WilddogRoom wilddogRoom, RoomStream roomStream) {
+                Log.d(TAG,"room onStreamRemoved roomStream id:"+ roomStream.getStreamId());
                 removeRemoteStream(roomStream.getStreamId());
                 handler.sendEmptyMessage(0);
             }
@@ -150,6 +167,7 @@ public class VideoModelActivity extends AppCompatActivity {
             @Override
             public void onStreamReceived(WilddogRoom wilddogRoom, RoomStream roomStream) {
                 // 在控件中显示
+                Log.d(TAG,"room onStreamReceived roomStream id:"+ roomStream.getStreamId());
                 StreamHolder holder = new StreamHolder(false, System.currentTimeMillis(), roomStream);
                 holder.setId(roomStream.getStreamId());
                 streamHolders.add(holder);
@@ -163,6 +181,7 @@ public class VideoModelActivity extends AppCompatActivity {
 
             @Override
             public void onError(WilddogRoom wilddogRoom, final WilddogVideoError wilddogVideoError) {
+                Log.d(TAG,"room onError error: "+wilddogVideoError.toString() );
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -198,6 +217,7 @@ public class VideoModelActivity extends AppCompatActivity {
         LogUtil.setLogLevel(Logger.Level.DEBUG);
         WilddogVideoInitializer.initialize(VideoModelActivity.this, Constant.WILDDOG_VIDEO_APP_ID, WilddogAuth.getInstance().getCurrentUser().getToken(false).getResult().getToken());
         initializer = WilddogVideoInitializer.getInstance();
+        Log.d(TAG,"initRoomSDK Finish");
     }
 
     private void createLocalStream() {
@@ -205,10 +225,12 @@ public class VideoModelActivity extends AppCompatActivity {
         localStream = LocalStream.create(options);
         localStream.enableAudio(isAudioEnable);
         localStream.enableVideo(true);
+        Log.d(TAG,"createLocalStream Finish");
         //将本地媒体流绑定到WilddogVideoView中
         StreamHolder holder = new StreamHolder(true, System.currentTimeMillis(), localStream);
         streamHolders.add(holder);
         handler.sendEmptyMessage(0);
+        Log.d(TAG,"set localStream to holders Finish");
     }
 
     private void initView() {
@@ -221,12 +243,13 @@ public class VideoModelActivity extends AppCompatActivity {
         cbCamera.setChecked(isVideoEnable);
         llFlipCamera = (LinearLayout) findViewById(R.id.ll_filp_camera);
         ivLeave = (ImageView) findViewById(R.id.iv_leave);
-        tvInvite = (TextView) findViewById(R.id.tv_hungup);
+        tvInvite = (TextView) findViewById(R.id.tv_invite_other);
 
         gvStreams = (GridView) findViewById(R.id.gv_streams);
         gvStreams.setSelector(new ColorDrawable(Color.TRANSPARENT));
         adapter = new MygridViewAdapter(this, streamHolders);
         gvStreams.setAdapter(adapter);
+        Log.d(TAG,"initView Finish");
     }
 
     private void setListener(){
@@ -285,11 +308,12 @@ public class VideoModelActivity extends AppCompatActivity {
                 showInviteDialog();
             }
         });
+        Log.d(TAG,"setListener Finish");
     }
 
     private void showInviteDialog(){
         View view = View.inflate(VideoModelActivity.this, R.layout.popupwindow_invite, null);
-        TextView tvRoomId = view.findViewById(R.id.tv_roomid);
+        TextView tvRoomId = view.findViewById(R.id.tv_roomId);
         TextView tvCopyRoomId = view.findViewById(R.id.tv_copy_roomId);
         TextView tvCopyRoomUrl = view.findViewById(R.id.tv_copy_room_url);
         TextView tvCancel = view.findViewById(R.id.tv_cancel);
@@ -414,6 +438,7 @@ public class VideoModelActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
+            Log.d(TAG,"getView position"+i);
             ViewHolder holder;
             StreamHolder streamHolder = mlist.get(i);
             if (view == null) {
@@ -452,6 +477,17 @@ public class VideoModelActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        WilddogSyncManager.getWilddogSyncTool().judgeAndRemoveTime(roomId, new Callback<String>() {
+            @Override
+            public void onSuccess(String s) {
+                WilddogSyncManager.getWilddogSyncTool().removeRoomUsers(roomId, SharedPereferenceTool.getUserId(VideoModelActivity.this));
+            }
+
+            @Override
+            public void onFailed(VideoError error) {
+
+            }
+        });
         leaveRoom();
         if (!localStream.isClosed()) {
             localStream.close();

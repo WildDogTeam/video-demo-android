@@ -1,66 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/v4_drawerlayout"
+    android:id="@+id/ll_parent"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     >
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black"
-    >
-    <com.wilddog.board.WilddogBoard
-        android:id="@+id/board"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </com.wilddog.board.WilddogBoard>
-
-
-    <com.wilddog.toolbar.boardtoolbar.ToolBarMenu
-        android:id="@+id/graphic_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        app:fab_expandDirection="up"
-        app:fab_interval="1dp">
-
-    </com.wilddog.toolbar.boardtoolbar.ToolBarMenu>
-
-
-    <LinearLayout
-        android:id="@+id/ll_show"
-        android:layout_width="wrap_content"
-        android:layout_height="265dp"
-        android:layout_centerVertical="true"
-        android:gravity="center"
-        android:padding="2dp"
-        android:background="#2E2E2E"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/room_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="房间成员(1)"
-            android:textColor="#fff"
-            android:textSize="10sp"
-            />
-        <include layout="@layout/small_window_layout"/>
-
-        <ImageView
-            android:id="@+id/iv_show"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/arrows" />
-    </LinearLayout>
-        
+        android:id="@+id/title"
+        android:background="@android:color/black"
+        >
         <TextView
             android:id="@+id/tv_quit_room"
             android:layout_width="wrap_content"
@@ -103,22 +55,86 @@
             android:layout_marginRight="15dp"
             android:layout_alignParentRight="true"
             />
-</RelativeLayout>
-
-
-    <com.wilddog.conversation.view.LeftLayout
-        android:id="@+id/rl_leftmenu"
-        android:layout_width="wrap_content"
+    </RelativeLayout>
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/v4_drawerlayout"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
-    </com.wilddog.conversation.view.LeftLayout>
+        android:background="@android:color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            >
+            <com.wilddog.board.WilddogBoard
+                android:id="@+id/board"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <com.wilddog.conversation.view.RightLayout
-        android:id="@+id/rl_rightmenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:layout_gravity="end">
-    </com.wilddog.conversation.view.RightLayout>
-</android.support.v4.widget.DrawerLayout>
+            </com.wilddog.board.WilddogBoard>
+
+
+            <com.wilddog.toolbar.boardtoolbar.ToolBarMenu
+                android:id="@+id/graphic_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                app:fab_expandDirection="up"
+                app:fab_interval="1dp">
+
+            </com.wilddog.toolbar.boardtoolbar.ToolBarMenu>
+
+
+            <LinearLayout
+                android:id="@+id/ll_show"
+                android:layout_width="wrap_content"
+                android:layout_height="265dp"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:padding="2dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:background="#2E2E2E"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/room_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="7dp"
+                        android:text="房间成员(1)"
+                        android:textColor="#fff"
+                        android:textSize="10sp"
+                        />
+                    <include layout="@layout/small_window_layout"/>
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="8dp"
+                    android:layout_height="46dp"
+                    android:src="@drawable/hide"
+                    android:id="@+id/iv_show"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+        <com.wilddog.conversation.view.LeftLayout
+            android:id="@+id/rl_leftmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start">
+        </com.wilddog.conversation.view.LeftLayout>
+
+        <com.wilddog.conversation.view.RightLayout
+            android:id="@+id/rl_rightmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:layout_gravity="end">
+        </com.wilddog.conversation.view.RightLayout>
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>
 

@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 
 import com.wilddog.conversation.R;
@@ -20,7 +21,7 @@ import java.util.List;
 import me.leefeng.promptlibrary.PromptDialog;
 
 
-public class LeftLayout extends RelativeLayout implements View.OnClickListener {
+public class LeftLayout extends RelativeLayout{
 
     private Context context;
     private WilddogVideoView remoteView1;
@@ -30,6 +31,7 @@ public class LeftLayout extends RelativeLayout implements View.OnClickListener {
     private WilddogVideoView remoteView5;
     private WilddogVideoView remoteView6;
     private WilddogVideoView remoteView7;
+    private TextView tvNum;
     private List<WilddogVideoView> remoteVideoViewsL = new ArrayList<>();
     private List<StreamHolder> streamHolders = new ArrayList<>();
 
@@ -53,6 +55,7 @@ public class LeftLayout extends RelativeLayout implements View.OnClickListener {
     private void init(Context context){
         this.context = context;
         LayoutInflater.from(context).inflate(R.layout.left, this);
+        tvNum = findViewById(R.id.room_num);
         remoteView1 = (WilddogVideoView) findViewById(R.id.wvv_remote1_in);
         remoteView2 = (WilddogVideoView) findViewById(R.id.wvv_remote2_in);
         remoteView3 = (WilddogVideoView) findViewById(R.id.wvv_remote3_in);
@@ -68,23 +71,11 @@ public class LeftLayout extends RelativeLayout implements View.OnClickListener {
         remoteVideoViewsL.add(remoteView6);
         remoteVideoViewsL.add(remoteView7);
 
-        findViewById(R.id.copy_invite_left).setOnClickListener(this);
-
-
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.copy_invite_left:
-                ClipboardManager cmb = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
-                cmb.setText(Constant.INVITE_CANCEL);
-                promptDialog.showSuccess("邀请链接已复制");
-                break;
 
-        }
-    }
     public void showRemoteViews() {
+        tvNum.setText("房间成员("+streamHolders.size()+")");
         for(int i = 0;i<streamHolders.size();i++){
             StreamHolder streamHolder = streamHolders.get(i);
             streamHolder.getStream().attach(remoteVideoViewsL.get(i));
@@ -118,7 +109,6 @@ public class LeftLayout extends RelativeLayout implements View.OnClickListener {
     }
 
     public void addDialog(PromptDialog promptDialog) {
-
         this.promptDialog = promptDialog;
     }
 

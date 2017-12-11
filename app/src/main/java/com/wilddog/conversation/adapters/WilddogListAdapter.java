@@ -1,4 +1,4 @@
-package com.wilddog.conversation.adapter;
+package com.wilddog.conversation.adapters;
 
 import android.content.Context;
 import android.util.Log;

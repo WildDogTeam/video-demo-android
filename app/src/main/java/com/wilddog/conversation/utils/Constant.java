@@ -8,8 +8,8 @@ import android.os.Environment;
 
 public final class Constant {
     public static final int AUTO_SKIP_TIME = 2000;
-    public static final String WILDDOG_VIDEO_APP_ID = "wd4449761657cslfcf";
-    public static final String WILDDOG_SYNC_APP_ID = "wd1621490197hjoglv";
+    public static final String WILDDOG_VIDEO_APP_ID = "wd5248438159qbhzao";
+    public static final String WILDDOG_SYNC_APP_ID = "wd0018753635ifkvjw";
     public static final String INVITE_CANCEL = "com.wilddog.conversation.inviteCancel";
     //TuSDK key
     public static final String TUSDK_KEY = "0f144d55c02e797d-00-f8g7r1";
