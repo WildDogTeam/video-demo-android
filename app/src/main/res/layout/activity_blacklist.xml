@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.wilddog.conversation.activities.BlackUsersActivity">
+    tools:context="com.wilddog.conversation.activities.BlacklistActivity">
     <RelativeLayout
         style="@style/TitleStyle"
         android:layout_width="match_parent"

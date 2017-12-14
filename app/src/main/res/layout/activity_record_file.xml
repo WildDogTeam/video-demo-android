@@ -33,19 +33,21 @@
     </RelativeLayout>
 <ListView
     android:layout_marginTop="14dp"
+    android:footerDividersEnabled="true"
+    android:headerDividersEnabled="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/lv_record_file"
     android:divider="@drawable/listview_record_line_style"
     android:dividerHeight="0.5dp"
-    android:visibility="gone"
+    android:visibility="visible"
     />
     <RelativeLayout
         android:id="@+id/rl_no_file"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"

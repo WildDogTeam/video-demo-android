@@ -14,6 +14,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -28,7 +30,7 @@ import com.wilddog.conversation.bean.VideoError;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ConvertUtil;
-import com.wilddog.conversation.utils.SharedPereferenceTool;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.view.LeftLayout;
 import com.wilddog.conversation.view.RightLayout;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
@@ -55,8 +57,8 @@ import static com.wilddog.board.utils.BoardUtil.px2dip;
 
 public class InteractModelActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private WilddogBoard boardView;
-    private ToolBarMenu actionsMenu;
+    private WilddogBoard wbWhiteBoard;
+    private ToolBarMenu tbmToolBar;
     private WilddogVideoInitializer initializer;
     private LocalStream localStream;
     private boolean isAudioEnable = true;
@@ -79,7 +81,6 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-
             deteachAll();
             if(!drawerLayout.isDrawerOpen(leftMenu)) {
                 leftMenu.deteachAll();
@@ -97,6 +98,8 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
     private TextView quit;
     private TextView time;
     private TextView invite;
+    //private ListView videos;
+   // private VideosAdapter adapter;
     private PromptDialog promptDialog;
     private LinearLayout llParent;
     private long startTimeStamp;
@@ -113,13 +116,15 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
             });
         }
     };
+    private LinearLayout linearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interact_model);
-       /* getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         roomId = getIntent().getStringExtra("roomId");
         startTimeStamp = getIntent().getLongExtra("time",System.currentTimeMillis());
         initView();
@@ -247,6 +252,7 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         while (iterator.hasNext()){
             StreamHolder holder = iterator.next();
             if(streamId==holder.getId()){
+                // TODO: 17-12-13 fly sometimes crash by npe 
                 holder.getStream().close();
                 holder.getStream().detach();
                 iterator.remove();
@@ -262,13 +268,15 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         localStream = LocalStream.create(options);
         localStream.enableAudio(isAudioEnable);
         localStream.enableVideo(true);
-        localStream.attach(localView);
+        /*localStream.attach(localView);*/
+        StreamHolder holder = new StreamHolder(true,System.currentTimeMillis(),localStream);
+        streamHolders.add(holder);
         localStream.attach(localViewIn);
 
     }
     private LocalStreamOptions genLocalStreamOptions() {
         LocalStreamOptions.Builder builder = new LocalStreamOptions.Builder();
-        switch (SharedPereferenceTool.getDimension(this)) {
+        switch (SharedPreferenceTool.getDimension(this)) {
             case "360P":
                 builder.dimension(LocalStreamOptions.Dimension.DIMENSION_360P);
                 break;
@@ -291,8 +299,10 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
         llParent = (LinearLayout) findViewById(R.id.ll_parent);
-        localView = (WilddogVideoView) findViewById(R.id.wvv_local);
+        //videos = (ListView) findViewById(R.id.lv_videos);
         localViewIn = (WilddogVideoView) findViewById(R.id.wvv_local_in);
+
+        localView = (WilddogVideoView) findViewById(R.id.wvv_local);
         remoteView1 = (WilddogVideoView) findViewById(R.id.wvv_remote1);
         remoteView2 = (WilddogVideoView) findViewById(R.id.wvv_remote2);
         remoteView3 = (WilddogVideoView) findViewById(R.id.wvv_remote3);
@@ -307,6 +317,8 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         remoteVideoViews.add(remoteView5);
         remoteVideoViews.add(remoteView6);
         remoteVideoViews.add(remoteView7);
+        /*adapter = new VideosAdapter(InteractModelActivity.this,streamHolders);
+        videos.setAdapter(adapter);*/
 
         roomNum = (TextView) findViewById(R.id.room_num);
 
@@ -316,12 +328,10 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         invite = (TextView) findViewById(R.id.tv_invite_other);
         invite.setOnClickListener(this);
 
-        findViewById(R.id.copy_invite).setOnClickListener(this);
-
         leftMenu = (LeftLayout) findViewById(R.id.rl_leftmenu);
         ViewGroup.LayoutParams leftParams = leftMenu.getLayoutParams();
         leftParams.width = getWindowWidth() / 3;
-        // TODO: 17-12-11 fly 减去
+
         leftParams.height = getWindowHeight()-statusBarHeight;
         leftMenu.setLayoutParams(leftParams);
         leftMenu.addDialog(promptDialog);
@@ -333,6 +343,8 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         rightMenu.setLayoutParams(rightParams);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.v4_drawerlayout);
+
+        linearLayout = (LinearLayout) findViewById(R.id.ll_show);
 
         findViewById(R.id.iv_show).setOnClickListener(this);
 
@@ -366,12 +378,12 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         });
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
-        boardView = (WilddogBoard) findViewById(R.id.board);
-        boardView.setup(Constant.WILDDOG_SYNC_APP_ID, "room/"+roomId + "/board", SharedPereferenceTool.getUserId(InteractModelActivity.this),new BoardOption(px2dip(1366),px2dip(768), BoardOption.WildBoardAuthorityMode.READWRITE));
+        wbWhiteBoard = (WilddogBoard) findViewById(R.id.board);
+        wbWhiteBoard.setup(Constant.WILDDOG_SYNC_APP_ID, "room/"+roomId + "/board", SharedPreferenceTool.getUserId(InteractModelActivity.this),new BoardOption(px2dip(1366),px2dip(768), BoardOption.WildBoardAuthorityMode.READWRITE));
 
-        boardView.setBackgroundColor(Color.BLACK);
-        actionsMenu = (ToolBarMenu) findViewById(R.id.graphic_menu);
-        actionsMenu.bindingBoard(boardView, this);
+        wbWhiteBoard.setBackgroundColor(Color.BLACK);
+        tbmToolBar = (ToolBarMenu) findViewById(R.id.graphic_menu);
+        tbmToolBar.bindingBoard(wbWhiteBoard, this);
 
     }
     private void showLocalVideoView() {
@@ -407,6 +419,10 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
             case R.id.iv_show:
                 drawerLayout.openDrawer(leftMenu);
                 drawerLayout.openDrawer(rightMenu);
+             /*   ScaleAnimation animation =new ScaleAnimation(0.0f, 1.4f, 0.0f, 1.4f,
+                    Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                animation.setDuration(500);
+                linearLayout.startAnimation(animation);*/
                 break;
             case R.id.iv_hide:
                 drawerLayout.closeDrawer(leftMenu);
@@ -432,20 +448,20 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(View v) {
                 copyRoomId();
-                popupWindowDismiss();
+                dissmissPopupWindow();
             }
         });
         tvCopyRoomUrl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 copyRoomUrl();
-                popupWindowDismiss();
+                dissmissPopupWindow();
             }
         });
         tvCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupWindowDismiss();
+                dissmissPopupWindow();
             }
         });
         showPopupWindow(view);
@@ -462,7 +478,7 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         AlertMessageUtil.showShortToast("房间地址复制成功");
     }
 
-    private void popupWindowDismiss() {
+    private void dissmissPopupWindow() {
         if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
@@ -492,7 +508,7 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         WilddogSyncManager.getWilddogSyncTool().judgeAndRemoveTime(roomId, new Callback<String>() {
             @Override
             public void onSuccess(String s) {
-                WilddogSyncManager.getWilddogSyncTool().removeRoomUsers(roomId, SharedPereferenceTool.getUserId(InteractModelActivity.this));
+                WilddogSyncManager.getWilddogSyncTool().removeRoomUsers(roomId, SharedPreferenceTool.getUserId(InteractModelActivity.this));
             }
 
             @Override

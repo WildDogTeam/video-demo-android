@@ -2,14 +2,12 @@ package com.wilddog.conversation.activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,16 +56,14 @@ public class RecordFileActivity extends AppCompatActivity {
         adapter = new MyAdapter(files, this);
         lvRecordFile.setAdapter(adapter);
         initData();
-
     }
 
     private File getFile() {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "wilddog");
         if (!file.exists()) {
-            boolean a = file.mkdirs();
+            file.mkdirs();
         }
         return file;
-
     }
 
     private void initData() {
@@ -151,8 +147,8 @@ public class RecordFileActivity extends AppCompatActivity {
                         rlNoRecord.setVisibility(View.VISIBLE);
                         lvRecordFile.setVisibility(View.GONE);
                     }else {
-                        rlNoRecord.setVisibility(View.VISIBLE);
-                        lvRecordFile.setVisibility(View.GONE);
+                        lvRecordFile.setVisibility(View.VISIBLE);
+                        rlNoRecord.setVisibility(View.GONE);
                     }
 
                 }

@@ -13,53 +13,52 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wilddog.conversation.R;
-import com.wilddog.conversation.bean.BlackUser;
+import com.wilddog.conversation.bean.BlackListUser;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.MyOpenHelper;
-import com.wilddog.conversation.utils.SharedPereferenceTool;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.view.CircleImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackUsersActivity extends AppCompatActivity {
+public class BlacklistActivity extends AppCompatActivity {
 
-    private ListView lv_blacklist;
+    private ListView lvBlacklist;
     private RelativeLayout rlNoBlackUser;
-    private BlackUserAdapter adapter;
-    private List<BlackUser> blackUsers=new ArrayList<>();
+    private BlackListAdapter adapter;
+    private List<BlackListUser> blackListUsers =new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_black_users);
-
+        setContentView(R.layout.activity_blacklist);
         initView();
         initData();
     }
 
     private void initData() {
-        blackUsers = MyOpenHelper.getInstance().selectBlackUsers(SharedPereferenceTool.getUserId(this));
+        blackListUsers = MyOpenHelper.getInstance().selectBlackUsers(SharedPreferenceTool.getUserId(this));
         updateView();
     }
 
     private void updateView() {
-        if(blackUsers.isEmpty()){
-            lv_blacklist.setVisibility(View.GONE);
+        if(blackListUsers.isEmpty()){
+            lvBlacklist.setVisibility(View.GONE);
             rlNoBlackUser.setVisibility(View.VISIBLE);
         }else {
-            lv_blacklist.setVisibility(View.VISIBLE);
+            lvBlacklist.setVisibility(View.VISIBLE);
             rlNoBlackUser.setVisibility(View.GONE);
             adapter.notifyDataSetChanged();
         }
     }
 
     private void initView() {
-        lv_blacklist = (ListView) findViewById(R.id.lv_blacklist);
+        lvBlacklist = (ListView) findViewById(R.id.lv_blacklist);
         rlNoBlackUser = (RelativeLayout) findViewById(R.id.rl_no_blackuser);
-        adapter = new BlackUserAdapter(this);
-        lv_blacklist.setAdapter(adapter);
+        adapter = new BlackListAdapter(this);
+        lvBlacklist.setAdapter(adapter);
         findViewById(R.id.iv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,22 +68,22 @@ public class BlackUsersActivity extends AppCompatActivity {
 
     }
 
-    class BlackUserAdapter extends BaseAdapter{
+    class BlackListAdapter extends BaseAdapter{
 
         private Context context;
 
-        public BlackUserAdapter(Context context) {
+        public BlackListAdapter(Context context) {
             this.context = context;
         }
 
         @Override
         public int getCount() {
-            return blackUsers.size();
+            return blackListUsers.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return blackUsers.get(position);
+            return blackListUsers.get(position);
         }
 
         @Override
@@ -106,15 +105,15 @@ public class BlackUsersActivity extends AppCompatActivity {
                 holder= (ViewHolder) convertView.getTag();
             }
 
-            holder.uid.setText(blackUsers.get(position).getNickName());
-            ImageManager.Load(blackUsers.get(position).getFaceurl(),holder.civPhoto);
+            holder.uid.setText(blackListUsers.get(position).getNickName());
+            ImageManager.Load(blackListUsers.get(position).getFaceurl(),holder.civPhoto);
 
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AlertMessageUtil.showShortToast("移除用户");
-                    BlackUser blackUser = blackUsers.remove(position);
-                    MyOpenHelper.getInstance().deleteBlackUser(blackUser);
+                    BlackListUser blackListUser = blackListUsers.remove(position);
+                    MyOpenHelper.getInstance().deleteBlackUser(blackListUser);
                     updateView();
                 }
             });

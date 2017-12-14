@@ -84,9 +84,4 @@ public class SendInviteActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-    private void isUidOnline(){
-
-    }
-
 }

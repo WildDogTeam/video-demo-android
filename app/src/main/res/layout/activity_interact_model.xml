@@ -109,6 +109,11 @@
                         android:textSize="10sp"
                         />
                     <include layout="@layout/small_window_layout"/>
+                  <!--  <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/lv_videos"
+                        ></ListView>-->
                 </LinearLayout>
                 <ImageView
                     android:layout_width="8dp"

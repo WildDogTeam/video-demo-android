@@ -15,7 +15,7 @@ import com.wilddog.client.Query;
 import com.wilddog.client.SyncError;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.Chat;
-import com.wilddog.conversation.utils.SharedPereferenceTool;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +34,7 @@ public abstract class WilddogListAdapter<T> extends BaseAdapter {
     public WilddogListAdapter(Query mRef, Class<T> mModelClass, Context context) {
         this.mRef = mRef;
         this.mModelClass = mModelClass;
-        mUsername = SharedPereferenceTool.getUserId(context);
+        mUsername = SharedPreferenceTool.getUserId(context);
         mInflater = LayoutInflater.from(context);
         mModels = new ArrayList<T>();
         mKeys = new ArrayList<String>();

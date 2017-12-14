@@ -82,13 +82,13 @@
             android:name="io.fabric.ApiKey"
             android:value="62b476b8bec312542b8993f36ee2e14400600162" />
 
-        <activity android:name=".activities.DeclarActivity" />
+        <activity android:name=".activities.DeclareActivity" />
         <activity android:name=".activities.DetailInfoActivity" />
 
         <service android:name=".floatingwindow.WindowService" />
 
         <activity android:name=".activities.ReportActivity" />
-        <activity android:name=".activities.BlackUsersActivity" />
+        <activity android:name=".activities.BlacklistActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

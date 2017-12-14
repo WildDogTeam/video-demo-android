@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/ll_parent"
+    android:background="@color/video_model_video_bg"
     tools:context="com.wilddog.conversation.activities.VideoModelActivity">
 
     <GridView
@@ -13,8 +14,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:id="@+id/gv_streams"
-        android:verticalSpacing="1dp"
-        android:horizontalSpacing="1dp"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
         android:numColumns="2"
         android:columnWidth="180dp"
         ></GridView>
@@ -25,7 +26,7 @@
         android:layout_gravity="center"
         android:layout_alignParentBottom="true"
         android:id="@+id/ll_contral_button"
-        android:background="@android:color/black"
+        android:background="@color/video_model_button_bg"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"

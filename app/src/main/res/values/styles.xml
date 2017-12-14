@@ -9,10 +9,10 @@
     </style>
 
     <style name="ItemStyle" >
-        <item name="android:layout_height">41dp</item>
+        <item name="android:layout_height">52dp</item>
         <item name="android:background">@color/item_background</item>
         <item name="android:gravity">center</item>
-        <item name="android:paddingLeft">@dimen/item_margen_left</item>
+        <item name="android:paddingLeft">@dimen/item_small_margen_left</item>
         <item name="android:paddingRight">@dimen/item_margen_right</item>
     </style>
     <style name="ItemStyle_child" parent="ItemStyle">

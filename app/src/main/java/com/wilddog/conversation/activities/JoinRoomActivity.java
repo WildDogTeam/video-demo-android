@@ -19,8 +19,7 @@ import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.bean.VideoError;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.ObjectAndStringTool;
-import com.wilddog.conversation.utils.SharedPereferenceTool;
-import com.wilddog.conversation.wilddog.WilddogManager;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 
 public class JoinRoomActivity extends AppCompatActivity {
@@ -106,22 +105,20 @@ public class JoinRoomActivity extends AppCompatActivity {
         WilddogSyncManager.getWilddogSyncTool().getServerTimeStamp(roomId, new Callback<Long>() {
             @Override
             public void onSuccess(Long aLong) {
-                String uid = SharedPereferenceTool.getUserId(JoinRoomActivity.this);
-                UserInfo info = ObjectAndStringTool.getObjectFromJson(SharedPereferenceTool.getUserInfo(JoinRoomActivity.this), UserInfo.class);
+                String uid = SharedPreferenceTool.getUserId(JoinRoomActivity.this);
+                UserInfo info = ObjectAndStringTool.getObjectFromJson(SharedPreferenceTool.getUserInfo(JoinRoomActivity.this), UserInfo.class);
                 WilddogSyncManager.getWilddogSyncTool().writeRoomUsers(roomId, uid,info.getNickname());
-                SharedPereferenceTool.saveRoomId(JoinRoomActivity.this, roomId);
+                SharedPreferenceTool.saveRoomId(JoinRoomActivity.this, roomId);
                 if (type == 1) {
                     Intent intent = new Intent(JoinRoomActivity.this, VideoModelActivity.class);
                     intent.putExtra("roomId", roomId);
                     intent.putExtra("time", aLong);
                     startActivity(intent);
-                    finish();
                 } else {
                     Intent intent = new Intent(JoinRoomActivity.this, InteractModelActivity.class);
                     intent.putExtra("roomId", roomId);
                     intent.putExtra("time", aLong);
                     startActivity(intent);
-                    finish();
                 }
             }
 

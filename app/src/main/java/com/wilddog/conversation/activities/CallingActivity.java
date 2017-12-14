@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -33,7 +34,7 @@ import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.MyOpenHelper;
 import com.wilddog.conversation.utils.ParamsStore;
 import com.wilddog.conversation.utils.RingUtil;
-import com.wilddog.conversation.utils.SharedPereferenceTool;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.utils.TuSDKUtil;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.wilddog.WilddogVideoManager;
@@ -59,15 +60,15 @@ import java.util.TimerTask;
 public class CallingActivity extends AppCompatActivity {
     private static final String TAG = CallingActivity.class.getCanonicalName();
 
-    private String remoteid;
+    private String remoteId;
 
     private WilddogVideoCall video = WilddogVideoCall.getInstance();
 
     private CheckBox cbMic;
     private CheckBox cbSpeaker;
     private CheckBox cbCamera;
-    private LinearLayout llHungup;
-    private TextView tvHungup;
+    private LinearLayout llHangup;
+    private TextView tvHangup;
     private LinearLayout llFlipCamera;
 
     private CircleImageView civPhotoUrl;
@@ -78,17 +79,15 @@ public class CallingActivity extends AppCompatActivity {
     private TextView tvByte;
 
     private LinearLayout llCalled;
-    private TextView tvCallNickName;
-    private TextView tvNickName;
-
-
+    private TextView tvCallNickname;
+    private TextView tvNickname;
     private TextView tvTime;
+    private RelativeLayout rlHidePlace;
+    private WilddogVideoView wwvBig;
+    private WilddogVideoView wwvSmall;
 
-    private WilddogVideoView wvvBig;
-    private WilddogVideoView wvvSmall;
 
-
-    private LinearLayout llData;
+    private RelativeLayout rlData;
     private LinearLayout llState;
 
     private ImageView ivState;
@@ -100,13 +99,13 @@ public class CallingActivity extends AppCompatActivity {
 
     private LocalStream localStream;
 
-    private Conversation mConversation;
+    private Conversation conversation;
 
     private boolean isSelfInBig = true;
     private boolean isShowDetail = false;
     private boolean isAccept = false;
-    private boolean mFirstFrame = true;
-
+    private boolean firstFrame = true;
+    private boolean isButtonHide = false;
 
     private boolean isrecording = false;
     DecimalFormat decimalFormat = new DecimalFormat("0.00");
@@ -121,13 +120,14 @@ public class CallingActivity extends AppCompatActivity {
     private AudioManager audioManager;
     private ImageView ivFullScreen;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calling);
-//        remoteUserInfo = (UserInfo) getIntent().getSerializableExtra("user");
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         remoteUserInfo= WilddogVideoManager.getRemoteUser();
-        remoteid = remoteUserInfo.getUid();
+        remoteId = remoteUserInfo.getUid();
         initView();
         if(!StreamsHolder.getMyBinder().isWindowShow()) {
             LocalStreamOptions localStreamOptions = genLocalStreamOptions();
@@ -136,11 +136,11 @@ public class CallingActivity extends AppCompatActivity {
                 @Override
                 public void onByteFrame(byte[] bytes, int i, int i1, int i2, long l) {
                     // TODO 设置美颜效果
-                    frameProcess(bytes, 0, mFirstFrame, true, i, i1, i2);//data 可以传空 根据TextureId进行美颜
-                    mFirstFrame = false;
+                    frameProcess(bytes, 0, firstFrame, true, i, i1, i2);//data 可以传空 根据TextureId进行美颜
+                    firstFrame = false;
                 }
             });
-            localStream.attach(wvvBig);
+            localStream.attach(wwvBig);
 
             if(StreamsHolder.getLocalStream()!=null&& !localStream.isClosed()){
                 StreamsHolder.getLocalStream().close();
@@ -148,23 +148,23 @@ public class CallingActivity extends AppCompatActivity {
 
             StreamsHolder.setLocalStream(localStream);
 
-            mConversation = video.call(remoteid, localStream, "conversationDemo");
+            conversation = video.call(remoteId, localStream, "conversationDemo");
 
-            mConversation.setConversationListener(listener);
+            conversation.setConversationListener(listener);
 
             if(WilddogVideoManager.getConversation()!=null){
                 WilddogVideoManager.getConversation().close();
             }
 
-            WilddogVideoManager.saveConversation(mConversation);
+            WilddogVideoManager.saveConversation(conversation);
             startRing();
         }else  {
-            mConversation=WilddogVideoManager.getConversation();
-            mConversation.setConversationListener(listener);
+            conversation =WilddogVideoManager.getConversation();
+            conversation.setConversationListener(listener);
             localStream=StreamsHolder.getLocalStream();
             llCalled.setVisibility(View.INVISIBLE);
-            tvHungup.setText("挂断");
-            llData.setVisibility(View.VISIBLE);
+            tvHangup.setText("挂断");
+            rlData.setVisibility(View.VISIBLE);
         }
 
     }
@@ -179,7 +179,7 @@ public class CallingActivity extends AppCompatActivity {
     }
 
     public void frameProcess(byte[] data, int textureId, boolean isFirstFrame, boolean isInitEGL, int frameWidth, int frameHeight, int rotation) {
-        switch (SharedPereferenceTool.getBeautyPlan(CallingActivity.this)) {
+        switch (SharedPreferenceTool.getBeautyPlan(CallingActivity.this)) {
             case "Camera360":
                 if (isFirstFrame)
                     Camera360Util.initEngine(CallingActivity.this, isInitEGL, frameWidth, frameHeight, rotation);//  在第一帧视频到来时，初始化，指定需要的输出大小以及方向
@@ -260,9 +260,10 @@ public class CallingActivity extends AppCompatActivity {
                         case ACCEPTED:
                             stop();
                             llCalled.setVisibility(View.INVISIBLE);
-                            tvHungup.setText("挂断");
-                            llData.setVisibility(View.VISIBLE);
+                            tvHangup.setText("挂断");
+                            rlData.setVisibility(View.VISIBLE);
                             ParamsStore.isInitiativeCall =true;
+                            isAccept = true;
                             break;
                         case REJECTED:
                             stop();
@@ -300,7 +301,7 @@ public class CallingActivity extends AppCompatActivity {
             remoteStream.enableAudio(true);
             remoteStream.enableVideo(true);
             //在视频展示控件中播放其他端媒体流
-            mConversation.setStatsListener(statsListener);
+            conversation.setStatsListener(statsListener);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -317,10 +318,10 @@ public class CallingActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    AlertMessageUtil.showShortToast("用户：" + mConversation.getRemoteUid() + "离开会话");
+                    AlertMessageUtil.showShortToast("用户：" + conversation.getRemoteUid() + "离开会话");
                 }
             });
-//            mConversation.close();
+//            conversation.close();
             if(StreamsHolder.getMyBinder().isWindowShow())
                 StreamsHolder.getMyBinder().hidFloatingWindow();
             release();
@@ -350,17 +351,17 @@ public class CallingActivity extends AppCompatActivity {
         cbSpeaker.setChecked(isSpeakerOn);
         cbCamera = (CheckBox) findViewById(R.id.cb_camera);
         cbCamera.setChecked(isVideoEnable);
-        llHungup = (LinearLayout) findViewById(R.id.ll_reject);
-        tvHungup = (TextView) findViewById(R.id.tv_hungup);
+        llHangup = (LinearLayout) findViewById(R.id.ll_reject);
+        tvHangup = (TextView) findViewById(R.id.tv_hungup);
         civPhotoUrl = (CircleImageView) findViewById(R.id.civ_photo);
-        tvNickName = (TextView) findViewById(R.id.tv_nickname);
-        tvCallNickName = (TextView) findViewById(R.id.tv_call_nickname);
-        tvNickName.setText(remoteUserInfo.getNickname());
-        tvCallNickName.setText(remoteUserInfo.getNickname());
+        tvNickname = (TextView) findViewById(R.id.tv_nickname);
+        tvCallNickname = (TextView) findViewById(R.id.tv_call_nickname);
+        tvNickname.setText(remoteUserInfo.getNickname());
+        tvCallNickname.setText(remoteUserInfo.getNickname());
         ImageManager.Load(remoteUserInfo.getFaceurl(), civPhotoUrl);
-        tvHungup.setText("取消");
+        tvHangup.setText("取消");
         llFlipCamera = (LinearLayout) findViewById(R.id.ll_filp_camera);
-
+        rlHidePlace = (RelativeLayout) findViewById(R.id.rl_can_hide_place);
         tvTime = (TextView) findViewById(R.id.tv_time);
 
         tvDimension = (TextView) findViewById(R.id.tv_dimensions);
@@ -370,20 +371,33 @@ public class CallingActivity extends AppCompatActivity {
 
         llCalled = (LinearLayout) findViewById(R.id.ll_call);
 
-        wvvBig = (WilddogVideoView) findViewById(R.id.wvv_big);
-        wvvSmall = (WilddogVideoView) findViewById(R.id.wvv_small);
+        wwvBig = (WilddogVideoView) findViewById(R.id.wvv_big);
+        wwvBig.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isAccept){
+                    if(isButtonHide){
+                        rlHidePlace.setVisibility(View.VISIBLE);
+                    }else {
+                        rlHidePlace.setVisibility(View.INVISIBLE);
+                    }
+                    isButtonHide = !isButtonHide;
+                }
+            }
+        });
+        wwvSmall = (WilddogVideoView) findViewById(R.id.wvv_small);
         // 两个surfaceview 重叠显示，会有一个不显示。设置此属性，让此控件放到窗口顶层
-        wvvSmall.setZOrderMediaOverlay(true);
+        wwvSmall.setZOrderMediaOverlay(true);
 
 
-        llData = (LinearLayout) findViewById(R.id.ll_data);
-        llData.setVisibility(View.INVISIBLE);
+        rlData = (RelativeLayout) findViewById(R.id.rl_data);
+        rlData.setVisibility(View.INVISIBLE);
         llState = (LinearLayout) findViewById(R.id.ll_state);
         tvRecordTime = (TextView) findViewById(R.id.tv_record_time);
 
         ivState = (ImageView) findViewById(R.id.iv_report);
         ivRecordFile = (ImageView) findViewById(R.id.iv_record);
-
+        ivRecordFile.setBackgroundResource(R.drawable.record_normal);
         ivFullScreen = (ImageView) findViewById(R.id.iv_fullscreen);
 
 
@@ -393,7 +407,7 @@ public class CallingActivity extends AppCompatActivity {
                 isShowDetail = !isShowDetail;
                 // 将图标隐藏，显示统计信息
                 llState.setVisibility(View.VISIBLE);
-                llData.setVisibility(View.INVISIBLE);
+                rlData.setVisibility(View.INVISIBLE);
 
 
             }
@@ -403,9 +417,8 @@ public class CallingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isShowDetail = !isShowDetail;
-
                 llState.setVisibility(View.INVISIBLE);
-                llData.setVisibility(View.VISIBLE);
+                rlData.setVisibility(View.VISIBLE);
             }
         });
 
@@ -418,7 +431,7 @@ public class CallingActivity extends AppCompatActivity {
                     ivRecordFile.setBackgroundResource(R.drawable.record_normal);
                     isrecording = false;
                     tvRecordTime.setVisibility(View.GONE);
-                    mConversation.stopLocalRecording();
+                    conversation.stopLocalRecording();
                     endRecordTime();
                     showSavePopupWindow();
                 } else {
@@ -429,7 +442,7 @@ public class CallingActivity extends AppCompatActivity {
                     //开始录制
                     ivRecordFile.setBackgroundResource(R.drawable.record_selected);
                     isrecording = true;
-                    mConversation.startLocalRecording(getRecordFile(), wvvSmall, wvvBig);
+                    conversation.startLocalRecording(getRecordFile(), wwvSmall, wwvBig);
                     tvRecordTime.setVisibility(View.VISIBLE);
                     recordTime = 0;
                     startRecordTime();
@@ -470,12 +483,12 @@ public class CallingActivity extends AppCompatActivity {
             }
         });
 
-        llHungup.setOnClickListener(new View.OnClickListener() {
+        llHangup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (mConversation != null) {
-                    mConversation.close();
+                if (conversation != null) {
+                    conversation.close();
                 }
                 stop();
                 release();
@@ -534,17 +547,17 @@ public class CallingActivity extends AppCompatActivity {
 
     }
     private void release() {
-        if (mConversation != null) {
-            mConversation.close();
+        if (conversation != null) {
+            conversation.close();
         }
         if (localStream != null && !localStream.isClosed()) {
             localStream.close();
         }
-        String localid = SharedPereferenceTool.getUserId(getApplicationContext());
-        ConversationRecord record = MyOpenHelper.getInstance().selectConversationRecord(localid, remoteid);
+        String localid = SharedPreferenceTool.getUserId(getApplicationContext());
+        ConversationRecord record = MyOpenHelper.getInstance().selectConversationRecord(localid, remoteId);
         if (record == null) {
             record = new ConversationRecord();
-            record.setRemoteId(remoteid);
+            record.setRemoteId(remoteId);
             record.setDuration(String.valueOf(conversationTime));
             record.setLocalId(localid);
             record.setNickName(remoteUserInfo.getNickname());
@@ -553,13 +566,13 @@ public class CallingActivity extends AppCompatActivity {
             MyOpenHelper.getInstance().insertRecord(record);
         } else {
             record = new ConversationRecord();
-            record.setRemoteId(remoteid);
+            record.setRemoteId(remoteId);
             record.setDuration(String.valueOf(conversationTime));
             record.setNickName(remoteUserInfo.getNickname());
             record.setPhotoUrl(remoteUserInfo.getFaceurl());
             record.setLocalId(localid);
             record.setTimeStamp(String.valueOf(System.currentTimeMillis()));
-            MyOpenHelper.getInstance().updateRecord(localid, remoteid, record);
+            MyOpenHelper.getInstance().updateRecord(localid, remoteId, record);
         }
 
     }
@@ -704,7 +717,7 @@ public class CallingActivity extends AppCompatActivity {
     private LocalStreamOptions genLocalStreamOptions() {
         LocalStreamOptions.Builder builder = new LocalStreamOptions.Builder();
         builder.captureAudio(true).captureVideo(true).dimension(LocalStreamOptions.Dimension.DIMENSION_720P).maxFps(30);
-        switch (SharedPereferenceTool.getDimension(CallingActivity.this)) {
+        switch (SharedPreferenceTool.getDimension(CallingActivity.this)) {
             case "360P":
                 builder.dimension(LocalStreamOptions.Dimension.DIMENSION_360P);
                 break;
@@ -744,13 +757,13 @@ public class CallingActivity extends AppCompatActivity {
 //        if (localStream != null && !localStream.isClosed()) {
 //            localStream.close();
 //        }
-        if (wvvBig != null) {
-            wvvBig.release();
-            wvvBig = null;
+        if (wwvBig != null) {
+            wwvBig.release();
+            wwvBig = null;
         }
-        if (wvvSmall != null) {
-            wvvSmall.release();
-            wvvSmall = null;
+        if (wwvSmall != null) {
+            wwvSmall.release();
+            wwvSmall = null;
         }
     }
 
@@ -790,12 +803,12 @@ public class CallingActivity extends AppCompatActivity {
 
     private void updateView() {
         localStream.detach();
-        StreamsHolder.getRemoteStream().attach(wvvBig);
-        wvvSmall.setVisibility(View.VISIBLE);
-        localStream.attach(wvvSmall);
+        StreamsHolder.getRemoteStream().attach(wwvBig);
+        wwvSmall.setVisibility(View.VISIBLE);
+        localStream.attach(wwvSmall);
         isSelfInBig = false;
         tvTime.setVisibility(View.VISIBLE);
-        mConversation.setStatsListener(statsListener);
+        conversation.setStatsListener(statsListener);
         startTimer();
     }
 

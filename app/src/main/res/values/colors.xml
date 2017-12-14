@@ -35,4 +35,6 @@
     <color name="colorWhite">#fff</color>
     <color name="colorMeetingTitleBar">#212121</color>
     <color name="transparent_background">#ff000000</color>
+    <color name="video_model_button_bg">#16171c</color>
+    <color name="video_model_video_bg">#1f2228</color>
 </resources>

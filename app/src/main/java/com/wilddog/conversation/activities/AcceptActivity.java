@@ -30,7 +30,7 @@ public class AcceptActivity extends AppCompatActivity {
 
     private LinearLayout llReject;
     private LinearLayout llAccept;
-    private Conversation mConversation;
+    private Conversation conversation;
     private CircleImageView civPhotoUrl;
 
     private BroadcastReceiver broadcastReceiver;
@@ -41,20 +41,20 @@ public class AcceptActivity extends AppCompatActivity {
         setContentView(R.layout.activity_accept);
 
         tvNickname = (TextView) findViewById(R.id.tv_nickname);
-         llAccept= (LinearLayout) findViewById(R.id.ll_accept);
+        llAccept = (LinearLayout) findViewById(R.id.ll_accept);
         llReject = (LinearLayout) findViewById(R.id.ll_reject);
         civPhotoUrl = (CircleImageView) findViewById(R.id.civ_photo);
 
 
         remoteUserInfo = (UserInfo) getIntent().getSerializableExtra("user");
-        mConversation = WilddogVideoManager.getConversation();
+        conversation = WilddogVideoManager.getConversation();
         tvNickname.setText(remoteUserInfo.getNickname());
-        ImageManager.Load(remoteUserInfo.getFaceurl(),civPhotoUrl);
-        broadcastReceiver = new InviteCancelBroadcastReceiver(){
+        ImageManager.Load(remoteUserInfo.getFaceurl(), civPhotoUrl);
+        broadcastReceiver = new InviteCancelBroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 super.onReceive(context, intent);
-                if(intent.getAction().equals(Constant.INVITE_CANCEL)){
+                if (intent.getAction().equals(Constant.INVITE_CANCEL)) {
                     finish();
                 }
             }
@@ -65,8 +65,8 @@ public class AcceptActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 接受 进入通话页
                 WilddogVideoManager.setWilddogUser(remoteUserInfo);
-                ParamsStore.isInitiativeCall =false;
-                Intent intent = new Intent(AcceptActivity.this,ConversationActivity.class);
+                ParamsStore.isInitiativeCall = false;
+                Intent intent = new Intent(AcceptActivity.this, ConversationActivity.class);
 //                intent.putExtra("user",remoteUserInfo);
                 startActivity(intent);
                 finish();
@@ -77,7 +77,7 @@ public class AcceptActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 拒绝
-                mConversation.reject();
+                conversation.reject();
                 finish();
             }
         });
@@ -88,8 +88,9 @@ public class AcceptActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(RingUtil.isRing){
-        RingUtil.stop();}
+        if (RingUtil.isRing) {
+            RingUtil.stop();
+        }
     }
 
     private void startRing() {
@@ -99,8 +100,8 @@ public class AcceptActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter intentFilter= new IntentFilter(Constant.INVITE_CANCEL);
-        registerReceiver(broadcastReceiver,intentFilter);
+        IntentFilter intentFilter = new IntentFilter(Constant.INVITE_CANCEL);
+        registerReceiver(broadcastReceiver, intentFilter);
     }
 
     @Override

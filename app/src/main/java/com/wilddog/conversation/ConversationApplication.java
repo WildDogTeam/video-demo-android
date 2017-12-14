@@ -77,6 +77,7 @@ public class ConversationApplication extends Application {
                 .build();
         ImageLoader.getInstance().init(config);
         WXUtil.initWeixin(this);
+        //初始化七牛云存储
     }
 
     public static Context getContext() {

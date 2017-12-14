@@ -9,7 +9,7 @@ import com.wilddog.conversation.bean.UserInfo;
  * Created by fly on 17-6-12.
  */
 
-public class SharedPereferenceTool {
+public class SharedPreferenceTool {
     private static SharedPreferences sp;
     private static final String FILE_NAME = "share_data";
 

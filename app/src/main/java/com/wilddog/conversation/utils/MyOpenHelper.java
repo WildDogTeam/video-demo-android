@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.wilddog.conversation.ConversationApplication;
-import com.wilddog.conversation.bean.BlackUser;
+import com.wilddog.conversation.bean.BlackListUser;
 import com.wilddog.conversation.bean.ConversationRecord;
 
 import java.util.ArrayList;
@@ -128,15 +128,15 @@ public class MyOpenHelper extends SQLiteOpenHelper {
     }
 
     //黑名单增加操作
-    public boolean insertBlackList(BlackUser blackUser)
+    public boolean insertBlackList(BlackListUser blackListUser)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("localid",blackUser.getLocalId());
-        cv.put("remoteid",blackUser.getRemoteId());
-        cv.put("nickname",blackUser.getNickName());
-        cv.put("photoUrl",blackUser.getFaceurl());
-        cv.put("timestamp",blackUser.getTimeStamp());
+        cv.put("localid", blackListUser.getLocalId());
+        cv.put("remoteid", blackListUser.getRemoteId());
+        cv.put("nickname", blackListUser.getNickName());
+        cv.put("photoUrl", blackListUser.getFaceurl());
+        cv.put("timestamp", blackListUser.getTimeStamp());
         long row = db.insert(blackListTableName, null, cv);
         return row > -1;
     }
@@ -154,20 +154,20 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         cursor.close();
         return list;
     }
-    public List<BlackUser> selectBlackUsers(String localId) {
+    public List<BlackListUser> selectBlackUsers(String localId) {
         SQLiteDatabase db = this.getReadableDatabase();
         List list=new ArrayList();
         Cursor cursor = db
                 .query(blackListTableName, null, "localid=?", new String[]{localId}, null, null, "timestamp desc",null);
         if(cursor!=null){
             while (cursor.moveToNext()){
-                BlackUser blackUser = new BlackUser();
-                blackUser.setLocalId(cursor.getString(cursor.getColumnIndex("localid")));
-                blackUser.setTimeStamp(cursor.getString(cursor.getColumnIndex("timestamp")));
-                blackUser.setRemoteId(cursor.getString(cursor.getColumnIndex("remoteid")));
-                blackUser.setNickName(cursor.getString(cursor.getColumnIndex("nickname")));
-                blackUser.setFaceurl(cursor.getString(cursor.getColumnIndex("photoUrl")));
-                list.add(blackUser);
+                BlackListUser blackListUser = new BlackListUser();
+                blackListUser.setLocalId(cursor.getString(cursor.getColumnIndex("localid")));
+                blackListUser.setTimeStamp(cursor.getString(cursor.getColumnIndex("timestamp")));
+                blackListUser.setRemoteId(cursor.getString(cursor.getColumnIndex("remoteid")));
+                blackListUser.setNickName(cursor.getString(cursor.getColumnIndex("nickname")));
+                blackListUser.setFaceurl(cursor.getString(cursor.getColumnIndex("photoUrl")));
+                list.add(blackListUser);
             }
         }
         cursor.close();
@@ -180,9 +180,9 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         return delete>0;
     }
 
-    public boolean deleteBlackUser(BlackUser blackUser) {
+    public boolean deleteBlackUser(BlackListUser blackListUser) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int delete = db.delete(blackListTableName, "remoteid =?", new String[]{blackUser.getRemoteId()});
+        int delete = db.delete(blackListTableName, "remoteid =?", new String[]{blackListUser.getRemoteId()});
         return delete>0;
     }
 }

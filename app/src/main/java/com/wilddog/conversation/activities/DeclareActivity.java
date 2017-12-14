@@ -11,22 +11,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class DeclarActivity extends AppCompatActivity {
+public class DeclareActivity extends AppCompatActivity {
 
-    private TextView content;
+    private TextView tvContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_declar);
-        content = (TextView) findViewById(R.id.tv_content);
+        setContentView(R.layout.activity_declare);
+        tvContent = (TextView) findViewById(R.id.tv_content);
 
-        String declarData = parseDeclarData();
+        String declareData = parseDeclareData();
 
-        content.setText(declarData);
+        tvContent.setText(declareData);
     }
 
-    private String parseDeclarData() {
+    private String parseDeclareData() {
         StringBuilder sb=new StringBuilder();
         InputStream inputStream = null;
         InputStreamReader reader = null;

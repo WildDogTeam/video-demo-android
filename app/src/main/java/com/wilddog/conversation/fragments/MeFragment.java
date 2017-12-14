@@ -13,7 +13,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.wilddog.conversation.activities.BlackUsersActivity;
+import com.wilddog.conversation.activities.BlacklistActivity;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.activities.LoginActivity;
@@ -23,7 +23,7 @@ import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.ObjectAndStringTool;
-import com.wilddog.conversation.utils.SharedPereferenceTool;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 
@@ -68,12 +68,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         llBlackList = (LinearLayout) view.findViewById(R.id.ll_blacklist);
 
         tvUid = (TextView) view.findViewById(R.id.tv_uid);
-        tvNickName = (TextView) view.findViewById(R.id.tv_nickName);
+        tvNickName = (TextView) view.findViewById(R.id.tv_nickname);
         civPhotoUrl = (CircleImageView) view.findViewById(R.id.civ_photo);
         tvDimension = (TextView) view.findViewById(R.id.tv_dimension);
-        tvBeautyPlan = (TextView) view.findViewById(R.id.tv_beauty_plan);
-        btnCopy = (TextView) view.findViewById(R.id.tv_copy);
-        btnCopy.setOnClickListener(this);
         llDimension.setOnClickListener(this);
         llBeautyPlan.setOnClickListener(this);
         llRecordFile.setOnClickListener(this);
@@ -90,21 +87,18 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void initDate() {
-        info = ObjectAndStringTool.getObjectFromJson(SharedPereferenceTool.getUserInfo(getContext()), UserInfo.class);
+        info = ObjectAndStringTool.getObjectFromJson(SharedPreferenceTool.getUserInfo(getContext()), UserInfo.class);
         tvUid.setText("ID:" + info.getUid());
         tvNickName.setText(info.getNickname());
         ImageManager.Load(info.getFaceurl(), civPhotoUrl);
-        tvDimension.setText(SharedPereferenceTool.getDimension(getContext()));
-        tvBeautyPlan.setText(SharedPereferenceTool.getBeautyPlan(getContext()));
+        tvDimension.setText(SharedPreferenceTool.getDimension(getContext()));
+        tvBeautyPlan.setText(SharedPreferenceTool.getBeautyPlan(getContext()));
     }
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_copy:
-                copyUid();
-                break;
             case R.id.ll_dimension:
                 setDimension();
                 break;
@@ -129,7 +123,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void gotoBlackUsersActivity() {
-        startActivity(new Intent(getContext(), BlackUsersActivity.class));
+        startActivity(new Intent(getContext(), BlacklistActivity.class));
     }
 
 
@@ -156,8 +150,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     private void loginout() {
         // 清理登录状态,将用户信息移除
         WilddogSyncManager.getWilddogSyncTool().removeUserInfo(info.getUid());
-        SharedPereferenceTool.setUserInfo(getContext(), "");
-        SharedPereferenceTool.setLoginStatus(getContext(), false);
+        SharedPreferenceTool.setUserInfo(getContext(), "");
+        SharedPreferenceTool.setLoginStatus(getContext(), false);
         startActivity(new Intent(getContext(), LoginActivity.class));
         getActivity().finish();
     }
@@ -257,12 +251,12 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void saveDimensionAndChangeUI(String dimension) {
-        SharedPereferenceTool.saveDimension(getContext(), dimension);
+        SharedPreferenceTool.saveDimension(getContext(), dimension);
         tvDimension.setText(dimension);
     }
 
     private void saveBeautyPlanAndChangeUI(String beautyPlan) {
-        SharedPereferenceTool.saveBeautyPlan(getContext(), beautyPlan);
+        SharedPreferenceTool.saveBeautyPlan(getContext(), beautyPlan);
         tvBeautyPlan.setText(beautyPlan);
     }
 
@@ -270,11 +264,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
-    }
-
-    private void copyUid() {
-        getClipboardManager().setText(SharedPereferenceTool.getUserId(getContext()));
-        AlertMessageUtil.showShortToast("复制成功");
     }
 
     private ClipboardManager getClipboardManager() {

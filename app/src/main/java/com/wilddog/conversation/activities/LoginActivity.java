@@ -18,7 +18,7 @@ import com.wilddog.conversation.utils.CollectionDeviceIdTool;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.ObjectAndStringTool;
 import com.wilddog.conversation.utils.PermissionHelper;
-import com.wilddog.conversation.utils.SharedPereferenceTool;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.utils.WXUtil;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 import com.wilddog.conversation.wilddog.WilddogAuthManager;
@@ -35,21 +35,21 @@ import java.util.Random;
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
 
-    private Button login;
+    private Button btnLogin;
 
 
     private static final int REQUEST_CODE = 0; // 请求码
 
     static final String[] PERMISSIONS = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    private TextView declar;
+    private TextView tvDeclare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        login = (Button) findViewById(R.id.btn_login);
-        declar = (TextView) findViewById(R.id.tv_declar);
-        login.setOnClickListener(new View.OnClickListener() {
+        btnLogin = (Button) findViewById(R.id.btn_login);
+        tvDeclare = (TextView) findViewById(R.id.tv_declare);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //点击登录
@@ -59,10 +59,10 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-        declar.setOnClickListener(new View.OnClickListener() {
+        tvDeclare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this,DeclarActivity.class);
+                Intent intent=new Intent(LoginActivity.this,DeclareActivity.class);
                 startActivity(intent);
             }
         });
@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
-        Log.e(TAG, "login: "+ Environment.getExternalStorageDirectory() );
+        Log.e(TAG, "btnLogin: "+ Environment.getExternalStorageDirectory() );
         AlertMessageUtil.showprogressbar("微信登录中", LoginActivity.this);
        loginWithAnonymously();
         //   weixinLogin();
@@ -122,16 +122,18 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     // 成功
                     WilddogUser user = task.getResult().getWilddogUser();
-                    SharedPereferenceTool.saveUserId(LoginActivity.this, user.getUid());
+                    SharedPreferenceTool.saveUserId(LoginActivity.this, user.getUid());
                     UserInfo info = new UserInfo();
                     Random r = new Random();
-                    info.setNickname("Android" + (r.nextInt(999999)+1));
+                    int num = r.nextInt(999999)+1;
+                    info.setNickname("Android" + num);
+                    int photoNum = num%20+1;
                     info.setUid(user.getUid());
-                    info.setFaceurl("https://img.wdstatic.cn/imdemo/1.png");
+                    info.setFaceurl("https://img.wdstatic.cn/video-demo/Head"+photoNum+".png");
                     info.setDeviceid(CollectionDeviceIdTool.getDeviceId());
                     WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(info);
-                    SharedPereferenceTool.setUserInfo(LoginActivity.this, ObjectAndStringTool.getJsonFromObject(info));
-                    SharedPereferenceTool.setLoginStatus(LoginActivity.this, true);
+                    SharedPreferenceTool.setUserInfo(LoginActivity.this, ObjectAndStringTool.getJsonFromObject(info));
+                    SharedPreferenceTool.setLoginStatus(LoginActivity.this, true);
                     //TODO 需要记下所有的登录的用户的uid和昵称等用于推送
                     AlertMessageUtil.showShortToast("登录成功");
                     Constant.isLoginClickable = true;

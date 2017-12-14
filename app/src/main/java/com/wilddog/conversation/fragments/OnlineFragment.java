@@ -25,14 +25,13 @@ import com.wilddog.client.WilddogSync;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.activities.DetailInfoActivity;
 import com.wilddog.conversation.activities.JoinRoomActivity;
-import com.wilddog.conversation.activities.SendInviteActivity;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.MyOpenHelper;
 import com.wilddog.conversation.utils.PingYinUtil;
 import com.wilddog.conversation.utils.PinyinComparator;
-import com.wilddog.conversation.utils.SharedPereferenceTool;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.view.SideBar;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
@@ -50,7 +49,7 @@ import java.util.UUID;
 
 public class OnlineFragment extends BaseFragment {
 
-    private ImageView ivInvite;
+    private ImageView ivJoinRoom;
     private ListView lvUserList;
     private RelativeLayout rlNoUser;
     private RelativeLayout rlListView;
@@ -173,7 +172,7 @@ public class OnlineFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_online,null);
         sideBarView = (SideBar) view.findViewById(R.id.sideBar);
         rlListView = (RelativeLayout) view.findViewById(R.id.rl_listview);
-        ivInvite = (ImageView) view.findViewById(R.id.iv_invite);
+        ivJoinRoom = (ImageView) view.findViewById(R.id.iv_join_room);
         mDialogText = (TextView) LayoutInflater.from(getActivity()).inflate(
                 R.layout.list_position, null);
         mDialogText.setVisibility(View.INVISIBLE);
@@ -181,10 +180,10 @@ public class OnlineFragment extends BaseFragment {
         lvUserList = (ListView) view.findViewById(R.id.lv_records);
         sideBarView.setListView(lvUserList);
         rlNoUser = (RelativeLayout) view.findViewById(R.id.rl_no_user);
-        ivInvite.setOnClickListener(new View.OnClickListener() {
+        ivJoinRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoSendInviteActivity();
+                gotoJoinRoomActivity();
             }
         });
         showListViewOrTextView();
@@ -200,15 +199,12 @@ public class OnlineFragment extends BaseFragment {
     }
 
     private void gotoCallingAcivity(UserInfo info) {
-//
-//        Intent intent = new Intent(getContext(), CallingActivity.class);
-//        startActivity(intent);
         Intent intent = new Intent(getContext(), DetailInfoActivity.class);
         intent.putExtra("user",info);
         startActivity(intent);
     }
 
-    private void gotoSendInviteActivity(){
+    private void gotoJoinRoomActivity(){
         startActivity(new Intent(getContext(), JoinRoomActivity.class));
     }
 
@@ -226,7 +222,7 @@ public class OnlineFragment extends BaseFragment {
             @Override
             public void run() {
                 mRef = WilddogSync.getInstance().getReference();
-                mUid = SharedPereferenceTool.getUserId(getContext());
+                mUid = SharedPreferenceTool.getUserId(getContext());
                 blackUserIDs=MyOpenHelper.getInstance().selectBlackIds(mUid);
                 if(userList.size()>0){
                     userList.clear();

@@ -21,7 +21,7 @@ import com.wilddog.conversation.bean.ConversationRecord;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.ImageManager;
 import com.wilddog.conversation.utils.MyOpenHelper;
-import com.wilddog.conversation.utils.SharedPereferenceTool;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.utils.String2DateUtil;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
@@ -116,7 +116,7 @@ public class CallFragment extends BaseFragment {
         if (records.size() > 0) {
             records.clear();
         }
-        records.addAll(MyOpenHelper.getInstance().selectConversationRecords(SharedPereferenceTool.getUserId(getContext())));
+        records.addAll(MyOpenHelper.getInstance().selectConversationRecords(SharedPreferenceTool.getUserId(getContext())));
         adapter.notifyDataSetChanged();
         showListViewOrTextView();
     }
@@ -164,7 +164,7 @@ public class CallFragment extends BaseFragment {
             ConversationRecord everyone = mList.get(position);
             v.tvNickName.setText(everyone.getNickName());
             v.tvCallTime.setText(String2DateUtil.getStandardDate(everyone.getTimeStamp()));
-            v.tvDuration.setText(formatTime(everyone.getDuration()));
+            v.tvDuration.setText("通话时长:"+formatTime(everyone.getDuration()));
             ImageManager.Load(everyone.getPhotoUrl(), v.civPhoto);
             return view;
         }

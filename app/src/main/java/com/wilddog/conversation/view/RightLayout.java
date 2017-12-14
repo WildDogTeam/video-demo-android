@@ -21,7 +21,7 @@ import com.wilddog.conversation.adapters.ChatListAdapter;
 import com.wilddog.conversation.bean.Chat;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.ObjectAndStringTool;
-import com.wilddog.conversation.utils.SharedPereferenceTool;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 
 
 public class RightLayout extends RelativeLayout {
@@ -51,7 +51,7 @@ public class RightLayout extends RelativeLayout {
         this.context = context;
         LayoutInflater.from(context).inflate(R.layout.right, this);
         setupUsername();
-        String roomId = SharedPereferenceTool.getRoomId(context);
+        String roomId = SharedPreferenceTool.getRoomId(context);
         lvChat = (ListView) findViewById(R.id.lv_chat);
         inputText = (EditText) findViewById(R.id.et_msg);
         send = (Button) findViewById(R.id.btn_send);
@@ -95,8 +95,8 @@ public class RightLayout extends RelativeLayout {
     }
 
     private void setupUsername() {
-        mUserId = SharedPereferenceTool.getUserId(context);
-        UserInfo info = ObjectAndStringTool.getObjectFromJson(SharedPereferenceTool.getUserInfo(getContext()), UserInfo.class);
+        mUserId = SharedPreferenceTool.getUserId(context);
+        UserInfo info = ObjectAndStringTool.getObjectFromJson(SharedPreferenceTool.getUserInfo(getContext()), UserInfo.class);
         userName = info.getNickname();
     }
     private void sendMessage() {
