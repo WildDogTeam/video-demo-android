@@ -44,7 +44,7 @@ public class MyGridViewAdapter extends BaseAdapter {
         ViewHolder holder;
         StreamHolder streamHolder = list.get(i);
         if (view == null) {
-            view = View.inflate(context, R.layout.listitem_video, null);
+            view = View.inflate(context, R.layout.item_video, null);
 
             holder = new ViewHolder();
             holder.wilddogVideoView = (WilddogVideoView) view.findViewById(R.id.wvv_video);

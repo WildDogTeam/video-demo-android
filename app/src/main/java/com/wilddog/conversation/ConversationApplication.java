@@ -17,6 +17,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.wilddog.conversation.utils.Constant;
 import com.wilddog.conversation.utils.WXUtil;
+import com.wilddog.toolbar.util.QiniuUtil;
 
 import io.fabric.sdk.android.Fabric;
 import org.lasque.tusdk.core.TuSdk;
@@ -78,6 +79,7 @@ public class ConversationApplication extends Application {
         ImageLoader.getInstance().init(config);
         WXUtil.initWeixin(this);
         //初始化七牛云存储
+        QiniuUtil.getInstance().init();
     }
 
     public static Context getContext() {

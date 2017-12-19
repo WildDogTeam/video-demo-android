@@ -68,11 +68,11 @@ public class CallingActivity extends AppCompatActivity {
     private CheckBox cbSpeaker;
     private CheckBox cbCamera;
     private LinearLayout llHangup;
+    private LinearLayout llCancel;
     private TextView tvHangup;
+    private TextView tvCancel;
     private LinearLayout llFlipCamera;
-
     private CircleImageView civPhotoUrl;
-
     private TextView tvDimension;
     private TextView tvFps;
     private TextView tvRate;
@@ -85,7 +85,6 @@ public class CallingActivity extends AppCompatActivity {
     private RelativeLayout rlHidePlace;
     private WilddogVideoView wwvBig;
     private WilddogVideoView wwvSmall;
-
 
     private RelativeLayout rlData;
     private LinearLayout llState;
@@ -163,7 +162,6 @@ public class CallingActivity extends AppCompatActivity {
             conversation.setConversationListener(listener);
             localStream=StreamsHolder.getLocalStream();
             llCalled.setVisibility(View.INVISIBLE);
-            tvHangup.setText("挂断");
             rlData.setVisibility(View.VISIBLE);
         }
 
@@ -173,7 +171,7 @@ public class CallingActivity extends AppCompatActivity {
         RingUtil.paly(true, ConversationApplication.getContext().getApplicationContext());
     }
 
-    private void stop(){
+    private void stopRing(){
         if(RingUtil.isRing){
         RingUtil.stop();}
     }
@@ -207,7 +205,6 @@ public class CallingActivity extends AppCompatActivity {
 
         @Override
         public void onRemoteStreamStatsReport(RemoteStreamStatsReport remoteStreamStatsReport) {
-
             if (!isSelfInBig) {
                 showStats(null, remoteStreamStatsReport);
             }
@@ -244,7 +241,6 @@ public class CallingActivity extends AppCompatActivity {
     }
 
     private String convertToMB(BigInteger value) {
-
         float result = new BigDecimal(value.toString()).divide(new BigDecimal(new String ("1048576")),2,BigDecimal.ROUND_HALF_UP).floatValue();
         return decimalFormat.format(result);
     }
@@ -258,25 +254,25 @@ public class CallingActivity extends AppCompatActivity {
                 public void run() {
                     switch (callStatus) {
                         case ACCEPTED:
-                            stop();
+                            stopRing();
                             llCalled.setVisibility(View.INVISIBLE);
-                            tvHangup.setText("挂断");
+                            rlHidePlace.setVisibility(View.VISIBLE);
                             rlData.setVisibility(View.VISIBLE);
                             ParamsStore.isInitiativeCall =true;
                             isAccept = true;
                             break;
                         case REJECTED:
-                            stop();
+                            stopRing();
                             AlertMessageUtil.showShortToast("对方拒绝邀请");
                             finish();
                             break;
                         case BUSY:
-                            stop();
+                            stopRing();
                             AlertMessageUtil.showShortToast("对方在通话中，请稍后");
                             finish();
                             break;
                         case TIMEOUT:
-                            stop();
+                            stopRing();
                             AlertMessageUtil.showShortToast("呼叫超时,请稍后重试");
                             finish();
                             break;
@@ -293,11 +289,6 @@ public class CallingActivity extends AppCompatActivity {
             //有参与者成功加入会话后，会触发此方法
             //设置音视频全部开启
             StreamsHolder.setRemoteStream(remoteStream);
-//            StreamsHolder.setRemoteStream(remoteStream);
-//
-//            Intent intent = new Intent();
-//            intent.setAction(Constant.UPDATE_VIEW);
-//            sendBroadcast(intent);
             remoteStream.enableAudio(true);
             remoteStream.enableVideo(true);
             //在视频展示控件中播放其他端媒体流
@@ -325,7 +316,6 @@ public class CallingActivity extends AppCompatActivity {
             if(StreamsHolder.getMyBinder().isWindowShow())
                 StreamsHolder.getMyBinder().hidFloatingWindow();
             release();
-            finish();
         }
 
         @Override
@@ -352,14 +342,16 @@ public class CallingActivity extends AppCompatActivity {
         cbCamera = (CheckBox) findViewById(R.id.cb_camera);
         cbCamera.setChecked(isVideoEnable);
         llHangup = (LinearLayout) findViewById(R.id.ll_reject);
+        llCancel = (LinearLayout) findViewById(R.id.ll_cancel);
         tvHangup = (TextView) findViewById(R.id.tv_hungup);
+        tvCancel = (TextView) findViewById(R.id.tv_cancel);
         civPhotoUrl = (CircleImageView) findViewById(R.id.civ_photo);
         tvNickname = (TextView) findViewById(R.id.tv_nickname);
         tvCallNickname = (TextView) findViewById(R.id.tv_call_nickname);
         tvNickname.setText(remoteUserInfo.getNickname());
         tvCallNickname.setText(remoteUserInfo.getNickname());
         ImageManager.Load(remoteUserInfo.getFaceurl(), civPhotoUrl);
-        tvHangup.setText("取消");
+
         llFlipCamera = (LinearLayout) findViewById(R.id.ll_filp_camera);
         rlHidePlace = (RelativeLayout) findViewById(R.id.rl_can_hide_place);
         tvTime = (TextView) findViewById(R.id.tv_time);
@@ -370,7 +362,8 @@ public class CallingActivity extends AppCompatActivity {
         tvByte = (TextView) findViewById(R.id.tv_bytes);
 
         llCalled = (LinearLayout) findViewById(R.id.ll_call);
-
+        llCalled.setVisibility(View.VISIBLE);
+        rlHidePlace.setVisibility(View.GONE);
         wwvBig = (WilddogVideoView) findViewById(R.id.wvv_big);
         wwvBig.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -389,7 +382,6 @@ public class CallingActivity extends AppCompatActivity {
         // 两个surfaceview 重叠显示，会有一个不显示。设置此属性，让此控件放到窗口顶层
         wwvSmall.setZOrderMediaOverlay(true);
 
-
         rlData = (RelativeLayout) findViewById(R.id.rl_data);
         rlData.setVisibility(View.INVISIBLE);
         llState = (LinearLayout) findViewById(R.id.ll_state);
@@ -399,7 +391,6 @@ public class CallingActivity extends AppCompatActivity {
         ivRecordFile = (ImageView) findViewById(R.id.iv_record);
         ivRecordFile.setBackgroundResource(R.drawable.record_normal);
         ivFullScreen = (ImageView) findViewById(R.id.iv_fullscreen);
-
 
         ivState.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -490,9 +481,19 @@ public class CallingActivity extends AppCompatActivity {
                 if (conversation != null) {
                     conversation.close();
                 }
-                stop();
+                stopRing();
                 release();
-                finish();
+            }
+        });
+        llCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (conversation != null) {
+                    conversation.close();
+                }
+                stopRing();
+                release();
             }
         });
         llFlipCamera.setOnClickListener(new View.OnClickListener() {
@@ -534,15 +535,10 @@ public class CallingActivity extends AppCompatActivity {
 
     private void showFloatingWindow() {
         moveTaskToBack(false);
-
         StreamsHolder.getLocalStream().detach();
         StreamsHolder.getRemoteStream().detach();
-
         StreamsHolder.getMyBinder().showFloatingWindow();
-
         storeInstanceState();
-
-
         finish();
 
     }
@@ -574,7 +570,7 @@ public class CallingActivity extends AppCompatActivity {
             record.setTimeStamp(String.valueOf(System.currentTimeMillis()));
             MyOpenHelper.getInstance().updateRecord(localid, remoteId, record);
         }
-
+        finish();
     }
     private void storeInstanceState() {
         ParamsStore.preconverstationTime =conversationTime;
@@ -629,11 +625,11 @@ public class CallingActivity extends AppCompatActivity {
     private File getRecordFile() {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "wilddog");
         if (!file.exists()) {
-            boolean a = file.mkdirs();
+            file.mkdirs();
         }
         File videoFile = new File(file, "wilddog-" + System.currentTimeMillis() + ".mp4");
         try {
-            boolean b = videoFile.createNewFile();
+            videoFile.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -718,6 +714,12 @@ public class CallingActivity extends AppCompatActivity {
         LocalStreamOptions.Builder builder = new LocalStreamOptions.Builder();
         builder.captureAudio(true).captureVideo(true).dimension(LocalStreamOptions.Dimension.DIMENSION_720P).maxFps(30);
         switch (SharedPreferenceTool.getDimension(CallingActivity.this)) {
+            case "120P":
+                builder.dimension(LocalStreamOptions.Dimension.DIMENSION_120P);
+                break;
+            case "240P":
+                builder.dimension(LocalStreamOptions.Dimension.DIMENSION_240P);
+                break;
             case "360P":
                 builder.dimension(LocalStreamOptions.Dimension.DIMENSION_360P);
                 break;
@@ -741,7 +743,6 @@ public class CallingActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         release();
-        finish();
     }
 
     @Override
@@ -770,7 +771,6 @@ public class CallingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         if (StreamsHolder.getMyBinder().isWindowShow()) {
             StreamsHolder.getMyBinder().hidFloatingWindow();
             conversationTime=(System.currentTimeMillis()-ParamsStore.precurrentTime)/1000+ParamsStore.preconverstationTime;

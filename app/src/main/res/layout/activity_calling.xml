@@ -61,7 +61,7 @@
                     android:layout_marginRight="7dp"
                     android:textColor="@color/text_color_white"
                     android:textSize="12sp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     />
                 <ImageView
                     android:layout_marginTop="20dp"
@@ -71,9 +71,9 @@
                     />
             </LinearLayout>
             <ImageView
-                android:layout_marginTop="20dp"
-                android:layout_width="33dp"
-                android:layout_height="33dp"
+                android:layout_marginTop="25dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/ll_record_icon_and_time"
                 android:id="@+id/iv_fullscreen"
@@ -314,9 +314,9 @@
         android:id="@+id/ll_call"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/callbg"
+        android:background="@android:color/transparent"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.wilddog.conversation.view.CircleImageView
             android:id="@+id/civ_photo"
@@ -346,6 +346,33 @@
             android:text="等待对方接受邀请"
             android:textColor="@color/text_color_white"
             android:textSize="14.7sp" />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:id="@+id/ll_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="307dp"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:src="@drawable/reject" />
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/text_color_white" />
+        </LinearLayout>
     </LinearLayout>
 
 

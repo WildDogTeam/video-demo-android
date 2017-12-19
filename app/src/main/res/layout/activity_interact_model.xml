@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1f2228"
     >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -97,7 +98,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:background="#2E2E2E"
+                    android:background="@drawable/interact_model_show_bg"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_height="match_parent">
                     <TextView
                         android:id="@+id/room_num"
@@ -109,16 +112,11 @@
                         android:textSize="10sp"
                         />
                     <include layout="@layout/small_window_layout"/>
-                  <!--  <ListView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/lv_videos"
-                        ></ListView>-->
                 </LinearLayout>
                 <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="46dp"
-                    android:src="@drawable/hide"
+                    android:layout_width="6dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/hide"
                     android:id="@+id/iv_show"
                     android:layout_gravity="center"
                     />

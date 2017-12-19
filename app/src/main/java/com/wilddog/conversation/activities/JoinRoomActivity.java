@@ -78,7 +78,7 @@ public class JoinRoomActivity extends AppCompatActivity {
     private void join() {
         final String roomId = etRoomId.getText().toString().trim();
         if (TextUtils.isEmpty(roomId)) {
-            Toast.makeText(JoinRoomActivity.this, "房间号不能为空!", Toast.LENGTH_SHORT).show();
+            AlertMessageUtil.showShortToast("房间号不能为空!");
             return;
         }
         WilddogSyncManager.getWilddogSyncTool().writeServerTimeStamp(roomId, new Callback<Boolean>() {

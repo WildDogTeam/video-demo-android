@@ -33,7 +33,6 @@ import com.wilddog.conversation.wilddog.WilddogSyncManager;
 
 public class MeFragment extends BaseFragment implements View.OnClickListener {
     private TextView tvUid;
-    private TextView btnCopy;
     private TextView tvDimension;
     private TextView tvBeautyPlan;
     private TextView tvNickName;
@@ -68,6 +67,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
         llBlackList = (LinearLayout) view.findViewById(R.id.ll_blacklist);
 
         tvUid = (TextView) view.findViewById(R.id.tv_uid);
+        tvBeautyPlan = (TextView) view.findViewById(R.id.tv_beauty_plan);
         tvNickName = (TextView) view.findViewById(R.id.tv_nickname);
         civPhotoUrl = (CircleImageView) view.findViewById(R.id.civ_photo);
         tvDimension = (TextView) view.findViewById(R.id.tv_dimension);
@@ -158,11 +158,27 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
 
     private void setDimension() {
         View view = View.inflate(getContext(), R.layout.popupwindow_dimension, null);
+        TextView tvDimension120P = (TextView) view.findViewById(R.id.tv_dimesion_120P);
+        TextView tvDimension240P = (TextView) view.findViewById(R.id.tv_dimesion_240P);
         TextView tvDimension360P = (TextView) view.findViewById(R.id.tv_dimesion_360P);
         TextView tvDimension480P = (TextView) view.findViewById(R.id.tv_dimesion_480P);
         TextView tvDimension720P = (TextView) view.findViewById(R.id.tv_dimension_720P);
         TextView tvDimension1080P = (TextView) view.findViewById(R.id.tv_dimesion_1080P);
         TextView tvDimensionCancel = (TextView) view.findViewById(R.id.tv_cancel);
+        tvDimension120P.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveDimensionAndChangeUI(getString(R.string.dimension_120P));
+                popupWindowDismiss();
+            }
+        });
+        tvDimension240P.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveDimensionAndChangeUI(getString(R.string.dimension_240P));
+                popupWindowDismiss();
+            }
+        });
         tvDimension360P.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

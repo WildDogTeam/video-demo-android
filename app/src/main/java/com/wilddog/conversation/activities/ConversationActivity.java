@@ -256,7 +256,6 @@ public class ConversationActivity extends AppCompatActivity {
 
     private void initView() {
         rlParent = (RelativeLayout) findViewById(R.id.rl_parent);
-
         cbMic = (CheckBox) findViewById(R.id.cb_mic);
         cbMic.setChecked(isAudioEnable);
         cbSpeaker = (CheckBox) findViewById(R.id.cb_speaker);
@@ -292,12 +291,6 @@ public class ConversationActivity extends AppCompatActivity {
         });
         wwvSmall = (WilddogVideoView) findViewById(R.id.wvv_small);
         wwvSmall.setZOrderMediaOverlay(true);
-        wwvSmall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         rlData = (RelativeLayout) findViewById(R.id.rl_data);
         llState = (LinearLayout) findViewById(R.id.ll_state);
         tvRecordTime = (TextView) findViewById(R.id.tv_record_time);
@@ -441,14 +434,9 @@ public class ConversationActivity extends AppCompatActivity {
         moveTaskToBack(false);
         StreamsHolder.getLocalStream().detach();
         StreamsHolder.getRemoteStream().detach();
-
         StreamsHolder.getMyBinder().showFloatingWindow();
-
         storeInstanceState();
-
-
         finish();
-
     }
 
     private void storeInstanceState() {
@@ -591,6 +579,12 @@ public class ConversationActivity extends AppCompatActivity {
     private LocalStreamOptions genLocalStreamOptions() {
         LocalStreamOptions.Builder builder = new LocalStreamOptions.Builder();
         switch (SharedPreferenceTool.getDimension(ConversationActivity.this)) {
+            case "120P":
+                builder.dimension(LocalStreamOptions.Dimension.DIMENSION_120P);
+                break;
+            case "240P":
+                builder.dimension(LocalStreamOptions.Dimension.DIMENSION_240P);
+                break;
             case "360P":
                 builder.dimension(LocalStreamOptions.Dimension.DIMENSION_360P);
                 break;

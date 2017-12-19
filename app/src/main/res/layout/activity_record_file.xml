@@ -31,17 +31,42 @@
             android:textSize="@dimen/title_text_size"
             android:textColor="@color/item_background" />
     </RelativeLayout>
-<ListView
-    android:layout_marginTop="14dp"
-    android:footerDividersEnabled="true"
-    android:headerDividersEnabled="true"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/lv_record_file"
-    android:divider="@drawable/listview_record_line_style"
-    android:dividerHeight="0.5dp"
-    android:visibility="visible"
-    />
+    <RelativeLayout
+        android:id="@+id/rl_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="14.7dp"
+                android:background="@color/line_color" />
+
+            <ListView
+                android:layout_marginTop="14dp"
+                android:footerDividersEnabled="true"
+                android:headerDividersEnabled="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lv_record_file"
+                android:divider="@drawable/listview_record_line_style"
+                android:dividerHeight="0.5dp"
+                android:visibility="visible"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/line_color" />
+        </LinearLayout>
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rl_no_file"
         android:layout_width="match_parent"

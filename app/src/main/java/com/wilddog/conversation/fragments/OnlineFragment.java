@@ -174,7 +174,7 @@ public class OnlineFragment extends BaseFragment {
         rlListView = (RelativeLayout) view.findViewById(R.id.rl_listview);
         ivJoinRoom = (ImageView) view.findViewById(R.id.iv_join_room);
         mDialogText = (TextView) LayoutInflater.from(getActivity()).inflate(
-                R.layout.list_position, null);
+                R.layout.item_position, null);
         mDialogText.setVisibility(View.INVISIBLE);
         sideBarView.setTextView(mDialogText);
         lvUserList = (ListView) view.findViewById(R.id.lv_records);

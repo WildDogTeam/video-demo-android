@@ -37,6 +37,7 @@ public class RecordFileActivity extends AppCompatActivity {
     private File file;
     private File[] recordFiles;
     private RelativeLayout rlNoRecord;
+    private RelativeLayout rlListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,9 @@ public class RecordFileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_record_file);
         ivCancel = (ImageView) findViewById(R.id.iv_cancel);
         lvRecordFile = (ListView) findViewById(R.id.lv_record_file);
+
         rlNoRecord = (RelativeLayout) findViewById(R.id.rl_no_file);
+        rlListView = (RelativeLayout) findViewById(R.id.rl_listview);
         ivCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,10 +72,10 @@ public class RecordFileActivity extends AppCompatActivity {
     private void initData() {
         if (recordFiles == null || recordFiles.length <= 0) {
             rlNoRecord.setVisibility(View.VISIBLE);
-            lvRecordFile.setVisibility(View.GONE);
+            rlListView.setVisibility(View.GONE);
             return;
         }
-        lvRecordFile.setVisibility(View.VISIBLE);
+        rlListView.setVisibility(View.VISIBLE);
         rlNoRecord.setVisibility(View.GONE);
         for (File file : recordFiles) {
             if (file.getName().endsWith(".mp4")) {
@@ -122,7 +125,7 @@ public class RecordFileActivity extends AppCompatActivity {
         public View getView(final int i, View view, ViewGroup viewGroup) {
             MyAdapter.ViewHolder v;
             if (view == null) {
-                view = mInflater.inflate(R.layout.list_record_file_item, null);
+                view = mInflater.inflate(R.layout.item_record_file, null);
                 v = new MyAdapter.ViewHolder();
                 v.llRecord = (LinearLayout) view.findViewById(R.id.ll_record);
                 v.fileName = (TextView) view.findViewById(R.id.widget_channel_name);
@@ -145,10 +148,10 @@ public class RecordFileActivity extends AppCompatActivity {
                     notifyDataSetChanged();
                     if(mList.size()==0){
                         rlNoRecord.setVisibility(View.VISIBLE);
-                        lvRecordFile.setVisibility(View.GONE);
+                        rlListView.setVisibility(View.GONE);
                     }else {
                         lvRecordFile.setVisibility(View.VISIBLE);
-                        rlNoRecord.setVisibility(View.GONE);
+                        rlListView.setVisibility(View.GONE);
                     }
 
                 }

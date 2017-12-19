@@ -18,6 +18,8 @@
     <string name="dimension_720P">720P</string>
     <string name="dimension_480P">480P</string>
     <string name="dimension_360P">360P</string>
+    <string name="dimension_240P">240P</string>
+    <string name="dimension_120P">120P</string>
     <string name="change_dimension">切换清晰度</string>
     <string name="change_beauty_plan">切换美颜方案</string>
     <string name="beauty_plan_Camera360">Camera360</string>

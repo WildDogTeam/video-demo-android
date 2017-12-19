@@ -16,7 +16,25 @@
             style="@style/DialogItemStyle"
             android:layout_width="match_parent"
             android:text="@string/change_dimension" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_color" />
 
+        <TextView
+            android:id="@+id/tv_dimesion_120P"
+            style="@style/DialogItemStyle"
+            android:layout_width="match_parent"
+            android:text="@string/dimension_120P" /><View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/line_color" />
+
+        <TextView
+            android:id="@+id/tv_dimesion_240P"
+            style="@style/DialogItemStyle"
+            android:layout_width="match_parent"
+            android:text="@string/dimension_240P" />
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"

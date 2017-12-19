@@ -52,7 +52,7 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/rl_no_history"
+        android:id="@+id/rl_no_friend"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -65,7 +65,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="102dp"
             android:gravity="center"
-            android:src="@drawable/no_call" />
+            android:src="@drawable/no_friends" />
 
         <TextView
             android:id="@+id/tv_no_user"
@@ -74,7 +74,7 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="28dp"
             android:gravity="center"
-            android:text="暂无通话记录"
+            android:text="暂无好友"
             android:textColor="@color/text_color"
             android:textSize="15sp" />
     </RelativeLayout>

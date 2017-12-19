@@ -22,7 +22,7 @@ import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.floatingwindow.StreamsHolder;
 import com.wilddog.conversation.floatingwindow.WindowService;
-import com.wilddog.conversation.fragments.CallFragment;
+import com.wilddog.conversation.fragments.FriendsFragment;
 import com.wilddog.conversation.fragments.MeFragment;
 import com.wilddog.conversation.fragments.OnlineFragment;
 import com.wilddog.conversation.utils.AlertMessageUtil;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup rgMain;
     private Fragment onlineFragment = new OnlineFragment();
     private Fragment meFragment = new MeFragment();
-    private Fragment callFragment = new CallFragment();
+    private Fragment callFragment = new FriendsFragment();
     private boolean iscancel =true;
     private WilddogVideoCall video;
     private WindowService.MyBinder mybinder;

@@ -268,9 +268,9 @@ public class InteractModelActivity extends AppCompatActivity implements View.OnC
         localStream = LocalStream.create(options);
         localStream.enableAudio(isAudioEnable);
         localStream.enableVideo(true);
-        /*localStream.attach(localView);*/
-        StreamHolder holder = new StreamHolder(true,System.currentTimeMillis(),localStream);
-        streamHolders.add(holder);
+        localStream.attach(localView);
+        /*StreamHolder holder = new StreamHolder(true,System.currentTimeMillis(),localStream);
+        streamHolders.add(holder);*/
         localStream.attach(localViewIn);
 
     }

@@ -507,6 +507,7 @@ public class ToolBarOption implements View.OnClickListener, OnObjectListener {
                             mBoardView.addObject(wilddogBoardObject);
                         } else {
                             Log.i("qiniu", "Upload Fail");
+                            Log.e("qiniu",info.error);
                         }
                     }
                 }, null);

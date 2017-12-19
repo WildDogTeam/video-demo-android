@@ -261,7 +261,7 @@
             android:id="@+id/iv_hide"
             android:layout_width="8dp"
             android:layout_height="46dp"
-            android:background="@drawable/division"
+            android:background="@drawable/hide"
             />
 
     </LinearLayout>

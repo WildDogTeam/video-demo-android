@@ -44,7 +44,7 @@ public class VideosAdapter extends BaseAdapter{
         ViewHolder holder;
         StreamHolder streamHolder = mlist.get(i);
         if (view == null) {
-            view = View.inflate(mContext, R.layout.listitem_video, null);
+            view = View.inflate(mContext, R.layout.item_video, null);
             holder = new ViewHolder();
             holder.wilddogVideoView = (WilddogVideoView) view.findViewById(R.id.wvv_video);
             view.setTag(holder);

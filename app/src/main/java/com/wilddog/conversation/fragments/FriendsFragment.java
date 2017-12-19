@@ -35,23 +35,23 @@ import java.util.Map;
  * Created by fly on 17-6-9.
  */
 
-public class CallFragment extends BaseFragment {
+public class FriendsFragment extends BaseFragment {
     private RelativeLayout rlListView;
     private ListView lvRecordList;
     private List<ConversationRecord> records = new ArrayList<>();
     private MyAdapter adapter;
     private RelativeLayout rlNoHistory;
 
-    public CallFragment() {
+    public FriendsFragment() {
 
     }
 
     @Override
     public View initView(LayoutInflater inflater) {
-        View view = inflater.inflate(R.layout.fragment_call_history, null);
+        View view = inflater.inflate(R.layout.fragment_friends, null);
         rlListView = (RelativeLayout) view.findViewById(R.id.rl_listview);
         lvRecordList = (ListView) view.findViewById(R.id.lv_records);
-        rlNoHistory = (RelativeLayout) view.findViewById(R.id.rl_no_history);
+        rlNoHistory = (RelativeLayout) view.findViewById(R.id.rl_no_friend);
         adapter = new MyAdapter(records, getContext());
         lvRecordList.setAdapter(adapter);
         lvRecordList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -151,7 +151,7 @@ public class CallFragment extends BaseFragment {
         public View getView(final int position, View view, ViewGroup viewGroup) {
             ViewHolder v;
             if (view == null) {
-                view = mInflater.inflate(R.layout.item_recent_call, null);
+                view = mInflater.inflate(R.layout.item_friend, null);
                 v = new ViewHolder();
                 v.tvNickName = (TextView) view.findViewById(R.id.tv_nickname);
                 v.civPhoto = (CircleImageView) view.findViewById(R.id.civ_photo);

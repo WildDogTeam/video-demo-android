@@ -43,42 +43,6 @@ public class TouchGestureListener implements GestureDetector.OnGestureListener {
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         Log.i("MyGesture", "onScroll");
-
-       /* if(!mIsLongPressed)
-            return false;
-        // 计算偏移量
-        int dx = (int) (e2.getX()-e1.getX());
-        int dy = (int) (e2.getY()-e1.getY());
-
-        // 计算控件的区域
-        int left = mActionMenu.getLeft() + dx;
-        int right = mActionMenu.getRight() + dx;
-        int top = mActionMenu.getTop() + dy;
-        int bottom = mActionMenu.getBottom() + dy;
-
-        // 超出屏幕检测
-        if (left < 0) {
-            left = 0;
-            right = mActionMenu.getWidth();
-        }
-
-        if (right > getScreenWidth()) {
-            right = getScreenWidth();
-            left = getScreenWidth() - mActionMenu.getWidth();
-        }
-
-        if (top < 0) {
-            top = 0;
-            bottom = mActionMenu.getHeight();
-        }
-
-        if (bottom > getScreenHeight()) {
-            bottom = getScreenHeight();
-            top = getScreenHeight() - mActionMenu.getHeight();
-        }
-
-        mActionMenu.layout(left, top, right, bottom);*/
-
         return false;
     }
 
