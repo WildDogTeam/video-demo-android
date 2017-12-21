@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.wilddog.conversation.ConversationApplication;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.ConversationRecord;
+import com.wilddog.conversation.bean.StreamHolder;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.floatingwindow.PermissionUtils;
 import com.wilddog.conversation.floatingwindow.StreamsHolder;
@@ -379,6 +380,29 @@ public class CallingActivity extends AppCompatActivity {
             }
         });
         wwvSmall = (WilddogVideoView) findViewById(R.id.wvv_small);
+        wwvSmall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isAccept) {
+                    if (isSelfInBig) {
+                        //将本地流 放到小的 将远程流放大
+                        localStream.detach();
+                        StreamsHolder.getRemoteStream().detach();
+                        StreamsHolder.getRemoteStream().attach(wwvSmall);
+                        localStream.attach(wwvBig);
+                        wwvSmall.setVisibility(View.VISIBLE);
+                    } else {
+                        //
+                        localStream.detach();
+                        StreamsHolder.getRemoteStream().detach();
+                        StreamsHolder.getRemoteStream().attach(wwvBig);
+                        localStream.attach(wwvSmall);
+                        wwvSmall.setVisibility(View.VISIBLE);
+                    }
+                    isSelfInBig = !isSelfInBig;
+                }
+            }
+        });
         // 两个surfaceview 重叠显示，会有一个不显示。设置此属性，让此控件放到窗口顶层
         wwvSmall.setZOrderMediaOverlay(true);
 

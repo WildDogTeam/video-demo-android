@@ -290,6 +290,28 @@ public class ConversationActivity extends AppCompatActivity {
             }
         });
         wwvSmall = (WilddogVideoView) findViewById(R.id.wvv_small);
+        wwvSmall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    if (isLocalStreamInBigView) {
+                        //将本地流 放到小的 将远程流放大
+                        localStream.detach();
+                        StreamsHolder.getRemoteStream().detach();
+                        StreamsHolder.getRemoteStream().attach(wwvSmall);
+                        wwvSmall.setVisibility(View.VISIBLE);
+                        localStream.attach(wwvBig);
+                    } else {
+                        //
+                        localStream.detach();
+                        StreamsHolder.getRemoteStream().detach();
+                        StreamsHolder.getRemoteStream().attach(wwvBig);
+                        wwvSmall.setVisibility(View.VISIBLE);
+                        localStream.attach(wwvSmall);
+                    }
+                isLocalStreamInBigView = !isLocalStreamInBigView;
+
+            }
+        });
         wwvSmall.setZOrderMediaOverlay(true);
         rlData = (RelativeLayout) findViewById(R.id.rl_data);
         llState = (LinearLayout) findViewById(R.id.ll_state);
