@@ -83,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="这是默认昵称"
-                android:id="@+id/tv_nickName"
+                android:id="@+id/tv_nickname"
                 android:textColor="@color/text_color"
                 android:textSize="15sp"
                 />

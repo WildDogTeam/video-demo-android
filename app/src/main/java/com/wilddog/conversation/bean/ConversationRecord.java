@@ -7,8 +7,8 @@ package com.wilddog.conversation.bean;
 public class ConversationRecord {
     private String localId;
     private String remoteId;
-    private String timeStamp;
-    private String nickName;
+    private String timestamp;
+    private String nickname;
     private String photoUrl;
     private String duration;
 
@@ -20,8 +20,8 @@ public class ConversationRecord {
         return "ConversationRecord{" +
                 "localId='" + localId + '\'' +
                 ", remoteId='" + remoteId + '\'' +
-                ", timeStamp='" + timeStamp + '\'' +
-                ", nickName='" + nickName + '\'' +
+                ", timestamp='" + timestamp + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", photoUrl='" + photoUrl + '\'' +
                 ", duration='" + duration + '\'' +
                 '}';
@@ -43,20 +43,20 @@ public class ConversationRecord {
         this.remoteId = remoteId;
     }
 
-    public String getTimeStamp() {
-        return timeStamp;
+    public String getTimestamp() {
+        return timestamp;
     }
 
-    public void setTimeStamp(String timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getPhotoUrl() {

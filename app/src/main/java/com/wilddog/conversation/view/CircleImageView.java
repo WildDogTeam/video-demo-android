@@ -25,7 +25,7 @@ public class CircleImageView extends android.support.v7.widget.AppCompatImageVie
     private static final int COLORDRAWABLE_DIMENSION = 1;
 
     private static final int DEFAULT_BORDER_WIDTH = 0;
-    private static final int DEFAULT_BORDER_COLOR = Color.BLACK;
+    private static final int DEFAULT_BORDER_COLOR = Color.GRAY;
 
     private final RectF mDrawableRect = new RectF();
     private final RectF mBorderRect = new RectF();

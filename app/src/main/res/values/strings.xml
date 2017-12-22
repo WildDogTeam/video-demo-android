@@ -18,6 +18,8 @@
     <string name="dimension_720P">720P</string>
     <string name="dimension_480P">480P</string>
     <string name="dimension_360P">360P</string>
+    <string name="dimension_240P">240P</string>
+    <string name="dimension_120P">120P</string>
     <string name="change_dimension">切换清晰度</string>
     <string name="change_beauty_plan">切换美颜方案</string>
     <string name="beauty_plan_Camera360">Camera360</string>
@@ -26,8 +28,9 @@
     <string name="delete">删除</string>
     <string name="online_now">当前在线</string>
     <string name="camera360_sdk_version">Camera360 SDK v1.7</string>
-    <string name="call_history">好友</string>
+    <string name="call_history">好友列表</string>
     <string name="about">关于</string>
+    <string name="join_room">加入多人房间</string>
     <string name="detailinfo">详细资料</string>
     <string name="blacklist">加入黑名单</string>
     <string name="report">举报</string>
@@ -39,4 +42,11 @@
     <string name="report_dsc">举报说明</string>
     <string name="count">还可以输入200个字</string>
     <string name="blackusers">黑名单</string>
+    <string name="write_room_id">请填写房间号</string>
+    <string name="choose_model">选择模式</string>
+    <string name="join">加入</string>
+    <string name="invite_other">邀请他人</string>
+    <string name="roomId">房间号:</string>
+    <string name="copy_roomId">复制房间号</string>
+    <string name="copy_room_url">复制房间地址</string>
 </resources>

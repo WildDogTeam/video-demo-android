@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="180dp"
+    android:layout_height="153dp"
+    tools:context="com.wilddog.conversation.activities.VideoModelActivity">
+    <RelativeLayout
+        android:layout_width="180dp"
+        android:layout_height="153dp"
+        >
+    <com.wilddog.video.base.WilddogVideoView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/wvv_video"
+        />
+    </RelativeLayout>
+</LinearLayout>
+<!--
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="30dp"
+    >
+    <RelativeLayout
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        >
+
+        <com.wilddog.video.base.WilddogVideoView
+            android:id="@+id/wvv_video"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:padding="3dp">
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>-->

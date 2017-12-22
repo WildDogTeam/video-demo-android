@@ -3,6 +3,7 @@ package com.wilddog.conversation.utils;
 import android.media.MediaMetadataRetriever;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +17,9 @@ import java.io.IOException;
 public class ExtractVideoInfo {
     private static MediaMetadataRetriever mMetadataRetriever;
     private long fileLength = 0;//毫秒
-    public ExtractVideoInfo(String path) {
+    private String fileName;
+    public ExtractVideoInfo(String fileName,String path) {
+        this.fileName = fileName;
         if (TextUtils.isEmpty(path)) {
             throw new RuntimeException("path must be not null !");
         }
@@ -46,6 +49,10 @@ public class ExtractVideoInfo {
         }else {
         mMetadataRetriever.setDataSource(file.getAbsolutePath());}
         String len = mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        String bitrate = mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
+        String captureFrameRate = mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_CAPTURE_FRAMERATE);
+        String numTrack = mMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_NUM_TRACKS);
+        Log.e("matadate:","filename:"+this.fileName+"bitrate:"+bitrate+" captureFrameRate:"+captureFrameRate+" numTrack:"+numTrack);
         fileLength = TextUtils.isEmpty(len) ? 0 : Long.valueOf(len);
     }
 

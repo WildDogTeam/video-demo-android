@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.wilddog.conversation.activities.BlacklistActivity">
+    <RelativeLayout
+        style="@style/TitleStyle"
+        android:layout_width="match_parent"
+        android:background="@color/title_color"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/iv_cancel"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:src="@drawable/left_arrow" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/blackusers"
+            android:textSize="@dimen/title_text_size"
+            android:textColor="@color/item_background" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lv_blacklist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/listview_line_style"
+        android:dividerHeight="0.5dp" />
+    <RelativeLayout
+        android:id="@+id/rl_no_blackuser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tv_no_user"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="102dp"
+            android:gravity="center"
+            android:src="@drawable/no_black_user" />
+
+        <TextView
+            android:id="@+id/tv_no_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="28dp"
+            android:gravity="center"
+            android:text="暂无黑名单用户"
+            android:textColor="@color/text_color"
+            android:textSize="15sp" />
+    </RelativeLayout>
+</LinearLayout>

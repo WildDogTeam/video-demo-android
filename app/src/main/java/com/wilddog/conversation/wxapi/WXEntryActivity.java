@@ -14,12 +14,12 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wilddog.conversation.activities.MainActivity;
 import com.wilddog.conversation.bean.UserInfo;
-import com.wilddog.conversation.utils.ActivityHolder;
+import com.wilddog.conversation.holders.ActivityHolder;
 import com.wilddog.conversation.utils.AlertMessageUtil;
-import com.wilddog.conversation.utils.CollectionDeviceIdTool;
+import com.wilddog.conversation.utils.DeviceIdGenerator;
 import com.wilddog.conversation.utils.Constant;
-import com.wilddog.conversation.utils.ObjectAndStringTool;
-import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.JsonConvertUtil;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.wilddog.WilddogAuthManager;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 import com.wilddog.wilddogauth.core.Task;
@@ -74,16 +74,16 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                             if (task.isSuccessful()) {
                                 // 成功
                                 WilddogUser user = task.getResult().getWilddogUser();
-                                SharedpereferenceTool.saveUserId(WXEntryActivity.this, user.getUid());
+                                SharedPreferenceTool.saveUserId(WXEntryActivity.this, user.getUid());
                                 UserInfo info = new UserInfo();
                                 info.setNickname(user.getDisplayName());
                                 info.setUid(user.getUid());
                                 info.setFaceurl(user.getPhotoUrl().toString());
-                                info.setDeviceid(CollectionDeviceIdTool.getDeviceId());
+                                info.setDeviceid(DeviceIdGenerator.getDeviceId());
                                 // WilddogSyncManager.getWilddogSyncTool().writeToUser(user.getUid());
                                 WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(info);
-                                SharedpereferenceTool.setUserInfo(WXEntryActivity.this, ObjectAndStringTool.getJsonFromObject(info));
-                                SharedpereferenceTool.setLoginStatus(WXEntryActivity.this, true);
+                                SharedPreferenceTool.setUserInfo(WXEntryActivity.this, JsonConvertUtil.getJsonFromObject(info));
+                                SharedPreferenceTool.setLoginStatus(WXEntryActivity.this, true);
                                 //TODO 需要记下所有的登录的用户的uid和昵称等用于推送
                                 AlertMessageUtil.showShortToast("登录成功");
                                 Constant.isLoginClickable = true;

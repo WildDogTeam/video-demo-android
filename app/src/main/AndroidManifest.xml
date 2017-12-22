@@ -29,14 +29,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- 在sdcard中创建/删除文件的权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-    <!-- 请求访问使用照相设备 -->
-    <uses-permission android:name="android.permission.CAMERA" />
     <!-- 开启闪光灯权限 -->
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-
-    <!-- 访问麦克风 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <uses-feature android:name="android.hardware.camera.flash" />
 
@@ -61,10 +55,10 @@
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.SDKVersionActivity" />
         <activity android:name=".activities.RecordFileActivity" />
-        <activity android:name=".activities.SendInviteActivity" />
         <activity android:name=".activities.CallingActivity" />
         <activity android:name=".activities.PermissionActivity" />
-
+        <activity android:name=".activities.VideoModelActivity" />
+        <activity android:name=".activities.InteractModelActivity" android:screenOrientation="landscape"  android:windowSoftInputMode="adjustPan|stateHidden"/>
         <receiver android:name="com.wilddog.client.receiver.WilddogAuthCastReceiver">
             <intent-filter>
                 <action android:name="com.wilddog.wilddogauth.signinsuccess" />
@@ -87,13 +81,13 @@
             android:name="io.fabric.ApiKey"
             android:value="62b476b8bec312542b8993f36ee2e14400600162" />
 
-        <activity android:name=".activities.DeclarActivity" />
+        <activity android:name=".activities.DeclareActivity" />
         <activity android:name=".activities.DetailInfoActivity" />
 
         <service android:name=".floatingwindow.WindowService" />
 
         <activity android:name=".activities.ReportActivity" />
-        <activity android:name=".activities.BlackUsersActivity"></activity>
+        <activity android:name=".activities.BlacklistActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -104,6 +98,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <activity android:name=".activities.JoinRoomActivity"></activity>
     </application>
 
 </manifest>

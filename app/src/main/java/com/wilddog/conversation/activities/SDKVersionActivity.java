@@ -12,7 +12,6 @@ public class SDKVersionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TODO 手动修改版本
         setContentView(R.layout.activity_sdk_version);
         ivCancel = (ImageView) findViewById(R.id.iv_cancel);
         ivCancel.setOnClickListener(new View.OnClickListener() {

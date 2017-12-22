@@ -12,13 +12,13 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
-import com.wilddog.conversation.utils.ActivityHolder;
+import com.wilddog.conversation.holders.ActivityHolder;
 import com.wilddog.conversation.utils.AlertMessageUtil;
-import com.wilddog.conversation.utils.CollectionDeviceIdTool;
+import com.wilddog.conversation.utils.DeviceIdGenerator;
 import com.wilddog.conversation.utils.Constant;
-import com.wilddog.conversation.utils.ObjectAndStringTool;
+import com.wilddog.conversation.utils.JsonConvertUtil;
 import com.wilddog.conversation.utils.PermissionHelper;
-import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.utils.WXUtil;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 import com.wilddog.conversation.wilddog.WilddogAuthManager;
@@ -30,24 +30,23 @@ import com.wilddog.wilddogauth.model.WilddogUser;
 import android.Manifest;
 import android.widget.TextView;
 
+import java.util.Random;
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
-
-    private Button login;
-
-
+    private Button btnLogin;
     private static final int REQUEST_CODE = 0; // 请求码
 
     static final String[] PERMISSIONS = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    private TextView declar;
+    private TextView tvDeclare;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        login = (Button) findViewById(R.id.btn_login);
-        declar = (TextView) findViewById(R.id.tv_declar);
-        login.setOnClickListener(new View.OnClickListener() {
+        btnLogin = (Button) findViewById(R.id.btn_login);
+        tvDeclare = (TextView) findViewById(R.id.tv_declare);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //点击登录
@@ -57,10 +56,10 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-        declar.setOnClickListener(new View.OnClickListener() {
+        tvDeclare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this,DeclarActivity.class);
+                Intent intent = new Intent(LoginActivity.this, DeclareActivity.class);
                 startActivity(intent);
             }
         });
@@ -88,11 +87,13 @@ public class LoginActivity extends AppCompatActivity {
         IWXAPI iwxapi = WXUtil.getIwxapi();
         if (!iwxapi.isWXAppInstalled()) {
             AlertMessageUtil.showShortToast("请先下载安装微信");
+            AlertMessageUtil.dismissprogressbar();
             Constant.isLoginClickable = true;
             return;
         }
         if (!iwxapi.isWXAppSupportAPI()) {
             AlertMessageUtil.showShortToast("请先更新微信应用");
+            AlertMessageUtil.dismissprogressbar();
             Constant.isLoginClickable = true;
             return;
         }
@@ -105,30 +106,31 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
-        Log.e(TAG, "login: "+ Environment.getExternalStorageDirectory() );
+        Log.e(TAG, "btnLogin: " + Environment.getExternalStorageDirectory());
         AlertMessageUtil.showprogressbar("微信登录中", LoginActivity.this);
-//        loginWithAnonymously();
-        weixinLogin();
+        loginWithAnonymously();
+        //weixinLogin();
     }
 
-
     private void loginWithAnonymously() {
-
         WilddogAuthManager.getWilddogAuth().signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // 成功
                     WilddogUser user = task.getResult().getWilddogUser();
-                    SharedpereferenceTool.saveUserId(LoginActivity.this, user.getUid());
+                    SharedPreferenceTool.saveUserId(LoginActivity.this, user.getUid());
                     UserInfo info = new UserInfo();
-                    info.setNickname(user.getUid());
+                    Random r = new Random();
+                    int num = r.nextInt(999999) + 1;
+                    info.setNickname("Android" + num);
+                    int photoNum = num % 20 + 1;
                     info.setUid(user.getUid());
-                    info.setFaceurl("https://img.wdstatic.cn/imdemo/1.png");
-                    info.setDeviceid(CollectionDeviceIdTool.getDeviceId());
+                    info.setFaceurl("https://img.wdstatic.cn/video-demo/Head" + photoNum + ".png");
+                    info.setDeviceid(DeviceIdGenerator.getDeviceId());
                     WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(info);
-                    SharedpereferenceTool.setUserInfo(LoginActivity.this, ObjectAndStringTool.getJsonFromObject(info));
-                    SharedpereferenceTool.setLoginStatus(LoginActivity.this, true);
+                    SharedPreferenceTool.setUserInfo(LoginActivity.this, JsonConvertUtil.getJsonFromObject(info));
+                    SharedPreferenceTool.setLoginStatus(LoginActivity.this, true);
                     //TODO 需要记下所有的登录的用户的uid和昵称等用于推送
                     AlertMessageUtil.showShortToast("登录成功");
                     Constant.isLoginClickable = true;

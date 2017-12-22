@@ -10,41 +10,37 @@ import android.widget.TextView;
 
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
-import com.wilddog.conversation.utils.ImageManager;
+import com.wilddog.conversation.utils.ImageLoadingUtil;
 import com.wilddog.conversation.view.CircleImageView;
 
 public class ReportActivity extends AppCompatActivity {
 
-    private TextView nickName;
-    private CircleImageView headImage;
-    private EditText report;
-    private TextView hint;
+    private TextView tvNickname;
+    private CircleImageView civHeadImage;
+    private EditText etReport;
+    private TextView tvHint;
     private UserInfo user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-
         user = (UserInfo) getIntent().getSerializableExtra("user");
-
         initView();
-
         setData();
-
     }
 
     private void setData() {
-        nickName.setText(user.getNickname());
-        ImageManager.Load(user.getFaceurl(), headImage);
+        tvNickname.setText(user.getNickname());
+        ImageLoadingUtil.Load(user.getFaceurl(), civHeadImage);
     }
 
 
     private void initView() {
-        nickName = (TextView) findViewById(R.id.tv_nickName);
-        headImage = (CircleImageView) findViewById(R.id.civ_photo);
-        report = (EditText) findViewById(R.id.et_report);
-        hint = (TextView) findViewById(R.id.tv_hint);
+        tvNickname = (TextView) findViewById(R.id.tv_nickname);
+        civHeadImage = (CircleImageView) findViewById(R.id.civ_photo);
+        etReport = (EditText) findViewById(R.id.et_report);
+        tvHint = (TextView) findViewById(R.id.tv_hint);
         findViewById(R.id.tv_commit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +53,7 @@ public class ReportActivity extends AppCompatActivity {
                 finish();
             }
         });
-        report.addTextChangedListener(new TextWatcher() {
+        etReport.addTextChangedListener(new TextWatcher() {
             public int MAX_LENGTH=200;
             public int restLength=MAX_LENGTH;
 
@@ -79,7 +75,7 @@ public class ReportActivity extends AppCompatActivity {
                     restLength=0;
                     s.delete(MAX_LENGTH,s.length());
                 }
-                hint.setText("还可以输入"+ restLength +"个字");
+                tvHint.setText("还可以输入"+ restLength +"个字");
             }
         });
     }

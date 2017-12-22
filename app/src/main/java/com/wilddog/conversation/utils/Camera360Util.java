@@ -51,8 +51,8 @@ public class Camera360Util {
         prettifySDK.SetOutputFormat(PGSkinPrettifyEngine.PG_PixelFormat.PG_Pixel_NV21);//设置美肤结果的输出格式
         prettifySDK.SetSkinSoftenStrength(SOFTEN_VALUE);//设置美颜程度
         prettifySDK.SetSkinColor(PINK_VALUE, WHITE_VALUE, REDDEN_VALUE);//设置美颜参数
-        // ""Skinbw
-        prettifySDK.SetColorFilterByName("Grace");//设置美颜滤镜，详细参数参考中的 mFilterType
+        // ""Skinbw Grace
+        prettifySDK.SetColorFilterByName("Skinbw");//设置美颜滤镜，详细参数参考中的 mFilterType
         prettifySDK.SetColorFilterStrength(SOFTEN_VALUE);//设置美颜强度
         prettifySDK.SetSkinSoftenAlgorithm(PGSkinPrettifyEngine.PG_SoftenAlgorithm.PG_SoftenAlgorithmContrast);//设置磨皮算法
     }

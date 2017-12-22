@@ -9,8 +9,8 @@ import android.os.Bundle;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.Constant;
-import com.wilddog.conversation.utils.ObjectAndStringTool;
-import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.JsonConvertUtil;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 
 public class SplashActivity extends AppCompatActivity {
@@ -21,7 +21,7 @@ public class SplashActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case gotoLoginAcitivity:
-                    if (SharedpereferenceTool.getLoginStatus(SplashActivity.this)) {
+                    if (SharedPreferenceTool.getLoginStatus(SplashActivity.this)) {
                         gotoMainActivity();
                     } else {
                         gotoLoginAcitivity();
@@ -39,7 +39,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         // 自动跳转设置时间为2秒。
-
         handler.sendEmptyMessageDelayed(gotoLoginAcitivity, Constant.AUTO_SKIP_TIME);
     }
 
@@ -48,7 +47,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void gotoMainActivity() {
-        WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(ObjectAndStringTool.getObjectFromJson(SharedpereferenceTool.getUserInfo(SplashActivity.this), UserInfo.class));
+        WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(JsonConvertUtil.getObjectFromJson(SharedPreferenceTool.getUserInfo(SplashActivity.this), UserInfo.class));
         startActivity(new Intent(SplashActivity.this, MainActivity.class));
     }
 

@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="这是默认昵称"
-                android:id="@+id/tv_nickName"
+                android:id="@+id/tv_nickname"
                 android:textColor="@color/text_color"
                 android:textSize="17.3sp"
                 android:layout_marginBottom="13.3dp"
@@ -92,11 +92,10 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         style="@style/ItemStyle_child"
-        android:id="@+id/tv_blacklist"
+        android:id="@+id/ll_blacklist"
         >
 
-        <com.wilddog.conversation.view.DrawCenterButton
-
+        <com.wilddog.conversation.view.DrawableCenterButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/blacklist"
@@ -106,11 +105,20 @@
             android:textSize="@dimen/item_left_text_size"
             android:gravity="center_vertical"
             />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/right_arraw" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginLeft="@dimen/item_margen_left"
+        android:layout_marginLeft="@dimen/item_large_margen_left"
         android:background="@color/line_color"/>
 
     <LinearLayout
@@ -119,8 +127,7 @@
         android:layout_width="match_parent"
         android:orientation="horizontal">
 
-        <com.wilddog.conversation.view.DrawCenterButton
-
+        <com.wilddog.conversation.view.DrawableCenterButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/report"
@@ -130,6 +137,15 @@
             android:textSize="@dimen/item_left_text_size"
             android:gravity="center_vertical"
             />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/right_arraw" />
     </LinearLayout>
 
 

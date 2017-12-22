@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -20,14 +19,14 @@ import com.wilddog.client.SyncError;
 import com.wilddog.client.ValueEventListener;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
-import com.wilddog.conversation.floatingwindow.StreamsHolder;
 import com.wilddog.conversation.floatingwindow.WindowService;
-import com.wilddog.conversation.fragments.CallFragment;
-import com.wilddog.conversation.fragments.MeFragment;
+import com.wilddog.conversation.fragments.FriendsFragment;
 import com.wilddog.conversation.fragments.OnlineFragment;
+import com.wilddog.conversation.fragments.SettingFragment;
+import com.wilddog.conversation.holders.StreamsHolder;
 import com.wilddog.conversation.utils.AlertMessageUtil;
 import com.wilddog.conversation.utils.Constant;
-import com.wilddog.conversation.utils.SharedpereferenceTool;
+import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 import com.wilddog.conversation.wilddog.WilddogVideoManager;
 import com.wilddog.video.base.WilddogVideoError;
@@ -42,21 +41,16 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
-    private RadioButton online;
-    private RadioButton me;
-    private RadioButton call;
     private FragmentManager fragmentManager;
     private RadioGroup rgMain;
     private Fragment onlineFragment = new OnlineFragment();
-    private Fragment meFragment = new MeFragment();
-    private Fragment callFragment = new CallFragment();
-    private boolean iscancel =true;
+    private Fragment settingFragment = new SettingFragment();
+    private Fragment friendsFragment = new FriendsFragment();
+    private boolean isCancel = true;
     private WilddogVideoCall video;
     private WindowService.MyBinder mybinder;
     private MyServiceConnection serviceConnection;
-
-
-
+    private UserInfo remoteUserInfo;
     public class MyServiceConnection implements ServiceConnection {
         private boolean isbind = false;
 
@@ -100,17 +94,16 @@ public class MainActivity extends AppCompatActivity {
         setListener();
     }
 
-    private void setListener(){
+    private void setListener() {
         video.setListener(listener);
     }
-
 
     private Conversation.Listener conversationListener = new Conversation.Listener() {
         @Override
         public void onCallResponse(CallStatus callStatus) {
-            switch (callStatus){
+            switch (callStatus) {
                 case ACCEPTED:
-                    iscancel =false;
+                    isCancel = false;
                     break;
                 case REJECTED:
                     break;
@@ -128,36 +121,31 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
                     StreamsHolder.setRemoteStream(remoteStream);
-
                     Intent intent = new Intent();
                     intent.setAction(Constant.UPDATE_VIEW);
                     sendBroadcast(intent);
-
                 }
             });
         }
 
         @Override
         public void onClosed() {
-            if(iscancel){
+            if (isCancel) {
                 // 取消邀请。 TODO 关闭被叫界面
                 AlertMessageUtil.showShortToast("对方已取消");
                 // 发自定义广播，关闭界面回到主页
                 Intent intent = new Intent();
                 intent.setAction(Constant.INVITE_CANCEL);
                 sendBroadcast(intent);
-                iscancel =true;
-
-            }else {
+                isCancel = true;
+            } else {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        AlertMessageUtil.showShortToast("用户：" +  WilddogVideoManager.getConversation().getRemoteUid() + "离开会话");
+                        AlertMessageUtil.showShortToast("用户：" + WilddogVideoManager.getConversation().getRemoteUid() + "离开会话");
                     }
                 });
-//                WilddogVideoManager.getConversation().close();
             }
             release();
 
@@ -165,24 +153,19 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onError(WilddogVideoError wilddogVideoError) {
-            Log.e(TAG,wilddogVideoError.toString());
+            Log.e(TAG, wilddogVideoError.toString());
         }
 
     };
 
     private void release() {
-        if(WilddogVideoManager.getConversation()!=null){
+        if (WilddogVideoManager.getConversation() != null) {
             WilddogVideoManager.getConversation().close();
         }
-        if(StreamsHolder.getLocalStream()!=null&&!StreamsHolder.getLocalStream().isClosed()){
+        if (StreamsHolder.getLocalStream() != null && !StreamsHolder.getLocalStream().isClosed()) {
             StreamsHolder.getLocalStream().close();
         }
-//        if(StreamsHolder.getMyBinder().isWindowShow())
-//            StreamsHolder.getMyBinder().hidFloatingWindow();
     }
-
-    private UserInfo remoteUserInfo;
-
     private WilddogVideoCall.Listener listener =
             new WilddogVideoCall.Listener() {
                 @Override
@@ -193,20 +176,22 @@ public class MainActivity extends AppCompatActivity {
                     WilddogSyncManager.getWilddogSyncTool().getonlineUserInfos(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            if(dataSnapshot==null || dataSnapshot.getValue()==null){return;}
+                            if (dataSnapshot == null || dataSnapshot.getValue() == null) {
+                                return;
+                            }
                             Map map = (Map) dataSnapshot.getValue();
-                            if(map.containsKey(uid)){
+                            if (map.containsKey(uid)) {
                                 Map subMap = (Map) map.get(uid);
                                 remoteUserInfo = new UserInfo();
-                                String strFaceurl = subMap.get("faceurl")==null?"https://img.wdstatic.cn/imdemo/1.png":subMap.get("faceurl").toString();
+                                String strFaceurl = subMap.get("faceurl") == null ? "https://img.wdstatic.cn/imdemo/1.png" : subMap.get("faceurl").toString();
                                 remoteUserInfo.setFaceurl(strFaceurl);
-                                String strNickname = subMap.get("nickname")==null?uid:subMap.get("nickname").toString();
+                                String strNickname = subMap.get("nickname") == null ? uid : subMap.get("nickname").toString();
                                 remoteUserInfo.setNickname(strNickname);
                                 remoteUserInfo.setUid(uid);
                                 remoteUserInfo.setDeviceid(subMap.get("deviceid").toString());
                                 gotoAcceptActivity(remoteUserInfo);
-                            }else {
-                                Toast.makeText(MainActivity.this,"呼叫者已经离线",Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MainActivity.this, "呼叫者已经离线", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -220,27 +205,24 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onTokenError(WilddogVideoError WilddogVideoCallError) {
-                    Toast.makeText(MainActivity.this,"token 存在问题,退出登录",Toast.LENGTH_SHORT).show();
-                    Log.e("tokenerror",WilddogVideoCallError.getMessage());
-                    WilddogSyncManager.getWilddogSyncTool().removeUserInfo(SharedpereferenceTool.getUserId(MainActivity.this));
-                    SharedpereferenceTool.setUserInfo(MainActivity.this, "");
-                    SharedpereferenceTool.setLoginStatus(MainActivity.this, false);
+                    Toast.makeText(MainActivity.this, "token 存在问题,退出登录", Toast.LENGTH_SHORT).show();
+                    Log.e("tokenerror", WilddogVideoCallError.getMessage());
+                    WilddogSyncManager.getWilddogSyncTool().removeUserInfo(SharedPreferenceTool.getUserId(MainActivity.this));
+                    SharedPreferenceTool.setUserInfo(MainActivity.this, "");
+                    SharedPreferenceTool.setLoginStatus(MainActivity.this, false);
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                     finish();
                 }
             };
 
-            private void gotoAcceptActivity(UserInfo info){
-                Intent intent = new Intent(MainActivity.this,AcceptActivity.class);
-                intent.putExtra("user",info);
-                startActivity(intent);
-            }
+    private void gotoAcceptActivity(UserInfo info) {
+        Intent intent = new Intent(MainActivity.this, AcceptActivity.class);
+        intent.putExtra("user", info);
+        startActivity(intent);
+    }
 
     private void initView() {
         rgMain = (RadioGroup) findViewById(R.id.rg_main);
-        online = (RadioButton) findViewById(R.id.rb_main_online);
-        call = (RadioButton) findViewById(R.id.rb_main_call);
-        me = (RadioButton) findViewById(R.id.rb_main_me);
         rgMain.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -249,10 +231,10 @@ public class MainActivity extends AppCompatActivity {
                         changeFragment(onlineFragment);
                         break;
                     case R.id.rb_main_me:
-                        changeFragment(meFragment);
+                        changeFragment(settingFragment);
                         break;
                     case R.id.rb_main_call:
-                        changeFragment(callFragment);
+                        changeFragment(friendsFragment);
                         break;
                     default:
                         break;

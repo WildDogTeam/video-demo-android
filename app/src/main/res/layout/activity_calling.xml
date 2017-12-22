@@ -2,341 +2,390 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:id="@+id/rl_parent"
     tools:context="com.wilddog.conversation.activities.CallingActivity">
 
 
-
     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            >
-            <com.wilddog.video.base.WilddogVideoView
-                android:id="@+id/wvv_big"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-            <com.wilddog.video.base.WilddogVideoView
-                android:layout_width="105dp"
-                android:layout_height="160dp"
-                android:id="@+id/wvv_small"
-                android:layout_marginTop="16dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_margin="3dp"
-                android:visibility="gone"
-                />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="我是昵称"
-            android:id="@+id/tv_nickname"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/text_color_white"
-            android:textSize="23sp"
-            android:layout_marginTop="30dp"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_time"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:layout_marginTop="15dp"
-            android:textColor="@color/text_color_white"
-            android:visibility="invisible"
-            android:layout_below="@+id/tv_nickname"
-            />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ll_data"
-                android:orientation="vertical"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="13.3dp"
-                android:layout_alignParentRight="true"
-                >
-                <ImageView
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
-                    android:id="@+id/iv_report"
-                    android:src="@drawable/stats"
-                    />
-                <ImageView
-                    android:layout_marginTop="20dp"
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
-                    android:id="@+id/iv_record"
-                    android:src="@drawable/record_normal"
-                    />
-                <ImageView
-                    android:layout_marginTop="20dp"
-                    android:layout_width="33dp"
-                    android:layout_height="33dp"
-                    android:id="@+id/iv_fullscreen"
-                    android:src="@drawable/fullscreen"
-                    />
-            </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00:00:00"
-            android:id="@+id/tv_record_time"
-            android:layout_alignBottom="@+id/ll_data"
-            android:layout_toLeftOf="@+id/ll_data"
-            android:layout_marginRight="7dp"
-            android:textColor="@color/text_color_white"
-            android:textSize="12sp"
-            android:visibility="gone"
-            />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ll_state"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:layout_alignParentRight="true"
-                >
-
-                <TextView
-                    android:padding="3dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="dimension"
-                    android:textSize="12sp"
-                    android:id="@+id/tv_dimensions"
-                    android:textColor="@color/item_background"
-                    />
-                <TextView
-                    android:padding="3dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="fps"
-                    android:textSize="12sp"
-                    android:id="@+id/tv_fps"
-                    android:textColor="@color/item_background"
-                    />
-                <TextView
-                    android:padding="3dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="rate"
-                    android:textSize="12sp"
-                    android:id="@+id/tv_rate"
-                    android:textColor="@color/item_background"
-                    />
-                <TextView
-                    android:padding="3dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="sent"
-                    android:textSize="12sp"
-                    android:id="@+id/tv_bytes"
-                    android:textColor="@color/item_background"
-                    />
-
-
-            </LinearLayout>
-        </RelativeLayout>
-
-
-
-    <LinearLayout
+        android:id="@+id/rl_wilddog_video_views"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/ll_call"
-        android:background="@drawable/callbg"
-        android:orientation="vertical"
-        >
-        <com.wilddog.conversation.view.CircleImageView
-            android:layout_width="57dp"
-            android:layout_height="57dp"
-            android:id="@+id/civ_photo"
-            android:layout_gravity="center"
-            android:src="@drawable/logo"
-            android:layout_marginTop="30dp"
-            />
-        <TextView
+        android:layout_weight="1">
+
+        <com.wilddog.video.base.WilddogVideoView
+            android:id="@+id/wwv_big"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_call_nickname"
-            android:textSize="22.7sp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:text="YOYO"
-            android:layout_marginTop="13dp"
-            android:textColor="@color/item_background"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:textSize="14.7sp"
+            android:layout_height="match_parent" />
+
+        <com.wilddog.video.base.WilddogVideoView
+            android:id="@+id/wvv_small"
+            android:layout_width="105dp"
+            android:layout_height="160dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="3dp"
             android:layout_marginTop="16dp"
-            android:textColor="@color/text_color_white"
-            android:text="等待对方接受邀请"/>
-    </LinearLayout>
+            android:visibility="gone" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="17dp"
-        android:id="@+id/ll_contral_button"
-        android:background="@android:color/transparent"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/rl_data"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:id="@+id/ll_mic"
-                android:descendantFocusability="afterDescendants"
-                >
-                <CheckBox
-                    android:id="@+id/cb_mic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:background="@drawable/selector_button_mic"
-                    android:button="@null"
-                    android:layout_marginBottom="9dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/text_color_white"
-                    android:text="麦克风"
-                    android:layout_marginBottom="1dp"
-                    android:textSize="14sp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:id="@+id/ll_speaker"
-                android:descendantFocusability="afterDescendants"
-                >
-                <CheckBox
-                    android:id="@+id/cb_speaker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:background="@drawable/selector_button_speaker"
-                    android:button="@null"
-                    android:layout_marginBottom="11.3dp"
-                    />
-                <TextView
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="13.3dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/text_color_white"
-                    android:text="扬声器"
-                    android:layout_marginBottom="1dp"
-                    android:textSize="14sp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:id="@+id/ll_camera"
-                android:descendantFocusability="afterDescendants"
-                >
-                <CheckBox
-                    android:id="@+id/cb_camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:background="@drawable/selector_button_camera"
-                    android:button="@null"
-                    android:layout_marginBottom="9.3dp"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/text_color_white"
-                    android:text="摄像头"
-                    android:layout_marginBottom="1dp"
-                    android:textSize="14sp"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:id="@+id/ll_filp_camera"
-                >
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/flip_camera"
-                    android:gravity="center_horizontal"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="14dp"
-                    />
-                <TextView
-                    android:id="@+id/tv_flipCamera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/text_color_white"
-                    android:layout_gravity="center_horizontal"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="1dp"
-                    android:text="翻转相机" />
-            </LinearLayout>
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            android:id="@+id/ll_reject"
-            >
             <ImageView
-                android:layout_width="62dp"
-                android:layout_height="62dp"
-                android:src="@drawable/reject"
-                android:gravity="center"
-                android:layout_gravity="center"
-                />
-            <TextView
-                android:id="@+id/tv_hungup"
+                android:id="@+id/iv_report"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/stats" />
+
+            <LinearLayout
+                android:id="@+id/ll_record_icon_and_time"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/iv_report"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_record_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginRight="7dp"
+                    android:text="00:00:00"
+                    android:textColor="@color/text_color_white"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/iv_record"
+                    android:layout_width="33dp"
+                    android:layout_height="33dp"
+                    android:layout_marginTop="20dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_fullscreen"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/ll_record_icon_and_time"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/fullscreen" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_dimensions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="dimension"
+                android:textColor="@color/item_background"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_fps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="fps"
+                android:textColor="@color/item_background"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="rate"
+                android:textColor="@color/item_background"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_bytes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="sent"
+                android:textColor="@color/item_background"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_can_hide_place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:text="我是昵称"
+                android:textColor="@color/text_color_white"
+                android:textSize="23sp" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_nickname"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:textColor="@color/text_color_white"
+                android:textSize="14sp"
+                android:visibility="invisible" />
+
+            <LinearLayout
+                android:id="@+id/ll_contral_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_gravity="center"
-                android:text="挂断" />
+                android:layout_marginBottom="17dp"
+                android:background="@android:color/transparent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ll_mic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:descendantFocusability="afterDescendants"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/cb_mic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="9dp"
+                            android:background="@drawable/selector_button_mic"
+                            android:button="@null"
+                            android:gravity="center_horizontal" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="1dp"
+                            android:gravity="center_horizontal"
+                            android:text="麦克风"
+                            android:textColor="@color/text_color_white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_speaker"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:descendantFocusability="afterDescendants"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/cb_speaker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="11.3dp"
+                            android:background="@drawable/selector_button_speaker"
+                            android:button="@null"
+                            android:gravity="center_horizontal" />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="1dp"
+                            android:gravity="center_horizontal"
+                            android:text="扬声器"
+                            android:textColor="@color/text_color_white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_camera"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:descendantFocusability="afterDescendants"
+                        android:orientation="vertical">
+
+                        <CheckBox
+                            android:id="@+id/cb_camera"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="9.3dp"
+                            android:background="@drawable/selector_button_camera"
+                            android:button="@null"
+                            android:gravity="center_horizontal" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="1dp"
+                            android:gravity="center_horizontal"
+                            android:text="摄像头"
+                            android:textColor="@color/text_color_white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_filp_camera"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="14dp"
+                            android:gravity="center_horizontal"
+                            android:src="@drawable/flip_camera" />
+
+                        <TextView
+                            android:id="@+id/tv_flipCamera"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="1dp"
+                            android:gravity="center_horizontal"
+                            android:text="翻转相机"
+                            android:textColor="@color/text_color_white"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_reject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:src="@drawable/reject" />
+
+                    <TextView
+                        android:id="@+id/tv_hungup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:text="挂断"
+                        android:textColor="@color/text_color_white" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_call"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <com.wilddog.conversation.view.CircleImageView
+            android:id="@+id/civ_photo"
+            android:layout_width="57dp"
+            android:layout_height="57dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/tv_call_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="13dp"
+            android:gravity="center"
+            android:text="YOYO"
+            android:textColor="@color/item_background"
+            android:textSize="22.7sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="等待对方接受邀请"
+            android:textColor="@color/text_color_white"
+            android:textSize="14.7sp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/ll_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="307dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:src="@drawable/reject" />
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/text_color_white" />
         </LinearLayout>
     </LinearLayout>
+
 
 </RelativeLayout>

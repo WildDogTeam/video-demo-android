@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="V2.2.0"
+            android:text="V3.0"
             android:textColor="@color/text_color"
             android:textSize="15sp" />
 
@@ -74,12 +74,21 @@
             android:textSize="11sp" />
 
         <TextView
-            android:id="@+id/tv_video_sdk_version"
+            android:id="@+id/tv_video_call_sdk_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="Wilddog Video Call SDK v2.2.0"
+            android:text="Wilddog Video Call SDK v2.4.0"
+            android:textColor="@color/text_color_666666"
+            android:textSize="11sp" />
+        <TextView
+            android:id="@+id/tv_video_room_sdk_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="Wilddog Video Room SDK v2.2.3"
             android:textColor="@color/text_color_666666"
             android:textSize="11sp" />
 

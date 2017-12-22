@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1f2228"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:background="@android:color/black"
+        >
+        <TextView
+            android:id="@+id/tv_quit_room"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出房间"
+            android:drawableLeft="@drawable/left_arrow"
+            android:drawablePadding="7dp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="11sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentStart="true"
+            />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="02:04:38"
+            android:drawableLeft="@drawable/inclass"
+            android:drawablePadding="7dp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="11sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_centerHorizontal="true"
+            />
+        <TextView
+            android:id="@+id/tv_invite_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="邀请他人"
+            android:drawableLeft="@drawable/s_invite"
+            android:drawablePadding="7dp"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="11sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/v4_drawerlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            >
+            <com.wilddog.board.WilddogBoard
+                android:id="@+id/board"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </com.wilddog.board.WilddogBoard>
+
+
+            <com.wilddog.toolbar.boardtoolbar.ToolBarMenu
+                android:id="@+id/graphic_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                app:fab_expandDirection="up"
+                app:fab_interval="1dp">
+
+            </com.wilddog.toolbar.boardtoolbar.ToolBarMenu>
+
+
+            <LinearLayout
+                android:id="@+id/ll_show"
+                android:layout_width="wrap_content"
+                android:layout_height="265dp"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:padding="2dp"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:background="@drawable/interact_model_show_bg"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:id="@+id/room_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="7dp"
+                        android:text="房间成员(1)"
+                        android:textColor="#fff"
+                        android:textSize="10sp"
+                        />
+                    <include layout="@layout/small_window_layout"/>
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="6dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/hide"
+                    android:id="@+id/iv_show"
+                    android:layout_gravity="center"
+                    />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+        <com.wilddog.conversation.view.LeftLayout
+            android:id="@+id/rl_leftmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start">
+        </com.wilddog.conversation.view.LeftLayout>
+
+        <com.wilddog.conversation.view.RightLayout
+            android:id="@+id/rl_rightmenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:layout_gravity="end">
+        </com.wilddog.conversation.view.RightLayout>
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>
+
