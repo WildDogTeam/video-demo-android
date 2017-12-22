@@ -12,18 +12,18 @@ import android.widget.TextView;
  */
 
 @SuppressLint("AppCompatCustomView")
-public class DrawCenterButton extends TextView {
+public class DrawableCenterButton extends TextView {
 
-    public DrawCenterButton(Context context, AttributeSet attrs,
-                                  int defStyle) {
+    public DrawableCenterButton(Context context, AttributeSet attrs,
+                                int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public DrawCenterButton(Context context, AttributeSet attrs) {
+    public DrawableCenterButton(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public DrawCenterButton(Context context) {
+    public DrawableCenterButton(Context context) {
         super(context);
     }
 

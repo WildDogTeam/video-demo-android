@@ -13,9 +13,9 @@ import android.widget.TextView;
 import com.wilddog.conversation.ConversationApplication;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
-import com.wilddog.conversation.receiver.InviteCancelBroadcastReceiver;
+import com.wilddog.conversation.receiver.InvitationCanceledBroadcastReceiver;
 import com.wilddog.conversation.utils.Constant;
-import com.wilddog.conversation.utils.ImageManager;
+import com.wilddog.conversation.utils.ImageLoadingUtil;
 import com.wilddog.conversation.utils.ParamsStore;
 import com.wilddog.conversation.utils.RingUtil;
 import com.wilddog.conversation.view.CircleImageView;
@@ -39,18 +39,15 @@ public class AcceptActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accept);
-
         tvNickname = (TextView) findViewById(R.id.tv_nickname);
         llAccept = (LinearLayout) findViewById(R.id.ll_accept);
         llReject = (LinearLayout) findViewById(R.id.ll_reject);
         civPhotoUrl = (CircleImageView) findViewById(R.id.civ_photo);
-
-
         remoteUserInfo = (UserInfo) getIntent().getSerializableExtra("user");
         conversation = WilddogVideoManager.getConversation();
         tvNickname.setText(remoteUserInfo.getNickname());
-        ImageManager.Load(remoteUserInfo.getFaceurl(), civPhotoUrl);
-        broadcastReceiver = new InviteCancelBroadcastReceiver() {
+        ImageLoadingUtil.Load(remoteUserInfo.getFaceurl(), civPhotoUrl);
+        broadcastReceiver = new InvitationCanceledBroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 super.onReceive(context, intent);
@@ -59,7 +56,6 @@ public class AcceptActivity extends AppCompatActivity {
                 }
             }
         };
-
         llAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,12 +63,10 @@ public class AcceptActivity extends AppCompatActivity {
                 WilddogVideoManager.setWilddogUser(remoteUserInfo);
                 ParamsStore.isInitiativeCall = false;
                 Intent intent = new Intent(AcceptActivity.this, ConversationActivity.class);
-//                intent.putExtra("user",remoteUserInfo);
                 startActivity(intent);
                 finish();
             }
         });
-
         llReject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +76,6 @@ public class AcceptActivity extends AppCompatActivity {
             }
         });
         startRing();
-
     }
 
     @Override

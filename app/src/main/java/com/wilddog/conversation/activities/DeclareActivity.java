@@ -12,7 +12,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class DeclareActivity extends AppCompatActivity {
-
     private TextView tvContent;
 
     @Override
@@ -20,14 +19,12 @@ public class DeclareActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_declare);
         tvContent = (TextView) findViewById(R.id.tv_content);
-
         String declareData = parseDeclareData();
-
         tvContent.setText(declareData);
     }
 
     private String parseDeclareData() {
-        StringBuilder sb=new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         InputStream inputStream = null;
         InputStreamReader reader = null;
         BufferedReader bufferedReader = null;
@@ -35,14 +32,14 @@ public class DeclareActivity extends AppCompatActivity {
             inputStream = getAssets().open("declaration.txt");
             reader = new InputStreamReader(inputStream);
             bufferedReader = new BufferedReader(reader);
-            String line="";
-            while ((line=bufferedReader.readLine())!=null){
+            String line = "";
+            while ((line = bufferedReader.readLine()) != null) {
                 sb.append(line);
                 sb.append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 if (bufferedReader != null) {
                     bufferedReader.close();

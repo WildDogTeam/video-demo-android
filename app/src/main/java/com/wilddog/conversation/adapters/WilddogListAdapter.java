@@ -22,41 +22,41 @@ import java.util.List;
 
 public abstract class WilddogListAdapter<T> extends BaseAdapter {
 
-    private Query mRef;
-    private Class<T> mModelClass;
-    private LayoutInflater mInflater;
-    private List<T> mModels;
-    private List<String> mKeys;
-    private ChildEventListener mListener;
-    private final String mUsername;
+    private Query ref;
+    private Class<T> modelClass;
+    private LayoutInflater inflater;
+    private List<T> models;
+    private List<String> keys;
+    private ChildEventListener listener;
+    private final String username;
 
 
-    public WilddogListAdapter(Query mRef, Class<T> mModelClass, Context context) {
-        this.mRef = mRef;
-        this.mModelClass = mModelClass;
-        mUsername = SharedPreferenceTool.getUserId(context);
-        mInflater = LayoutInflater.from(context);
-        mModels = new ArrayList<T>();
-        mKeys = new ArrayList<String>();
-        mListener = this.mRef.addChildEventListener(new ChildEventListener() {
+    public WilddogListAdapter(Query ref, Class<T> modelClass, Context context) {
+        this.ref = ref;
+        this.modelClass = modelClass;
+        username = SharedPreferenceTool.getUserId(context);
+        inflater = LayoutInflater.from(context);
+        models = new ArrayList<T>();
+        keys = new ArrayList<String>();
+        listener = this.ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
 
-                T model = (T) dataSnapshot.getValue(WilddogListAdapter.this.mModelClass);
+                T model = (T) dataSnapshot.getValue(WilddogListAdapter.this.modelClass);
                 String key = dataSnapshot.getKey();
 
                 if (previousChildName == null) {
-                    mModels.add(0, model);
-                    mKeys.add(0, key);
+                    models.add(0, model);
+                    keys.add(0, key);
                 } else {
-                    int previousIndex = mKeys.indexOf(previousChildName);
+                    int previousIndex = keys.indexOf(previousChildName);
                     int nextIndex = previousIndex + 1;
-                    if (nextIndex == mModels.size()) {
-                        mModels.add(model);
-                        mKeys.add(key);
+                    if (nextIndex == models.size()) {
+                        models.add(model);
+                        keys.add(key);
                     } else {
-                        mModels.add(nextIndex, model);
-                        mKeys.add(nextIndex, key);
+                        models.add(nextIndex, model);
+                        keys.add(nextIndex, key);
                     }
                 }
 
@@ -66,10 +66,10 @@ public abstract class WilddogListAdapter<T> extends BaseAdapter {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 String key = dataSnapshot.getKey();
-                T newModel = (T) dataSnapshot.getValue(WilddogListAdapter.this.mModelClass);
-                int index = mKeys.indexOf(key);
+                T newModel = (T) dataSnapshot.getValue(WilddogListAdapter.this.modelClass);
+                int index = keys.indexOf(key);
 
-                mModels.set(index, newModel);
+                models.set(index, newModel);
 
                 notifyDataSetChanged();
             }
@@ -78,10 +78,10 @@ public abstract class WilddogListAdapter<T> extends BaseAdapter {
             public void onChildRemoved(DataSnapshot dataSnapshot) {
 
                 String key = dataSnapshot.getKey();
-                int index = mKeys.indexOf(key);
+                int index = keys.indexOf(key);
 
-                mKeys.remove(index);
-                mModels.remove(index);
+                keys.remove(index);
+                models.remove(index);
 
                 notifyDataSetChanged();
             }
@@ -90,22 +90,22 @@ public abstract class WilddogListAdapter<T> extends BaseAdapter {
             public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
 
                 String key = dataSnapshot.getKey();
-                T newModel = (T) dataSnapshot.getValue(WilddogListAdapter.this.mModelClass);
-                int index = mKeys.indexOf(key);
-                mModels.remove(index);
-                mKeys.remove(index);
+                T newModel = (T) dataSnapshot.getValue(WilddogListAdapter.this.modelClass);
+                int index = keys.indexOf(key);
+                models.remove(index);
+                keys.remove(index);
                 if (previousChildName == null) {
-                    mModels.add(0, newModel);
-                    mKeys.add(0, key);
+                    models.add(0, newModel);
+                    keys.add(0, key);
                 } else {
-                    int previousIndex = mKeys.indexOf(previousChildName);
+                    int previousIndex = keys.indexOf(previousChildName);
                     int nextIndex = previousIndex + 1;
-                    if (nextIndex == mModels.size()) {
-                        mModels.add(newModel);
-                        mKeys.add(key);
+                    if (nextIndex == models.size()) {
+                        models.add(newModel);
+                        keys.add(key);
                     } else {
-                        mModels.add(nextIndex, newModel);
-                        mKeys.add(nextIndex, key);
+                        models.add(nextIndex, newModel);
+                        keys.add(nextIndex, key);
                     }
                 }
                 notifyDataSetChanged();
@@ -120,19 +120,19 @@ public abstract class WilddogListAdapter<T> extends BaseAdapter {
     }
 
     public void cleanup() {
-        mRef.removeEventListener(mListener);
-        mModels.clear();
-        mKeys.clear();
+        ref.removeEventListener(listener);
+        models.clear();
+        keys.clear();
     }
 
     @Override
     public int getCount() {
-        return mModels.size();
+        return models.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return mModels.get(i);
+        return models.get(i);
     }
 
     @Override
@@ -142,8 +142,8 @@ public abstract class WilddogListAdapter<T> extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        Chat msg = (Chat) mModels.get(position);
-        if(msg.getUid().equals(mUsername))
+        Chat msg = (Chat) models.get(position);
+        if (msg.getUid().equals(username))
             return 1;
         else
             return 0;
@@ -153,33 +153,36 @@ public abstract class WilddogListAdapter<T> extends BaseAdapter {
     public int getViewTypeCount() {
         return 2;
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         ViewHolder viewHolder;
-        if(convertView == null){
-            if(getItemViewType(position) == 0){
-                convertView = mInflater.inflate(R.layout.chat_left,null);
+        if (convertView == null) {
+            if (getItemViewType(position) == 0) {
+                convertView = inflater.inflate(R.layout.chat_left, null);
                 viewHolder = new ViewHolder();
-                viewHolder.author = (TextView)convertView.findViewById(R.id.author);
-                viewHolder.message = (TextView)convertView.findViewById(R.id.message);
-            }else {
-                convertView = mInflater.inflate(R.layout.chat_right,null);
+                viewHolder.author = (TextView) convertView.findViewById(R.id.author);
+                viewHolder.message = (TextView) convertView.findViewById(R.id.message);
+            } else {
+                convertView = inflater.inflate(R.layout.chat_right, null);
                 viewHolder = new ViewHolder();
-                viewHolder.author = (TextView)convertView.findViewById(R.id.author);
-                viewHolder.message = (TextView)convertView.findViewById(R.id.message);
+                viewHolder.author = (TextView) convertView.findViewById(R.id.author);
+                viewHolder.message = (TextView) convertView.findViewById(R.id.message);
             }
             convertView.setTag(viewHolder);
-        }else {
-            viewHolder = (ViewHolder)convertView.getTag();
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        T model = mModels.get(position);
+        T model = models.get(position);
         populateView(viewHolder, model);
         return convertView;
     }
-    static class ViewHolder{
+
+    static class ViewHolder {
         TextView author;
         TextView message;
     }
+
     protected abstract void populateView(ViewHolder holder, T model);
 }

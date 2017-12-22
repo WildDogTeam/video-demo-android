@@ -12,21 +12,22 @@ import com.wilddog.video.base.WilddogVideoView;
 import java.util.List;
 
 /**
- * Created by fly on 17-12-11.
+ * Created by fly on 17-12-13.
  */
 
-public class VideosAdapter extends BaseAdapter{
-    private List<StreamHolder> mlist;
-    private Context mContext;
-    private boolean isLocalAttach = false;
-    public VideosAdapter(Context context, List<StreamHolder> list) {
-        mContext = context;
-        mlist = list;
+public class VideoModelAdapter extends BaseAdapter {
+    private List<StreamHolder> list;
+    private Context context;
+    private boolean isLocalAttach;
+
+    public VideoModelAdapter(Context context, List<StreamHolder> list) {
+        this.context = context;
+        this.list = list;
     }
 
     @Override
     public int getCount() {
-        return mlist.size();
+        return list.size();
     }
 
     @Override
@@ -42,9 +43,9 @@ public class VideosAdapter extends BaseAdapter{
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
-        StreamHolder streamHolder = mlist.get(i);
+        StreamHolder streamHolder = list.get(i);
         if (view == null) {
-            view = View.inflate(mContext, R.layout.item_video, null);
+            view = View.inflate(context, R.layout.item_video, null);
             holder = new ViewHolder();
             holder.wilddogVideoView = (WilddogVideoView) view.findViewById(R.id.wvv_video);
             view.setTag(holder);
@@ -54,6 +55,7 @@ public class VideosAdapter extends BaseAdapter{
         if (streamHolder.isLocal()) {
             // 本地流detach 需要时间,频繁detach再attach,可能detach完成在attch之后,导致本地视频画面卡住,所以如果是本地流attch之后就不反复操作了
             if (isLocalAttach == false) {
+                holder.wilddogVideoView.setMirror(true);
                 streamHolder.getStream().attach(holder.wilddogVideoView);
                 isLocalAttach = true;
             }

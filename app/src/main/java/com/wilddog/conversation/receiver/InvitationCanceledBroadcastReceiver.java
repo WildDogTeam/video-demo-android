@@ -8,7 +8,7 @@ import android.content.Intent;
  * Created by fly on 17-6-13.
  */
 
-public class InviteCancelBroadcastReceiver extends BroadcastReceiver {
+public class InvitationCanceledBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 

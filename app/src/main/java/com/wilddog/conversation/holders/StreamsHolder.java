@@ -1,5 +1,6 @@
-package com.wilddog.conversation.floatingwindow;
+package com.wilddog.conversation.holders;
 
+import com.wilddog.conversation.floatingwindow.WindowService;
 import com.wilddog.video.base.LocalStream;
 import com.wilddog.video.call.RemoteStream;
 

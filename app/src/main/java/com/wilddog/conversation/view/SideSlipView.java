@@ -13,7 +13,7 @@ import android.widget.Scroller;
 /**
  * Created by fly on 2017/6/15.
  */
-public class SideslipView extends LinearLayout {
+public class SideSlipView extends LinearLayout {
 
     private ViewGroup viewContent;
     private ViewGroup viewLeft;
@@ -26,12 +26,12 @@ public class SideslipView extends LinearLayout {
     private ScrollerAnimation scrollerAnimation;
     private String toggleState = "CLOSE";
 
-    public SideslipView(Context context, AttributeSet attrs) {
+    public SideSlipView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public SideslipView(Context context) {
+    public SideSlipView(Context context) {
         this(context, null);
     }
 

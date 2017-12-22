@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.activities.CallingActivity;
 import com.wilddog.conversation.activities.ConversationActivity;
+import com.wilddog.conversation.holders.StreamsHolder;
 import com.wilddog.conversation.utils.ParamsStore;
 import com.wilddog.video.base.WilddogVideoView;
 

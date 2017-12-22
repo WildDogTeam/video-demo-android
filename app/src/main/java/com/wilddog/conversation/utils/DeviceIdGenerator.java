@@ -9,7 +9,7 @@ import java.util.UUID;
  * Created by fly on 17-9-4.
  */
 
-public class CollectionDeviceIdTool {
+public class DeviceIdGenerator {
     public static String getDeviceId(){
         String serial = null;
         String deviceId =null;

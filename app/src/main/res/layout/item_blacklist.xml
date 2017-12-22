@@ -6,7 +6,7 @@
     android:gravity="center"
     android:minHeight="50dp"
     android:orientation="horizontal">
-    <com.wilddog.conversation.view.SideslipView
+    <com.wilddog.conversation.view.SideSlipView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -49,5 +49,5 @@
                 android:textColor="@color/text_color_white"
                 android:textSize="16sp" />
         </LinearLayout>
-    </com.wilddog.conversation.view.SideslipView>
+    </com.wilddog.conversation.view.SideSlipView>
 </LinearLayout>

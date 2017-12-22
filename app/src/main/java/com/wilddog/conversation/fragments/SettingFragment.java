@@ -21,8 +21,8 @@ import com.wilddog.conversation.activities.RecordFileActivity;
 import com.wilddog.conversation.activities.SDKVersionActivity;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.AlertMessageUtil;
-import com.wilddog.conversation.utils.ImageManager;
-import com.wilddog.conversation.utils.ObjectAndStringTool;
+import com.wilddog.conversation.utils.ImageLoadingUtil;
+import com.wilddog.conversation.utils.JsonConvertUtil;
 import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
@@ -31,7 +31,7 @@ import com.wilddog.conversation.wilddog.WilddogSyncManager;
  * Created by fly on 17-6-9.
  */
 
-public class MeFragment extends BaseFragment implements View.OnClickListener {
+public class SettingFragment extends BaseFragment implements View.OnClickListener {
     private TextView tvUid;
     private TextView tvDimension;
     private TextView tvBeautyPlan;
@@ -51,7 +51,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     private UserInfo info;
     private LinearLayout llBlackList;
 
-    public MeFragment() {
+    public SettingFragment() {
 
     }
 
@@ -87,10 +87,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void initDate() {
-        info = ObjectAndStringTool.getObjectFromJson(SharedPreferenceTool.getUserInfo(getContext()), UserInfo.class);
+        info = JsonConvertUtil.getObjectFromJson(SharedPreferenceTool.getUserInfo(getContext()), UserInfo.class);
         tvUid.setText("ID:" + info.getUid());
         tvNickName.setText(info.getNickname());
-        ImageManager.Load(info.getFaceurl(), civPhotoUrl);
+        ImageLoadingUtil.Load(info.getFaceurl(), civPhotoUrl);
         tvDimension.setText(SharedPreferenceTool.getDimension(getContext()));
         tvBeautyPlan.setText(SharedPreferenceTool.getBeautyPlan(getContext()));
     }

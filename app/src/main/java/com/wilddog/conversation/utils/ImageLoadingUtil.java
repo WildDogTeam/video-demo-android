@@ -13,7 +13,7 @@ import com.wilddog.conversation.R;
 /**
  * Created by Administrator on 2015/12/17.
  */
-public class ImageManager {
+public class ImageLoadingUtil {
     public static void Load(String imgUrl, ImageView imageView){
                ImageLoader.getInstance().displayImage(imgUrl, imageView);
 

@@ -10,12 +10,13 @@
 
 
     <RelativeLayout
+        android:id="@+id/rl_wilddog_video_views"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
         <com.wilddog.video.base.WilddogVideoView
-            android:id="@+id/wvv_big"
+            android:id="@+id/wwv_big"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
@@ -30,57 +31,58 @@
             android:visibility="gone" />
 
         <RelativeLayout
+            android:id="@+id/rl_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/rl_data"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="13.3dp"
             android:layout_alignParentRight="true"
-            >
+            android:layout_marginRight="13.3dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
             <ImageView
+                android:id="@+id/iv_report"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
-                android:id="@+id/iv_report"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/stats"
-                />
+                android:src="@drawable/stats" />
+
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_below="@+id/iv_report"
-                android:layout_alignParentRight="true"
                 android:id="@+id/ll_record_icon_and_time"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/iv_report"
+                android:orientation="horizontal">
+
                 <TextView
+                    android:id="@+id/tv_record_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="00:00:00"
-                    android:id="@+id/tv_record_time"
                     android:layout_gravity="bottom"
                     android:layout_marginRight="7dp"
+                    android:text="00:00:00"
                     android:textColor="@color/text_color_white"
                     android:textSize="12sp"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
+
                 <ImageView
-                    android:layout_marginTop="20dp"
+                    android:id="@+id/iv_record"
                     android:layout_width="33dp"
                     android:layout_height="33dp"
-                    android:id="@+id/iv_record"
-                    />
+                    android:layout_marginTop="20dp" />
             </LinearLayout>
+
             <ImageView
-                android:layout_marginTop="25dp"
+                android:id="@+id/iv_fullscreen"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/ll_record_icon_and_time"
-                android:id="@+id/iv_fullscreen"
-                android:src="@drawable/fullscreen"
-                />
+                android:layout_marginTop="25dp"
+                android:src="@drawable/fullscreen" />
 
         </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/ll_state"
             android:layout_width="wrap_content"
@@ -125,10 +127,12 @@
                 android:textColor="@color/item_background"
                 android:textSize="12sp" />
         </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/rl_can_hide_place"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
@@ -138,17 +142,19 @@
                 android:text="我是昵称"
                 android:textColor="@color/text_color_white"
                 android:textSize="23sp" />
+
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_nickname"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
                 android:textColor="@color/text_color_white"
                 android:textSize="14sp"
                 android:visibility="invisible" />
+
             <LinearLayout
                 android:id="@+id/ll_contral_button"
                 android:layout_width="match_parent"
@@ -285,16 +291,18 @@
                     android:id="@+id/ll_reject"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
                     android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
+
                     <ImageView
                         android:layout_width="62dp"
                         android:layout_height="62dp"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:src="@drawable/reject" />
+
                     <TextView
                         android:id="@+id/tv_hungup"
                         android:layout_width="wrap_content"
@@ -346,23 +354,27 @@
             android:text="等待对方接受邀请"
             android:textColor="@color/text_color_white"
             android:textSize="14.7sp" />
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <LinearLayout
             android:id="@+id/ll_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="307dp"
             android:layout_gravity="center"
+            android:layout_marginTop="307dp"
             android:orientation="vertical">
+
             <ImageView
                 android:layout_width="62dp"
                 android:layout_height="62dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:src="@drawable/reject" />
+
             <TextView
                 android:id="@+id/tv_cancel"
                 android:layout_width="wrap_content"
@@ -374,7 +386,6 @@
                 android:textColor="@color/text_color_white" />
         </LinearLayout>
     </LinearLayout>
-
 
 
 </RelativeLayout>

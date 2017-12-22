@@ -3,7 +3,7 @@ package com.wilddog.conversation.bean;
 import com.wilddog.video.base.core.Stream;
 
 public class StreamHolder {
-    private Long timeStamp;
+    private Long timestamp;
     private Stream stream;
     private boolean isLocal =false;
 
@@ -17,9 +17,9 @@ public class StreamHolder {
         this.id = id;
     }
 
-    public StreamHolder(boolean isLocal, long timeStamp, Stream stream) {
+    public StreamHolder(boolean isLocal, long timestamp, Stream stream) {
         this.isLocal = isLocal;
-        this.timeStamp = timeStamp;
+        this.timestamp = timestamp;
         this.stream = stream;
     }
 
@@ -31,12 +31,12 @@ public class StreamHolder {
         isLocal = local;
     }
 
-    public Long getTimeStamp() {
-        return timeStamp;
+    public Long getTimestamp() {
+        return timestamp;
     }
 
-    public void setTimeStamp(Long timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public Stream getStream() {
@@ -55,7 +55,7 @@ public class StreamHolder {
         StreamHolder that = (StreamHolder) o;
 
         if (isLocal != that.isLocal) return false;
-        if (timeStamp != null ? !timeStamp.equals(that.timeStamp) : that.timeStamp != null)
+        if (timestamp != null ? !timestamp.equals(that.timestamp) : that.timestamp != null)
             return false;
         if (stream != null ? !stream.equals(that.stream) : that.stream != null) return false;
         return id != null ? id.equals(that.id) : that.id == null;
@@ -63,7 +63,7 @@ public class StreamHolder {
 
     @Override
     public int hashCode() {
-        int result = timeStamp != null ? timeStamp.hashCode() : 0;
+        int result = timestamp != null ? timestamp.hashCode() : 0;
         result = 31 * result + (stream != null ? stream.hashCode() : 0);
         result = 31 * result + (isLocal ? 1 : 0);
         result = 31 * result + (id != null ? id.hashCode() : 0);

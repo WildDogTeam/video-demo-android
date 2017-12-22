@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
-import com.wilddog.conversation.utils.ImageManager;
+import com.wilddog.conversation.utils.ImageLoadingUtil;
 import com.wilddog.conversation.view.CircleImageView;
 
 public class ReportActivity extends AppCompatActivity {
@@ -32,7 +32,7 @@ public class ReportActivity extends AppCompatActivity {
 
     private void setData() {
         tvNickname.setText(user.getNickname());
-        ImageManager.Load(user.getFaceurl(), civHeadImage);
+        ImageLoadingUtil.Load(user.getFaceurl(), civHeadImage);
     }
 
 

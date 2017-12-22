@@ -10,12 +10,13 @@
     tools:context="com.wilddog.conversation.activities.ConversationActivity">
 
     <RelativeLayout
+        android:id="@+id/rl_wilddog_video_views"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
 
         <com.wilddog.video.base.WilddogVideoView
-            android:id="@+id/wvv_big"
+            android:id="@+id/wwv_big"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

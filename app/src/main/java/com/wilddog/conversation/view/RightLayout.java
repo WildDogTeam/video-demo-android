@@ -20,7 +20,7 @@ import com.wilddog.conversation.R;
 import com.wilddog.conversation.adapters.ChatListAdapter;
 import com.wilddog.conversation.bean.Chat;
 import com.wilddog.conversation.bean.UserInfo;
-import com.wilddog.conversation.utils.ObjectAndStringTool;
+import com.wilddog.conversation.utils.JsonConvertUtil;
 import com.wilddog.conversation.utils.SharedPreferenceTool;
 
 
@@ -96,7 +96,7 @@ public class RightLayout extends RelativeLayout {
 
     private void setupUsername() {
         mUserId = SharedPreferenceTool.getUserId(context);
-        UserInfo info = ObjectAndStringTool.getObjectFromJson(SharedPreferenceTool.getUserInfo(getContext()), UserInfo.class);
+        UserInfo info = JsonConvertUtil.getObjectFromJson(SharedPreferenceTool.getUserInfo(getContext()), UserInfo.class);
         userName = info.getNickname();
     }
     private void sendMessage() {

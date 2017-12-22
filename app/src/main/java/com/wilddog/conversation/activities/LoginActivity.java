@@ -12,11 +12,11 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.UserInfo;
-import com.wilddog.conversation.utils.ActivityHolder;
+import com.wilddog.conversation.holders.ActivityHolder;
 import com.wilddog.conversation.utils.AlertMessageUtil;
-import com.wilddog.conversation.utils.CollectionDeviceIdTool;
+import com.wilddog.conversation.utils.DeviceIdGenerator;
 import com.wilddog.conversation.utils.Constant;
-import com.wilddog.conversation.utils.ObjectAndStringTool;
+import com.wilddog.conversation.utils.JsonConvertUtil;
 import com.wilddog.conversation.utils.PermissionHelper;
 import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.utils.WXUtil;
@@ -34,10 +34,7 @@ import java.util.Random;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getName();
-
     private Button btnLogin;
-
-
     private static final int REQUEST_CODE = 0; // 请求码
 
     static final String[] PERMISSIONS = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -62,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         tvDeclare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this,DeclareActivity.class);
+                Intent intent = new Intent(LoginActivity.this, DeclareActivity.class);
                 startActivity(intent);
             }
         });
@@ -90,11 +87,13 @@ public class LoginActivity extends AppCompatActivity {
         IWXAPI iwxapi = WXUtil.getIwxapi();
         if (!iwxapi.isWXAppInstalled()) {
             AlertMessageUtil.showShortToast("请先下载安装微信");
+            AlertMessageUtil.dismissprogressbar();
             Constant.isLoginClickable = true;
             return;
         }
         if (!iwxapi.isWXAppSupportAPI()) {
             AlertMessageUtil.showShortToast("请先更新微信应用");
+            AlertMessageUtil.dismissprogressbar();
             Constant.isLoginClickable = true;
             return;
         }
@@ -107,15 +106,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
-        Log.e(TAG, "btnLogin: "+ Environment.getExternalStorageDirectory() );
+        Log.e(TAG, "btnLogin: " + Environment.getExternalStorageDirectory());
         AlertMessageUtil.showprogressbar("微信登录中", LoginActivity.this);
-       loginWithAnonymously();
-        //   weixinLogin();
+        loginWithAnonymously();
+        //weixinLogin();
     }
 
-
     private void loginWithAnonymously() {
-
         WilddogAuthManager.getWilddogAuth().signInAnonymously().addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(Task<AuthResult> task) {
@@ -125,14 +122,14 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferenceTool.saveUserId(LoginActivity.this, user.getUid());
                     UserInfo info = new UserInfo();
                     Random r = new Random();
-                    int num = r.nextInt(999999)+1;
+                    int num = r.nextInt(999999) + 1;
                     info.setNickname("Android" + num);
-                    int photoNum = num%20+1;
+                    int photoNum = num % 20 + 1;
                     info.setUid(user.getUid());
-                    info.setFaceurl("https://img.wdstatic.cn/video-demo/Head"+photoNum+".png");
-                    info.setDeviceid(CollectionDeviceIdTool.getDeviceId());
+                    info.setFaceurl("https://img.wdstatic.cn/video-demo/Head" + photoNum + ".png");
+                    info.setDeviceid(DeviceIdGenerator.getDeviceId());
                     WilddogSyncManager.getWilddogSyncTool().writeToUserInfo(info);
-                    SharedPreferenceTool.setUserInfo(LoginActivity.this, ObjectAndStringTool.getJsonFromObject(info));
+                    SharedPreferenceTool.setUserInfo(LoginActivity.this, JsonConvertUtil.getJsonFromObject(info));
                     SharedPreferenceTool.setLoginStatus(LoginActivity.this, true);
                     //TODO 需要记下所有的登录的用户的uid和昵称等用于推送
                     AlertMessageUtil.showShortToast("登录成功");

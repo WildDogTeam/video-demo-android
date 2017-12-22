@@ -1,4 +1,4 @@
-package com.wilddog.conversation.utils;
+package com.wilddog.conversation.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.wilddog.conversation.ConversationApplication;
-import com.wilddog.conversation.bean.BlackListUser;
+import com.wilddog.conversation.bean.BlacklistUser;
 import com.wilddog.conversation.bean.ConversationRecord;
 
 import java.util.ArrayList;
@@ -67,9 +67,9 @@ public class MyOpenHelper extends SQLiteOpenHelper {
                 conversationRecord.setLocalId(cursor.getString(cursor.getColumnIndex("localid")));
                 conversationRecord.setPhotoUrl(cursor.getString(cursor.getColumnIndex("photoUrl")));
                 conversationRecord.setDuration(cursor.getString(cursor.getColumnIndex("duration")));
-                conversationRecord.setTimeStamp(cursor.getString(cursor.getColumnIndex("timestamp")));
+                conversationRecord.setTimestamp(cursor.getString(cursor.getColumnIndex("timestamp")));
                 conversationRecord.setRemoteId(cursor.getString(cursor.getColumnIndex("remoteid")));
-                conversationRecord.setNickName(cursor.getString(cursor.getColumnIndex("nickname")));
+                conversationRecord.setNickname(cursor.getString(cursor.getColumnIndex("nickname")));
             list.add(conversationRecord);}
         }
         cursor.close();
@@ -85,9 +85,9 @@ public class MyOpenHelper extends SQLiteOpenHelper {
             conversationRecord.setLocalId(cursor.getString(cursor.getColumnIndex("localid")));
             conversationRecord.setPhotoUrl(cursor.getString(cursor.getColumnIndex("photoUrl")));
             conversationRecord.setDuration(cursor.getString(cursor.getColumnIndex("duration")));
-            conversationRecord.setTimeStamp(cursor.getString(cursor.getColumnIndex("timestamp")));
+            conversationRecord.setTimestamp(cursor.getString(cursor.getColumnIndex("timestamp")));
             conversationRecord.setRemoteId(cursor.getString(cursor.getColumnIndex("remoteid")));
-            conversationRecord.setNickName(cursor.getString(cursor.getColumnIndex("nickname")));
+            conversationRecord.setNickname(cursor.getString(cursor.getColumnIndex("nickname")));
         }
         cursor.close();
         return conversationRecord;
@@ -102,9 +102,9 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put("localid",conversationRecord.getLocalId());
         cv.put("remoteid",conversationRecord.getRemoteId());
-        cv.put("nickname",conversationRecord.getNickName());
+        cv.put("nickname",conversationRecord.getNickname());
         cv.put("photoUrl",conversationRecord.getPhotoUrl());
-        cv.put("timestamp",conversationRecord.getTimeStamp());
+        cv.put("timestamp",conversationRecord.getTimestamp());
         cv.put("duration",conversationRecord.getDuration());
         long row = db.insert(historyTableName, null, cv);
         return row;
@@ -120,23 +120,23 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         String[] whereValue = { localId, remoteId};
 
         ContentValues cv = new ContentValues();
-        cv.put("timestamp", conversationRecord.getTimeStamp());
-        cv.put("nickname",conversationRecord.getNickName());
+        cv.put("timestamp", conversationRecord.getTimestamp());
+        cv.put("nickname",conversationRecord.getNickname());
         cv.put("photoUrl",conversationRecord.getPhotoUrl());
         cv.put("duration",conversationRecord.getDuration());
         db.update(historyTableName, cv, where, whereValue);
     }
 
     //黑名单增加操作
-    public boolean insertBlackList(BlackListUser blackListUser)
+    public boolean insertBlackList(BlacklistUser blacklistUser)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("localid", blackListUser.getLocalId());
-        cv.put("remoteid", blackListUser.getRemoteId());
-        cv.put("nickname", blackListUser.getNickName());
-        cv.put("photoUrl", blackListUser.getFaceurl());
-        cv.put("timestamp", blackListUser.getTimeStamp());
+        cv.put("localid", blacklistUser.getLocalId());
+        cv.put("remoteid", blacklistUser.getRemoteId());
+        cv.put("nickname", blacklistUser.getNickName());
+        cv.put("photoUrl", blacklistUser.getFaceurl());
+        cv.put("timestamp", blacklistUser.getTimeStamp());
         long row = db.insert(blackListTableName, null, cv);
         return row > -1;
     }
@@ -154,20 +154,20 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         cursor.close();
         return list;
     }
-    public List<BlackListUser> selectBlackUsers(String localId) {
+    public List<BlacklistUser> selectBlackUsers(String localId) {
         SQLiteDatabase db = this.getReadableDatabase();
         List list=new ArrayList();
         Cursor cursor = db
                 .query(blackListTableName, null, "localid=?", new String[]{localId}, null, null, "timestamp desc",null);
         if(cursor!=null){
             while (cursor.moveToNext()){
-                BlackListUser blackListUser = new BlackListUser();
-                blackListUser.setLocalId(cursor.getString(cursor.getColumnIndex("localid")));
-                blackListUser.setTimeStamp(cursor.getString(cursor.getColumnIndex("timestamp")));
-                blackListUser.setRemoteId(cursor.getString(cursor.getColumnIndex("remoteid")));
-                blackListUser.setNickName(cursor.getString(cursor.getColumnIndex("nickname")));
-                blackListUser.setFaceurl(cursor.getString(cursor.getColumnIndex("photoUrl")));
-                list.add(blackListUser);
+                BlacklistUser blacklistUser = new BlacklistUser();
+                blacklistUser.setLocalId(cursor.getString(cursor.getColumnIndex("localid")));
+                blacklistUser.setTimeStamp(cursor.getString(cursor.getColumnIndex("timestamp")));
+                blacklistUser.setRemoteId(cursor.getString(cursor.getColumnIndex("remoteid")));
+                blacklistUser.setNickName(cursor.getString(cursor.getColumnIndex("nickname")));
+                blacklistUser.setFaceurl(cursor.getString(cursor.getColumnIndex("photoUrl")));
+                list.add(blacklistUser);
             }
         }
         cursor.close();
@@ -180,9 +180,9 @@ public class MyOpenHelper extends SQLiteOpenHelper {
         return delete>0;
     }
 
-    public boolean deleteBlackUser(BlackListUser blackListUser) {
+    public boolean deleteBlackUser(BlacklistUser blacklistUser) {
         SQLiteDatabase db = this.getWritableDatabase();
-        int delete = db.delete(blackListTableName, "remoteid =?", new String[]{blackListUser.getRemoteId()});
+        int delete = db.delete(blackListTableName, "remoteid =?", new String[]{blacklistUser.getRemoteId()});
         return delete>0;
     }
 }

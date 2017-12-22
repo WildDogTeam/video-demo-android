@@ -1,4 +1,4 @@
-package com.wilddog.conversation.utils;
+package com.wilddog.conversation.holders;
 
 import android.app.Activity;
 

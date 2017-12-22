@@ -19,8 +19,8 @@ import com.wilddog.conversation.R;
 import com.wilddog.conversation.activities.CallingActivity;
 import com.wilddog.conversation.bean.ConversationRecord;
 import com.wilddog.conversation.bean.UserInfo;
-import com.wilddog.conversation.utils.ImageManager;
-import com.wilddog.conversation.utils.MyOpenHelper;
+import com.wilddog.conversation.utils.ImageLoadingUtil;
+import com.wilddog.conversation.db.MyOpenHelper;
 import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.utils.String2DateUtil;
 import com.wilddog.conversation.view.CircleImageView;
@@ -162,10 +162,10 @@ public class FriendsFragment extends BaseFragment {
                 v = (ViewHolder) view.getTag();
             }
             ConversationRecord everyone = mList.get(position);
-            v.tvNickName.setText(everyone.getNickName());
-            v.tvCallTime.setText(String2DateUtil.getStandardDate(everyone.getTimeStamp()));
+            v.tvNickName.setText(everyone.getNickname());
+            v.tvCallTime.setText(String2DateUtil.getStandardDate(everyone.getTimestamp()));
             v.tvDuration.setText("通话时长:"+formatTime(everyone.getDuration()));
-            ImageManager.Load(everyone.getPhotoUrl(), v.civPhoto);
+            ImageLoadingUtil.Load(everyone.getPhotoUrl(), v.civPhoto);
             return view;
         }
 

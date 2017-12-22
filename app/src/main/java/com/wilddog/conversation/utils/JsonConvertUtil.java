@@ -12,7 +12,7 @@ import java.io.IOException;
  * Created by fly on 17-8-17.
  */
 
-public class ObjectAndStringTool {
+public class JsonConvertUtil {
     private static ObjectMapper objectMapper = new ObjectMapper();
 
     /**

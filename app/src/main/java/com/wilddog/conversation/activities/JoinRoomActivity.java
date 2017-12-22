@@ -11,14 +11,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.wilddog.conversation.R;
 import com.wilddog.conversation.bean.Callback;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.bean.VideoError;
 import com.wilddog.conversation.utils.AlertMessageUtil;
-import com.wilddog.conversation.utils.ObjectAndStringTool;
+import com.wilddog.conversation.utils.JsonConvertUtil;
 import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.wilddog.WilddogSyncManager;
 
@@ -106,20 +105,18 @@ public class JoinRoomActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Long aLong) {
                 String uid = SharedPreferenceTool.getUserId(JoinRoomActivity.this);
-                UserInfo info = ObjectAndStringTool.getObjectFromJson(SharedPreferenceTool.getUserInfo(JoinRoomActivity.this), UserInfo.class);
-                WilddogSyncManager.getWilddogSyncTool().writeRoomUsers(roomId, uid,info.getNickname());
+                UserInfo info = JsonConvertUtil.getObjectFromJson(SharedPreferenceTool.getUserInfo(JoinRoomActivity.this), UserInfo.class);
+                WilddogSyncManager.getWilddogSyncTool().writeRoomUsers(roomId, uid, info.getNickname());
                 SharedPreferenceTool.saveRoomId(JoinRoomActivity.this, roomId);
+                Intent intent;
                 if (type == 1) {
-                    Intent intent = new Intent(JoinRoomActivity.this, VideoModelActivity.class);
-                    intent.putExtra("roomId", roomId);
-                    intent.putExtra("time", aLong);
-                    startActivity(intent);
+                    intent = new Intent(JoinRoomActivity.this, VideoModelActivity.class);
                 } else {
-                    Intent intent = new Intent(JoinRoomActivity.this, InteractModelActivity.class);
-                    intent.putExtra("roomId", roomId);
-                    intent.putExtra("time", aLong);
-                    startActivity(intent);
+                    intent = new Intent(JoinRoomActivity.this, InteractModelActivity.class);
                 }
+                intent.putExtra("roomId", roomId);
+                intent.putExtra("time", aLong);
+                startActivity(intent);
             }
 
             @Override

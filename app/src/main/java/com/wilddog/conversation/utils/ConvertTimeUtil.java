@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Created by Administrator on 2017/1/13.
  */
-public class ConvertUtil {
+public class ConvertTimeUtil {
     public static long hourValue = 60*60*1000;
     public static long minuteValue =60*1000;
     public static final String yyyyMMddWWHHmm = "yyyy-MM-dd(E)  HH:mm";

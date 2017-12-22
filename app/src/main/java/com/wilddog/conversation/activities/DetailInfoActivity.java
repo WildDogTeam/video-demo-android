@@ -12,11 +12,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wilddog.conversation.R;
-import com.wilddog.conversation.bean.BlackListUser;
+import com.wilddog.conversation.bean.BlacklistUser;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.AlertMessageUtil;
-import com.wilddog.conversation.utils.ImageManager;
-import com.wilddog.conversation.utils.MyOpenHelper;
+import com.wilddog.conversation.utils.ImageLoadingUtil;
+import com.wilddog.conversation.db.MyOpenHelper;
 import com.wilddog.conversation.utils.SharedPreferenceTool;
 import com.wilddog.conversation.view.CircleImageView;
 import com.wilddog.conversation.wilddog.WilddogVideoManager;
@@ -28,7 +28,7 @@ public class DetailInfoActivity extends AppCompatActivity {
     private UserInfo user;
     private Button btnCall;
     private TextView tvUid;
-    private LinearLayout llBlackList;
+    private LinearLayout llBlacklist;
     private LinearLayout tvReport;
     private LinearLayout llParent;
     private PopupWindow popupWindow;
@@ -44,8 +44,8 @@ public class DetailInfoActivity extends AppCompatActivity {
 
     private void setData() {
         tvNickname.setText(user.getNickname());
-        ImageManager.Load(user.getFaceurl(), civHeadImage);
-        tvUid.setText("ID:"+user.getUid());
+        ImageLoadingUtil.Load(user.getFaceurl(), civHeadImage);
+        tvUid.setText("ID:" + user.getUid());
     }
 
     private void initView() {
@@ -54,7 +54,7 @@ public class DetailInfoActivity extends AppCompatActivity {
         civHeadImage = (CircleImageView) findViewById(R.id.civ_photo);
         tvUid = (TextView) findViewById(R.id.tv_uid);
         btnCall = (Button) findViewById(R.id.btn_call);
-        llBlackList = (LinearLayout) findViewById(R.id.ll_blacklist);
+        llBlacklist = (LinearLayout) findViewById(R.id.ll_blacklist);
         tvReport = (LinearLayout) findViewById(R.id.tv_report);
         findViewById(R.id.iv_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +71,7 @@ public class DetailInfoActivity extends AppCompatActivity {
             }
         });
 
-        llBlackList.setOnClickListener(new View.OnClickListener() {
+        llBlacklist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showPupWindowView();
@@ -80,8 +80,8 @@ public class DetailInfoActivity extends AppCompatActivity {
         tvReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(DetailInfoActivity.this,ReportActivity.class);
-                intent.putExtra("user",user);
+                Intent intent = new Intent(DetailInfoActivity.this, ReportActivity.class);
+                intent.putExtra("user", user);
                 startActivity(intent);
             }
         });
@@ -96,19 +96,19 @@ public class DetailInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String mid = SharedPreferenceTool.getUserId(DetailInfoActivity.this);
-                BlackListUser blackListUser =new BlackListUser();
-                blackListUser.setLocalId(mid);
-                blackListUser.setNickName(user.getNickname());
-                blackListUser.setRemoteId(user.getUid());
-                blackListUser.setTimeStamp(System.currentTimeMillis()+"");
-                blackListUser.setFaceurl(user.getFaceurl());
-                boolean isAdded = MyOpenHelper.getInstance().insertBlackList(blackListUser);
-                if(isAdded) {
+                BlacklistUser blacklistUser = new BlacklistUser();
+                blacklistUser.setLocalId(mid);
+                blacklistUser.setNickName(user.getNickname());
+                blacklistUser.setRemoteId(user.getUid());
+                blacklistUser.setTimeStamp(System.currentTimeMillis() + "");
+                blacklistUser.setFaceurl(user.getFaceurl());
+                boolean isAdded = MyOpenHelper.getInstance().insertBlackList(blacklistUser);
+                if (isAdded) {
                     MyOpenHelper.getInstance().deleteConversationRecord(mid, user.getUid());
                     AlertMessageUtil.showShortToast("加入黑名单成功");
                     dismissPopupWindow();
                     finish();
-                }else {
+                } else {
                     // 加入和名单失败
                     AlertMessageUtil.showShortToast("加入黑名单失败");
                     dismissPopupWindow();

@@ -27,8 +27,8 @@ import com.wilddog.conversation.activities.DetailInfoActivity;
 import com.wilddog.conversation.activities.JoinRoomActivity;
 import com.wilddog.conversation.bean.UserInfo;
 import com.wilddog.conversation.utils.AlertMessageUtil;
-import com.wilddog.conversation.utils.ImageManager;
-import com.wilddog.conversation.utils.MyOpenHelper;
+import com.wilddog.conversation.utils.ImageLoadingUtil;
+import com.wilddog.conversation.db.MyOpenHelper;
 import com.wilddog.conversation.utils.PingYinUtil;
 import com.wilddog.conversation.utils.PinyinComparator;
 import com.wilddog.conversation.utils.SharedPreferenceTool;
@@ -290,7 +290,7 @@ public class OnlineFragment extends BaseFragment {
                     v.tvCatalog.setText(catalog);
                 }
             }
-            ImageManager.Load(everyone.getFaceurl(),v.photoUrl);
+            ImageLoadingUtil.Load(everyone.getFaceurl(),v.photoUrl);
             return view;
         }
 

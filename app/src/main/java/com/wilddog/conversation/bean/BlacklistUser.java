@@ -4,7 +4,7 @@ package com.wilddog.conversation.bean;
  * Created by he on 2017/10/12.
  */
 
-public class BlackListUser {
+public class BlacklistUser {
     private String localId;
     private String remoteId;
     private String timeStamp;

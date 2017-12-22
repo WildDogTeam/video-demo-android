@@ -23,7 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wilddog.conversation.R;
-import com.wilddog.conversation.adapters.MyGridViewAdapter;
+import com.wilddog.conversation.adapters.VideoModelAdapter;
 import com.wilddog.conversation.bean.Callback;
 import com.wilddog.conversation.bean.StreamHolder;
 import com.wilddog.conversation.bean.VideoError;
@@ -66,7 +66,7 @@ public class VideoModelActivity extends AppCompatActivity {
     private int currVolume = 0;
     private AudioManager audioManager;
 
-    private MyGridViewAdapter adapter;
+    private VideoModelAdapter adapter;
     private List<StreamHolder> streamHolders = new ArrayList<>();
     private long startTimeStamp;
     private Handler handler = new Handler() {
@@ -206,7 +206,7 @@ public class VideoModelActivity extends AppCompatActivity {
         LocalStreamOptions options = new LocalStreamOptions.Builder().build();
         localStream = LocalStream.create(options);
         localStream.enableAudio(isAudioEnable);
-        localStream.enableVideo(true);
+        localStream.enableVideo(isVideoEnable);
         //将本地媒体流绑定到WilddogVideoView中
         StreamHolder holder = new StreamHolder(true, System.currentTimeMillis(), localStream);
         streamHolders.add(holder);
@@ -227,7 +227,7 @@ public class VideoModelActivity extends AppCompatActivity {
 
         gvStreams = (GridView) findViewById(R.id.gv_streams);
         gvStreams.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        adapter = new MyGridViewAdapter(this, streamHolders);
+        adapter = new VideoModelAdapter(this, streamHolders);
         gvStreams.setAdapter(adapter);
     }
 
