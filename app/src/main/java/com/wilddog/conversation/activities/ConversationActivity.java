@@ -425,6 +425,7 @@ public class ConversationActivity extends AppCompatActivity {
                 int bigIndex = ((ViewGroup)wwvBig.getParent()).indexOfChild(wwvBig);
                 if (wwvBig != null) {
                     rlWilddogVideoView.removeView(wwvBig);
+                    wwvBig.release();
                     wwvBig = new WilddogVideoView(ConversationActivity.this);
                     ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     wwvBig.setLayoutParams(params);
@@ -433,6 +434,7 @@ public class ConversationActivity extends AppCompatActivity {
                 int smallIndex = ((ViewGroup)wwvSmall.getParent()).indexOfChild(wwvSmall);
                 if (wwvSmall != null) {
                     rlWilddogVideoView.removeView(wwvSmall);
+                    wwvSmall.release();
                     wwvSmall = new WilddogVideoView(ConversationActivity.this);
                     ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(CommonUtil.dipToPixel(ConversationActivity.this, 105), CommonUtil.dipToPixel(ConversationActivity.this, 160));
                     wwvSmall.setLayoutParams(params);
@@ -448,6 +450,7 @@ public class ConversationActivity extends AppCompatActivity {
                 int bigIndex = ((ViewGroup)wwvBig.getParent()).indexOfChild(wwvBig);
                 if (wwvBig != null) {
                     rlWilddogVideoView.removeView(wwvBig);
+                    wwvBig.release();
                     wwvBig = new WilddogVideoView(ConversationActivity.this);
                     ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     wwvBig.setLayoutParams(params);
@@ -456,6 +459,7 @@ public class ConversationActivity extends AppCompatActivity {
                 int smallIndex = ((ViewGroup)wwvSmall.getParent()).indexOfChild(wwvSmall);
                 if (wwvSmall != null) {
                     rlWilddogVideoView.removeView(wwvSmall);
+                    wwvSmall.release();
                     wwvSmall = new WilddogVideoView(ConversationActivity.this);
                     ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(CommonUtil.dipToPixel(ConversationActivity.this, 105), CommonUtil.dipToPixel(ConversationActivity.this, 160));
                     wwvSmall.setLayoutParams(params);

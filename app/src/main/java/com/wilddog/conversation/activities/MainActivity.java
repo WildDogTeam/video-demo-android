@@ -37,6 +37,7 @@ import com.wilddog.video.call.WilddogVideoCall;
 import com.wilddog.wilddogauth.WilddogAuth;
 
 import java.util.Map;
+import java.util.UUID;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -188,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                                 String strNickname = subMap.get("nickname") == null ? uid : subMap.get("nickname").toString();
                                 remoteUserInfo.setNickname(strNickname);
                                 remoteUserInfo.setUid(uid);
-                                remoteUserInfo.setDeviceid(subMap.get("deviceid").toString());
+                                remoteUserInfo.setDeviceid(subMap.get("deviceid")==null ? UUID.randomUUID().toString():subMap.get("deviceid").toString());
                                 gotoAcceptActivity(remoteUserInfo);
                             } else {
                                 Toast.makeText(MainActivity.this, "呼叫者已经离线", Toast.LENGTH_SHORT).show();
