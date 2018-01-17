@@ -56,6 +56,8 @@ public class AcceptActivity extends AppCompatActivity {
                 }
             }
         };
+        IntentFilter intentFilter = new IntentFilter(Constant.INVITE_CANCEL);
+        registerReceiver(broadcastReceiver, intentFilter);
         llAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +83,11 @@ public class AcceptActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
         if (RingUtil.isRing) {
             RingUtil.stop();
         }
+
     }
 
     private void startRing() {
@@ -93,13 +97,10 @@ public class AcceptActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter intentFilter = new IntentFilter(Constant.INVITE_CANCEL);
-        registerReceiver(broadcastReceiver, intentFilter);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(broadcastReceiver);
     }
 }
